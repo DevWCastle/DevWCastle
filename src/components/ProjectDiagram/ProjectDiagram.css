@@ -1,0 +1,38 @@
+.project-diagram {
+  width: 100%;
+  height: auto;
+}
+
+.project-diagram__bg {
+  fill: #0c1207;
+  stroke: none;
+}
+
+.project-diagram__node {
+  fill: rgba(204, 255, 0, 0.07);
+  stroke: rgba(204, 255, 0, 0.5);
+}
+
+.project-diagram__node.is-dashed {
+  stroke-dasharray: 5 5;
+  fill: transparent;
+}
+
+.project-diagram text {
+  fill: var(--tx);
+  font: 600 12px 'JetBrains Mono', monospace;
+  text-anchor: middle;
+}
+
+.project-diagram line {
+  stroke: var(--lime);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+  animation: project-diagram-flow 1.2s linear infinite;
+}
+
+@keyframes project-diagram-flow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
