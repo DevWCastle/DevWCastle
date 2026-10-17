@@ -1,0 +1,95 @@
+.screens {
+  width: 100%;
+}
+
+.screens__stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+}
+
+.screens__stack img {
+  position: absolute;
+  left: 0;
+  top: 8%;
+  width: 84%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  opacity: 0.5;
+  z-index: 1;
+  transform: translate(14%, 10%) rotate(4deg) scale(0.9);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.6s;
+}
+
+.screens__stack img.is-front {
+  opacity: 1;
+  z-index: 2;
+  transform: rotate(-3deg);
+}
+
+.project-slide.is-active .project-card:hover .screens__stack img.is-front {
+  transform: rotate(-1deg) translateY(-6px);
+}
+
+/* posicionados em relação a .project-media */
+.screens__controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.screens__dots {
+  display: flex;
+}
+
+.screens__btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--tx);
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.screens__btn:hover {
+  background: var(--lime);
+  color: #0a0a0a;
+}
+
+.screens__dot {
+  width: 26px;
+  height: 40px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+}
+
+.screens__dot::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 5px;
+  margin-top: -2px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 0.3s;
+}
+
+.screens__dot[aria-current='true']::after {
+  background: var(--lime);
+}
