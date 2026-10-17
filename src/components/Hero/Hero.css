@@ -1,0 +1,100 @@
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: clamp(24px, 5vw, 70px);
+  align-items: center;
+  padding: clamp(40px, 8vh, 90px) 0 40px;
+  position: relative;
+}
+
+.hero h1 {
+  font: 900 clamp(40px, 6.6vw, 96px)/.98 "Archivo";
+  font-stretch: 108%;
+  letter-spacing: -.04em;
+  margin: 14px 0 0;
+  text-transform: uppercase;
+}
+
+.hero h1 em {
+  font-style: normal;
+  background: var(--lime);
+  color: var(--lime-tx);
+  padding: 0 12px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.role {
+  font: 400 clamp(17px, 2vw, 21px)/1.5 "JetBrains Mono", monospace;
+  color: var(--lime);
+  margin: 26px 0 0;
+  min-height: 3em;
+}
+
+.cur {
+  display: inline-block;
+  width: .55em;
+  height: 1.05em;
+  background: var(--lime);
+  vertical-align: -.15em;
+  margin-left: 3px;
+  animation: bl 1s steps(2) infinite;
+}
+
+@keyframes bl {
+  50% { opacity: 0; }
+}
+
+.lead {
+  max-width: 560px;
+  color: var(--mu);
+  margin: 14px 0 30px;
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ph {
+  position: relative;
+  max-width: 440px;
+  justify-self: end;
+  width: 100%;
+}
+
+.ph::before {
+  content: "";
+  position: absolute;
+  inset: 18px -16px -16px 18px;
+  background: var(--s2);
+  border-radius: 28px 28px 28px 120px;
+  border: 1px solid var(--ln);
+}
+
+.ph img {
+  position: relative;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 28px 28px 28px 120px;
+  border: 1px solid var(--ln);
+}
+
+.chip {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  padding: 8px 12px;
+  border-radius: 99px;
+  color: var(--lime);
+}
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .ph { justify-self: center; max-width: 340px; margin-right: 14px; }
+}

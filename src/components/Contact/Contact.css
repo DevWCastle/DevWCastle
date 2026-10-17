@@ -1,0 +1,80 @@
+.contact {
+  background: var(--s1);
+  border: 1px solid var(--ln);
+  border-radius: 28px;
+  padding: clamp(22px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.contact h2 {
+  margin-top: 6px;
+}
+
+.ch {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+}
+
+.ch li {
+  border-top: 1px solid var(--ln);
+  padding: 14px 0;
+}
+
+.ch a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.ch a:hover {
+  color: var(--lime);
+}
+
+.ch .off {
+  color: var(--mu);
+}
+
+label {
+  display: block;
+  margin: 0 0 6px;
+}
+
+.f {
+  margin-bottom: 18px;
+}
+
+input, textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--tx);
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  padding: 13px 14px;
+  font: inherit;
+  transition: border-color .2s;
+}
+
+input:hover, textarea:hover {
+  border-color: #333333;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--lime);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 255, 0, .2);
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.req {
+  color: var(--lime);
+}
+
+@media (max-width: 860px) {
+  .contact { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,17 @@
+.stack div {
+  border-top: 1px solid var(--ln);
+  padding: 14px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stack span {
+  color: var(--mu);
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .stack div { flex-direction: column; gap: 2px; }
+  .stack span { text-align: left; }
+}

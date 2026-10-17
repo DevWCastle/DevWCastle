@@ -1,0 +1,15 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  border-block: 1px solid var(--ln);
+  padding: 15px 0;
+  color: var(--mu);
+}
+
+.strip span::before {
+  content: "◆";
+  color: var(--lime);
+  margin-right: 10px;
+  font-size: 9px;
+}
