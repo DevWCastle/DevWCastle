@@ -1,4 +1,4 @@
-:root {
+ :root {
   --bg: #0a0a0a;
   --s1: #141414;
   --s2: #1c1c1c;
@@ -40,6 +40,63 @@ body::before {
   background: var(--bg);
   z-index: 60;
 }
+
+/* ===== FUNDO: gradiente + grade + brilhos animados ===== */
+
+/* ===== FUNDO: gradiente + grade + brilhos animados (tons mais escuros) ===== */
+
+/* 1) gradiente */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 88% 4%, rgba(150, 190, 0, .09), transparent 70%),
+    radial-gradient(55% 40% at 0% 55%, rgba(40, 95, 20, .20), transparent 70%),
+    radial-gradient(50% 35% at 100% 100%, rgba(150, 190, 0, .05), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, #08110a 48%, var(--bg) 100%);
+}
+
+/* 2) brilhos que se movem devagar */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .35;
+  background:
+    radial-gradient(closest-side, rgba(150, 190, 0, .20), transparent) no-repeat,
+    radial-gradient(closest-side, rgba(40, 110, 30, .26), transparent) no-repeat;
+  background-size: 420px 420px, 520px 520px;
+  background-position: -120px 20%, calc(100% + 160px) 95%;
+  animation: bg-drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes bg-drift {
+  to {
+    background-position: -50px calc(20% - 50px), calc(100% + 90px) calc(95% - 50px);
+  }
+}
+
+/* 3) grade sutil */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent);
+  mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent);
+}
+
+/* ===== restante do CSS, sem alterações ===== */
 
 a { color: inherit; }
 img { max-width: 100%; height: auto; display: block; }
@@ -120,5 +177,6 @@ h2 em {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
+  body::after { animation: none !important; } /* o * não alcança pseudo-elementos */
   .rv { opacity: 1; transform: none; }
 }
