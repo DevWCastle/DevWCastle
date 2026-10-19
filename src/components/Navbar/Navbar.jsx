@@ -6,7 +6,7 @@ export default function Navbar() {
 
   return (
     <header className="nav">
-      <div className="wrap bar">
+      <div className=" bar">
         <a className="logo" href="#inicio" aria-label="WCastle Dev — início">
           <i className='destaque'>DEVW</i>CASTLE
         </a>
