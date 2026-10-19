@@ -1,100 +1,304 @@
-.hero {
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: clamp(24px, 5vw, 70px);
-  align-items: center;
-  padding: clamp(40px, 8vh, 50px) 0 0px;
+/* =========================================
+   HERO SECTION — DEVWCASTLE
+   ========================================= */
+
+.hero-section {
   position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-background, #0B100D);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
-.hero h1 {
-  font: 900 clamp(40px, 6.6vw, 96px)/.98 "Sora";
-  font-stretch: 108%;
-  letter-spacing: .1rem;
-  margin: 14px 0 0;
-  text-transform: uppercase;
+/* Fundo com Textura e Gradiente Radial */
+.bg-matrix-pattern {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 80% 40%, rgba(199, 243, 107, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(199, 243, 107, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.hero h1 em {
+/* Container Grid Principal */
+.hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(30px, 5vw, 80px);
+  align-items: center;
+
+  max-width: 1480px;
+  margin: 0 auto;
+  width: 100%;
+  padding: clamp(40px, 8vh, 80px) clamp(20px, 4vw, 50px);
+}
+
+/* --- LADO ESQUERDO: CONTEÚDO --- */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Logo Badge com Castelo */
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.castle-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent, #C7F36B);
+}
+
+.castle-icon i {
+  position: absolute;
+  font-size: 8px;
+  font-weight: 900;
+  color: #0B100D;
+  top: 10px;
   font-style: normal;
-  background: var(--lime);
-  color: var(--lime-tx);
-  padding: 0 12px;
-  display: inline-block;
-  line-height: 1.2;
 }
 
-.role {
-  font: 400 clamp(17px, 2vw, 21px)/1.5 "Inter", monospace;
-  color: var(--lime);
-  margin: 26px 0 0;
-  min-height: 3em;
+.logo-hero {
+  font-family: "Sora", sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #F0F0E9;
 }
 
-.cur {
-  display: inline-block;
-  width: .55em;
-  height: 1.05em;
-  background: var(--lime);
-  vertical-align: -.15em;
-  margin-left: 3px;
-  animation: bl 1s steps(2) infinite;
+.logo-hero .destaque {
+  font-style: normal;
+  color: var(--color-accent, #C7F36B);
 }
 
-@keyframes bl {
-  50% { opacity: 0; }
+/* Título de Alto Impacto */
+.hero-title {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(36px, 5.2vw, 76px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #F0F0E9;
+  margin: 0 0 20px;
 }
 
-.lead {
-  max-width: 560px;
-  color: var(--mu);
-  margin: 14px 0 30px;
+/* Linha Vazada (Outline / Stroke) em Verde Lima */
+/* Título com interior 100% transparente e contorno contínuo (sem linhas cruzadas internas) */
+.hero-title .stroke-lime {
+  color: transparent;
+  
+  /* Mantém apenas a borda externa visível */
+  -webkit-text-stroke: 2px var(--color-accent, #C7F36B);
+  paint-order: stroke fill;
+
+  /* Afasta ligeiramente as letras para impedir que os vetores se cruzem */
+  letter-spacing: 0.04em;
+
+  /* Brilho Neon sutil nas bordas (idêntico ao da imagem) */
+  text-shadow: 
+    0 0 10px rgba(199, 243, 107, 0.4),
+    0 0 20px rgba(199, 243, 107, 0.15);
 }
 
-.cta {
+/* Parágrafo Descritivo */
+.hero-description {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: #A5ADA5;
+  max-width: 540px;
+  margin: 0 0 28px;
+}
+
+/* Badges da Stack Tecnológica */
+.stack-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
+  margin-bottom: 36px;
 }
 
-.ph {
-  position: relative;
-  max-width: 440px;
-  justify-self: end;
-  width: 100%;
+.badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Inter", monospace;
+  font-size: 13px;
+  color: #8C968C;
 }
 
-.ph::before {
-  content: "";
-  position: absolute;
-  inset: 18px -16px -16px 18px;
-  background: var(--s2);
-  border-radius: 28px 28px 28px 28px;
-  border: 1px solid var(--ln);
+.badge-item i {
+  font-style: normal;
+  color: #A5ADA5;
 }
 
-.ph img {
-  position: relative;
-  aspect-ratio: 4/5;
-  object-fit: cover;
-  width: 100%;
-  border-radius: 28px 28px 28px 28px;
-  border: 1px solid var(--ln);
+/* Botões CTA */
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
 }
 
-.chip {
-  position: absolute;
-  left: 14px;
-  bottom: 14px;
-  z-index: 2;
-  background: var(--bg);
-  border: 1px solid var(--ln);
-  padding: 8px 12px;
+.btn-primary-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
   border-radius: 99px;
-  color: var(--lime);
+  background: var(--color-accent, #C7F36B);
+  color: #0B100D;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 0 25px rgba(199, 243, 107, 0.35);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
-@media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; }
-  .ph { justify-self: center; max-width: 340px; margin-right: 14px; }
+.btn-primary-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(199, 243, 107, 0.5);
+}
+
+.btn-secondary-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 99px;
+  border: 1px solid rgba(240, 240, 233, 0.3);
+  background: rgba(19, 26, 21, 0.6);
+  color: #F0F0E9;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.22s ease, transform 0.22s ease;
+}
+
+.btn-secondary-outline:hover {
+  border-color: var(--color-accent, #C7F36B);
+  transform: translateY(-2px);
+}
+
+/* --- LADO DIREITO: FOTO E MOLDURA TECH --- */
+.hero-media {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Frame da Foto com Corte Chanfrado e Brilho Neon */
+.profile-frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 400px;
+}
+
+.profile-border-glow {
+  position: relative;
+  padding: 8px;
+  border-radius: 36px 36px 100px 36px; /* Borda assimétrica igual ao mock-up */
+  background: linear-gradient(135deg, rgba(199, 243, 107, 0.8), rgba(48, 59, 42, 0.3));
+  box-shadow: 0 0 30px rgba(199, 243, 107, 0.25);
+}
+
+.profile-border-glow img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 4.8;
+  object-fit: cover;
+  border-radius: 28px 28px 92px 28px;
+  background: #131A15;
+}
+
+/* Chip de Status "Disponível" */
+.status-chip {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(11, 16, 13, 0.85);
+  border: 1px solid rgba(199, 243, 107, 0.3);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #F0F0E9;
+  backdrop-filter: blur(8px);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent, #C7F36B);
+  box-shadow: 0 0 8px #C7F36B;
+}
+
+/* Cards Decorativos com Fragmentos de Código ao Fundo */
+.code-card {
+  position: absolute;
+  z-index: 1;
+  background: rgba(15, 22, 18, 0.75);
+  border: 1px solid rgba(48, 59, 42, 0.6);
+  border-radius: 14px;
+  padding: 12px 16px;
+  backdrop-filter: blur(10px);
+  font-family: "Fira Code", monospace;
+  font-size: 11px;
+  color: #728072;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.code-card-top {
+  top: -10px;
+  left: 0px;
+}
+
+.code-card-bottom {
+  bottom: -20px;
+  left: -20px;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+  }
+
+  .hero-media {
+    margin-top: 30px;
+  }
+
+  .profile-frame {
+    max-width: 340px;
+  }
+
+  .code-card {
+    display: none; /* Simplifica em telas pequenas */
+  }
 }

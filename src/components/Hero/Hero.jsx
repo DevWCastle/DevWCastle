@@ -1,66 +1,106 @@
-import { useState, useEffect } from 'react';
 import profileImg from '../../assets/profile.jpg';
 import './Hero.css';
 
-const roles = [
-  "Desenvolvimento de Automações Web",
-  "APIs REST com Node.js e NestJS",
-  "Aplicações Full Stack com React e Typescript"
-];
-
 export default function Hero() {
-  const [text, setText] = useState('');
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentRole = roles[roleIdx];
-
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        setText(currentRole.substring(0, charIdx + 1));
-        setCharIdx(prev => prev + 1);
-
-        if (charIdx + 1 === currentRole.length) {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        setText(currentRole.substring(0, charIdx - 1));
-        setCharIdx(prev => prev - 1);
-
-        if (charIdx - 1 === 0) {
-          setIsDeleting(false);
-          setRoleIdx((prev) => (prev + 1) % roles.length);
-        }
-      }
-    }, isDeleting ? 40 : 80);
-
-    return () => clearTimeout(timer);
-  }, [charIdx, isDeleting, roleIdx]);
-
   return (
-    <main className="wrap" id="inicio">
+    <main id="inicio" className="hero-section">
+      {/* Padrões sutis de fundo (Grid/Matrix & Circuitos) */}
+      <div className="bg-matrix-pattern" aria-hidden="true" />
+
       <div className="hero">
-        <div>
-          <p className="mono kick rv">Desenvolvedor de Software · Backend &amp; Full Stack</p>
-          <h1 className="rv">Código que <em>fala</em> com o mundo real.</h1>
-          <p className="role rv">
-            <span className="sr">Modelagem SQL, APIs REST com Node.js e NestJS, aplicações full stack com React.</span>
-            <span aria-hidden="true">{text}</span>
-            <span className="cur" aria-hidden="true"></span>
+        {/* Lado Esquerdo: Conteúdo Principal */}
+        <div className="hero-content">
+          {/* Brand/Logo com Ícone de Castelo */}
+          <div className="brand-badge">
+            <span className="castle-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2 22h20V10l-3-3v3h-2V7l-3-3-3 3v3H9V7L6 10v3H4V7L1 10v12zm4-10h2v10H6V12zm5-3h2v13h-2V9zm5 3h2v10h-2V12z" />
+              </svg>
+              <i>&lt;/&gt;</i>
+            </span>
+            <span className="logo-hero" aria-label="DevWCastle — início">
+              <i className="destaque">DEVW</i>Castle
+            </span>
+          </div>
+
+          {/* Título de Alto Impacto (Sólido + Stroke) */}
+          <h1 className="hero-title">
+            DO CÓDIGO AO <br />
+            <span className="stroke-lime">IMPACTO REAL</span>
+          </h1>
+
+          {/* Descrição em Parágrafo */}
+          <p className="hero-description">
+            Especialista em criar soluções de software que conectam a lógica digital
+            ao mundo físico. Full Stack, IoT, e Automações.
           </p>
-          <p className="lead rv">
-            Desenvolvo APIs e aplicações web com TypeScript, Node.js e SQL. Venho da eletroeletrônica e da manutenção industrial, e levo esse olhar de confiabilidade para o software.
-          </p>
-          <div className="cta rv">
-            <a className="pill" href="#projetos">Ver projetos ↓</a>
-            <a className="ghost" href="https://github.com/DevWCastle" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+
+          {/* Badges da Stack Tecnológica */}
+          <div className="stack-badges">
+            <span className="badge-item">
+              <i className="icon-react">⚛</i> [React]
+            </span>
+            <span className="badge-item">
+              <i className="icon-node">JS</i> [Node.js]
+            </span>
+            <span className="badge-item">
+              <i className="icon-chip">🎛</i> [Hardware Circuits]
+            </span>
+            <span className="badge-item">
+              <i className="icon-cloud">☁</i> [Cloud Data]
+            </span>
+          </div>
+
+          {/* Botoes de Ação (CTA) */}
+          <div className="cta-group">
+            <a className="btn-primary-glow" href="#projetos">
+              Ver Projetos ↓
+            </a>
+            <a className="btn-secondary-outline" href="#contato">
+              Fale Comigo ↗
+            </a>
           </div>
         </div>
-        <div className="ph rv">
-          <img src={profileImg} alt="Desenvolvedor DevWCastle" />
-          <span className="chip mono">◆ Disponível</span>
+
+        {/* Lado Direito: Foto e Cards Decorativos */}
+        <div className="hero-media">
+          {/* Card decorativo superior (JSON) */}
+          <div className="code-card code-card-top" aria-hidden="true">
+            <pre>
+              <code>
+{`{
+  "name": "json",
+  "projet": "des",
+  "done": "tine",
+  "color": "t."
+}`}
+              </code>
+            </pre>
+          </div>
+
+          {/* Container com Moldura Tech & Glow na Foto */}
+          <div className="profile-frame">
+            <div className="profile-border-glow">
+              <img src={profileImg} alt="Desenvolvedor DevWCastle" />
+              <span className="status-chip">
+                <span className="pulse-dot" /> DISPONÍVEL
+              </span>
+            </div>
+          </div>
+
+          {/* Card decorativo inferior (Python/Code) */}
+          <div className="code-card code-card-bottom" aria-hidden="true">
+            <pre>
+              <code>
+{`# forsteine R
+python = 0
+def __comigo__(
+  "stat": "HellaWeRous"
+  return 1
+)`}
+              </code>
+            </pre>
+          </div>
         </div>
       </div>
     </main>
