@@ -70,4 +70,5 @@ export const projects = [
         'Diagrama: Raspberry Pi 4B conecta a API com Express e JWT, que persiste em SQLite, e comunica com o CLP.',
     },
   },
+  
 ];

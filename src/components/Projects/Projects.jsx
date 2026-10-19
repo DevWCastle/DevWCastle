@@ -60,7 +60,7 @@ function Projects() {
   };
 
   return (
-    <section ref={sectionRef} className="projects" id="projetos" aria-labelledby="projects-title">
+    <section ref={sectionRef} className="wrap projects" id="projetos" aria-labelledby="projects-title">
       <div className="projects__grid" aria-hidden="true" />
       <div className="projects__blob projects__blob--a" aria-hidden="true" />
       <div className="projects__blob projects__blob--b" aria-hidden="true" />
