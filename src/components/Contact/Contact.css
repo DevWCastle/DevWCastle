@@ -88,17 +88,20 @@ label {
   color: var(--tx);
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   background: rgba(0, 0, 0, 0.35);
   color: var(--tx);
-  border: 1px solid var(--ln);
+  border: none;
   border-radius: 12px;
   padding: 14px 16px;
   font: inherit;
   font-size: 15px;
-  transition:   border-color  0.7s, background 0.7s, box-shadow 0.7s ease-in-out;
 
+  transition:
+    background-color 0.7s ease,
+    box-shadow 0.7s ease-in-out;
 }
 
 input:hover, textarea:hover {
