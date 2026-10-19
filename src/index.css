@@ -1,14 +1,16 @@
- :root {
-  --bg: #0a0a0a;
-  --s1: #141414;
-  --s2: #1c1c1c;
-  --ln: #222222;
-  --tx: #f4f3ef;
-  --mu: #888888;
-  --lime: #ccff00;
-  --lime-tx: #000000;
-  --cy: #ccff00;
-  --hd: 68px;
+:root {
+  /* Paleta Principal Refinada */
+  --bg: #0B100D;        /* Fundo principal (carvão escuro com nuances frias) */
+  --s1: #131A15;        /* Cards e superfícies primárias */
+  --s2: #1A231D;        /* Superfícies secundárias e estados de hover */
+  --ln: #303B2A;        /* Bordas, linhas de divisão e contornos */
+  --tx: #F0F0E9;        /* Texto principal (alto contraste e leitura suave) */
+  --mu: #A5ADA5;        /* Texto secundário (cinza-esverdeado) */
+  --lime: #C7F36B;      /* Verde de destaque sofisticado e elegante */
+  --lime-tx: #0B100D;   /* Texto sobre fundo de destaque */
+  --cy: #C7F36B;        /* Mantido por compatibilidade legada */
+  --hd: 68px;           /* Altura da Navbar */
+
   color-scheme: dark;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -28,8 +30,10 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--tx);
-  font: 400 17px/1.65 "Archivo", system-ui, sans-serif;
+  font: 400 17px/1.65 "Archivo", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body::before {
@@ -41,11 +45,9 @@ body::before {
   z-index: 60;
 }
 
-/* ===== FUNDO: gradiente + grade + brilhos animados ===== */
+/* ===== FUNDO: Gradiente ambiental quase imperceptível ===== */
 
-/* ===== FUNDO: gradiente + grade + brilhos animados (tons mais escuros) ===== */
-
-/* 1) gradiente */
+/* 1) Gradiente ambiental profundo hiper-suavizado */
 html::before {
   content: "";
   position: fixed;
@@ -53,26 +55,25 @@ html::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(60% 45% at 88% 4%, rgba(150, 190, 0, .09), transparent 70%),
-    radial-gradient(55% 40% at 0% 55%, rgba(40, 95, 20, .20), transparent 70%),
-    radial-gradient(50% 35% at 100% 100%, rgba(150, 190, 0, .05), transparent 70%),
-    linear-gradient(180deg, var(--bg) 0%, #08110a 48%, var(--bg) 100%);
+    radial-gradient(50% 40% at 85% 10%, rgba(199, 243, 107, 0.01), transparent 75%),
+    radial-gradient(50% 40% at 10% 80%, rgba(48, 59, 42, 0.04), transparent 75%),
+    linear-gradient(180deg, var(--bg) 0%, #090E0B 50%, var(--bg) 100%);
 }
 
-/* 2) brilhos que se movem devagar */
+/* 2) Luzes ambiente com opacidade quase zero */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: .35;
+  opacity: 0.06;
   background:
-    radial-gradient(closest-side, rgba(150, 190, 0, .20), transparent) no-repeat,
-    radial-gradient(closest-side, rgba(40, 110, 30, .26), transparent) no-repeat;
+    radial-gradient(closest-side, rgba(199, 243, 107, 0.03), transparent) no-repeat,
+    radial-gradient(closest-side, rgba(48, 59, 42, 0.08), transparent) no-repeat;
   background-size: 420px 420px, 520px 520px;
   background-position: -120px 20%, calc(100% + 160px) 95%;
-  animation: bg-drift 16s ease-in-out infinite alternate;
+  animation: bg-drift 18s ease-in-out infinite alternate;
 }
 
 @keyframes bg-drift {
@@ -81,35 +82,28 @@ body::after {
   }
 }
 
-/* 3) grade sutil */
-html::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent);
-  mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent);
+/* ===== ELEMENTOS BASE & UTILITÁRIOS ===== */
+
+a {
+  color: inherit;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* ===== restante do CSS, sem alterações ===== */
-
-a { color: inherit; }
-img { max-width: 100%; height: auto; display: block; }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 :focus-visible {
-  outline: 3px solid var(--lime);
+  outline: 2px solid var(--lime);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 .mono {
   font: 600 12.5px/1.4 "JetBrains Mono", ui-monospace, monospace;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -123,9 +117,10 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .wrap {
-  max-width: 1180px;
+  max-width: 1520px;
   margin: 0 auto;
   padding: 0 clamp(18px, 4vw, 40px);
+  margin-bottom: 4vw;
 }
 
 section {
@@ -135,9 +130,10 @@ section {
 h2 {
   font: 800 clamp(30px, 4.6vw, 54px)/1.02 "Archivo";
   font-stretch: 105%;
-  letter-spacing: -.03em;
+  letter-spacing: -0.03em;
   margin: 10px 0 36px;
   text-transform: uppercase;
+  color: var(--tx);
 }
 
 h2 em {
@@ -145,6 +141,7 @@ h2 em {
   background: var(--lime);
   color: var(--lime-tx);
   padding: 0 8px;
+  border-radius: 2px;
 }
 
 .kick {
@@ -162,11 +159,12 @@ h2 em {
   color: var(--mu);
 }
 
-/* motion - scroll reveal */
+/* ===== ANIMAÇÕES E TRANSITION REVEAL ===== */
+
 .rv {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .rv.in {
@@ -177,6 +175,6 @@ h2 em {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
-  body::after { animation: none !important; } /* o * não alcança pseudo-elementos */
+  body::after { animation: none !important; }
   .rv { opacity: 1; transform: none; }
 }
