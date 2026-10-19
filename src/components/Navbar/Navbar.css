@@ -1,25 +1,55 @@
 /* =========================================
-   NAVBAR — DEVWCASTLE
+   NAVBAR — DEVWCASTLE (Fast Final-Hero Scroll)
    ========================================= */
 
 .nav {
-  position: sticky;
+  position: fixed;
   top: env(safe-area-inset-top, 0px);
+  left: 0;
+  right: 0;
   z-index: 50;
 
+  /* Revelação de fundo e divisória vinculados ao progresso concentrado */
+  background: rgba(
+    11, 
+    16, 
+    13, 
+    calc(0.88 * var(--scroll-progress, 0))
+  );
+
+  -webkit-backdrop-filter: blur(calc(14px * var(--scroll-progress, 0))) saturate(130%);
+  backdrop-filter: blur(calc(14px * var(--scroll-progress, 0))) saturate(130%);
+
+  border-bottom: 1px solid rgba(
+    48, 
+    59, 
+    42, 
+    var(--scroll-progress, 0)
+  );
+
+  will-change: background-color, border-color, backdrop-filter, opacity, visibility;
+  transition: background-color 0.1s linear, border-color 0.1s linear, visibility 0.1s linear;
+}
+
+/* Estado de Ocultação Absoluta (Antes dos 80% do Hero) */
+.nav.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Estado Final Estável (Hero 100% ultrapassada) */
+.nav.is-scrolled {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
   background: rgba(11, 16, 13, 0.88);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
   backdrop-filter: blur(14px) saturate(130%);
-
-  border-bottom: 1px solid
-    var(--color-border, var(--ln, #303B2A));
-
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+  border-bottom-color: var(--color-border, var(--ln, #303B2A));
 }
 
-/* Container da navbar */
+/* Container da Navbar */
 .bar {
   height: var(--hd);
 
@@ -33,7 +63,7 @@
   padding: 0 clamp(18px, 4vw, 40px);
 }
 
-/* Logo */
+/* Logo - Revelação progressiva rápida com o conjunto */
 .logo {
   display: inline-flex;
   align-items: center;
@@ -49,7 +79,11 @@
 
   color: var(--color-title, var(--tx, #F0F0E9));
 
-  transition: opacity 0.2s ease;
+  opacity: var(--scroll-progress, 0);
+  transform: translateY(calc(-6px * (1 - var(--scroll-progress, 0))));
+
+  will-change: opacity, transform;
+  transition: opacity 0.08s linear, transform 0.08s linear;
 }
 
 .logo .destaque {
@@ -66,11 +100,17 @@
   opacity: 0.88;
 }
 
-/* Navegação desktop */
+/* Links desktop - Revelação concentrada e veloz */
 .links {
   display: flex;
   align-items: center;
   gap: 22px;
+
+  opacity: var(--scroll-progress, 0);
+  transform: translateY(calc(-8px * (1 - var(--scroll-progress, 0))));
+
+  will-change: opacity, transform;
+  transition: opacity 0.08s linear, transform 0.08s linear;
 }
 
 .links a {
@@ -104,11 +144,9 @@
 }
 
 .links a.on {
-  border-bottom-color:
-    var(--color-accent, var(--lime, #C7F36B));
+  border-bottom-color: var(--color-accent, var(--lime, #C7F36B));
 }
 
-/* Linha sutil no hover */
 .links a:not(.on)::after {
   content: "";
   position: absolute;
@@ -130,7 +168,15 @@
   transform: scaleX(1);
 }
 
-/* Botão principal: contato */
+/* Botão de contato da Navbar */
+.nav-pill {
+  opacity: var(--scroll-progress, 0);
+  transform: translateY(calc(-8px * (1 - var(--scroll-progress, 0))));
+
+  will-change: opacity, transform;
+  transition: opacity 0.08s linear, transform 0.08s linear;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
@@ -167,43 +213,7 @@
   box-shadow: 0 6px 18px rgba(199, 243, 107, 0.16);
 }
 
-.pill:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* Botão secundário */
-.ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 11px 22px;
-  border-radius: 99px;
-
-  border: 1px solid
-    var(--color-border, var(--ln, #303B2A));
-
-  background: transparent;
-  color: var(--color-title, var(--tx, #F0F0E9));
-
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  text-decoration: none;
-
-  transition:
-    border-color 0.22s ease,
-    background-color 0.22s ease,
-    transform 0.22s ease;
-}
-
-.ghost:hover {
-  border-color: var(--color-accent, var(--lime, #C7F36B));
-  background: var(--color-surface, var(--s2, #131A15));
-  transform: translateY(-1px);
-}
-
-/* Botão do menu mobile */
+/* Botão burger e menu mobile */
 .burger {
   display: none;
   align-items: center;
@@ -213,8 +223,7 @@
   height: 44px;
   padding: 0;
 
-  border: 1px solid
-    var(--color-border, var(--ln, #303B2A));
+  border: 1px solid var(--color-border, var(--ln, #303B2A));
 
   background: var(--color-surface, var(--s1, #131A15));
   color: var(--color-title, var(--tx, #F0F0E9));
@@ -223,31 +232,18 @@
   cursor: pointer;
   font-size: 20px;
 
+  opacity: var(--scroll-progress, 0);
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    opacity 0.08s linear;
 }
 
-.burger:hover {
-  border-color: var(--color-accent, var(--lime, #C7F36B));
-}
-
-/* Menu mobile fechado por padrão */
 .menu {
   display: none;
 }
 
-/* Foco acessível para teclado */
-.nav a:focus-visible,
-.nav button:focus-visible {
-  outline: 2px solid var(--color-accent, var(--lime, #C7F36B));
-  outline-offset: 4px;
-}
-
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
-
+/* Responsive & Accessibility overrides */
 @media (max-width: 900px) {
   .links {
     display: none;
@@ -269,8 +265,7 @@
 
     background: rgba(11, 16, 13, 0.97);
 
-    border-top: 1px solid
-      var(--color-border, var(--ln, #303B2A));
+    border-top: 1px solid var(--color-border, var(--ln, #303B2A));
   }
 
   .menu a {
@@ -280,8 +275,7 @@
     min-height: 48px;
     padding: 14px 0;
 
-    border-bottom: 1px solid
-      var(--color-border, var(--ln, #303B2A));
+    border-bottom: 1px solid var(--color-border, var(--ln, #303B2A));
 
     color: var(--color-text-secondary, var(--mu, #A5ADA5));
     text-decoration: none;
@@ -301,8 +295,7 @@
   }
 
   .menu a.on {
-    border-bottom-color:
-      var(--color-accent, var(--lime, #C7F36B));
+    border-bottom-color: var(--color-accent, var(--lime, #C7F36B));
   }
 
   .menu a.pill {
@@ -318,20 +311,25 @@
     color: var(--color-background, #0B100D);
     background: var(--color-accent, #C7F36B);
   }
-
-  .menu a.pill:hover {
-    filter: brightness(1.04);
-  }
 }
 
-/* Respeita preferência por movimento reduzido */
 @media (prefers-reduced-motion: reduce) {
-  .nav *,
-  .nav *::before,
-  .nav *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .logo,
+  .links,
+  .nav-pill,
+  .burger {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .nav.is-hidden {
+    visibility: visible !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+  }
+
+  .nav {
+    background: rgba(11, 16, 13, 0.88) !important;
+    border-bottom-color: var(--color-border, var(--ln, #303B2A)) !important;
   }
 }
