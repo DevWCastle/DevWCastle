@@ -3,8 +3,7 @@ import profileImg from '../../assets/profile.jpg';
 import './Hero.css';
 
 const roles = [
-  "Desenvolvimento de soluções web práticas",
-  "Automações Web",
+  "Desenvolvimento de Automações Web",
   "APIs REST com Node.js e NestJS",
   "Aplicações Full Stack com React e Typescript"
 ];
