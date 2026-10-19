@@ -7,20 +7,21 @@ import TechStack from './components/TechStack/TechStack';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import { useScrollReveal } from './hooks/useScrollReveal';
+import './App.css'
 
 export default function App() {
   useScrollReveal();
 
   return (
     <>
-      <Navbar />
-      <Hero />
-      <TechStrip />
-      <About />
-      <Projects />
-      <TechStack />
-      <Contact />
-      <Footer />
+        <Navbar />
+        <Hero />
+        <TechStrip />
+        <Projects />
+        <TechStack />
+        <About />
+        <Contact />
+        <Footer />
     </>
   );
 }

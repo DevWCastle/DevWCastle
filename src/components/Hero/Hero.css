@@ -3,14 +3,14 @@
   grid-template-columns: 1.15fr .85fr;
   gap: clamp(24px, 5vw, 70px);
   align-items: center;
-  padding: clamp(40px, 8vh, 90px) 0 40px;
+  padding: clamp(40px, 8vh, 50px) 0 0px;
   position: relative;
 }
 
 .hero h1 {
-  font: 900 clamp(40px, 6.6vw, 96px)/.98 "Archivo";
+  font: 900 clamp(40px, 6.6vw, 96px)/.98 "Sora";
   font-stretch: 108%;
-  letter-spacing: -.04em;
+  letter-spacing: .1rem;
   margin: 14px 0 0;
   text-transform: uppercase;
 }
@@ -21,11 +21,11 @@
   color: var(--lime-tx);
   padding: 0 12px;
   display: inline-block;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .role {
-  font: 400 clamp(17px, 2vw, 21px)/1.5 "JetBrains Mono", monospace;
+  font: 400 clamp(17px, 2vw, 21px)/1.5 "Inter", monospace;
   color: var(--lime);
   margin: 26px 0 0;
   min-height: 3em;
@@ -69,7 +69,7 @@
   position: absolute;
   inset: 18px -16px -16px 18px;
   background: var(--s2);
-  border-radius: 28px 28px 28px 120px;
+  border-radius: 28px 28px 28px 28px;
   border: 1px solid var(--ln);
 }
 
@@ -78,7 +78,7 @@
   aspect-ratio: 4/5;
   object-fit: cover;
   width: 100%;
-  border-radius: 28px 28px 28px 120px;
+  border-radius: 28px 28px 28px 28px;
   border: 1px solid var(--ln);
 }
 

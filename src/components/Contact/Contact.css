@@ -1,21 +1,32 @@
 .contact {
   position: relative;
-  border: 1px solid var(--ln);
+
+  border: 1px solid var(--color-border);
   border-radius: 28px;
   padding: clamp(28px, 4vw, 52px);
+
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: clamp(24px, 4vw, 56px);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+
+  background: linear-gradient(
+    160deg,
+    rgba(19, 26, 21, 0.96),
+    rgba(11, 16, 13, 0.96)
+  );
+
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.55);
+
   transition: border-color 0.3s ease;
 }
 
 .contact:hover {
-  border-color: rgba(204, 255, 0, 0.35);
+  border-color: var(--color-heading-highlight);
 }
+
 
 .contact h2 {
   margin-top: 6px;

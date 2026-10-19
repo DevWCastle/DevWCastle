@@ -2,10 +2,11 @@ import './About.css';
 
 export default function About() {
   return (
-    <section className="wrap about" id="sobre">
+    <section className="wrap" id="sobre">
+      <p className="mono about__kicker">Apresentação</p>
       <div className="about__card rv">
-        <p className="mono about__kicker">Apresentação</p>
-        <h2 className="about__title">
+        
+        <h2 className="about__title rv">
           Confiabilidade de <em>engenharia</em> no seu software.
         </h2>
         <div className="about__cols">

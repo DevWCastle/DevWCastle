@@ -1,4 +1,10 @@
-
+.about__card{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
 
 .about__kicker {
   color: var(--lime);
@@ -9,20 +15,9 @@
 }
 
 .about__title {
-  font: 900 clamp(28px, 4.5vw, 52px) / 1.05 'Archivo';
-  font-stretch: 105%;
-  letter-spacing: -0.03em;
-  margin: 0 0 4vw 0;
-  text-transform: uppercase;
-  color: var(--tx);
-}
 
-.about__title em {
-  font-style: normal;
-  background: var(--lime);
-  color: #0a0a0a;
-  padding: 0 0.14em;
-  display: inline-block;
+    padding: 2rem 0;
+   gap: 16px;
 }
 
 .about__cols {

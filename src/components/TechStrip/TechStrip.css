@@ -13,3 +13,11 @@
   margin-right: 10px;
   font-size: 9px;
 }
+
+/* .wrap-strip{
+  max-width: 1520px;
+  margin: 3rem auto;
+  padding: 0 clamp(18px, 4vw, 40px);
+
+  
+} */
