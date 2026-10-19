@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 
 /**
- * Adiciona a classe "in" aos elementos ".rv" de um contêiner quando eles entram
- * na tela, com atraso escalonado. O visual fica no CSS global (.js .rv / .rv.in).
+ * Revela elementos .rv quando entram na tela,
+ * com atraso escalonado para uma transição natural.
  */
 function useRevealOnScroll(rootRef) {
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || !('IntersectionObserver' in window)) return undefined;
+
+    if (!root || !('IntersectionObserver' in window)) {
+      return undefined;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -18,11 +21,16 @@ function useRevealOnScroll(rootRef) {
           }
         });
       },
-      { threshold: 0.12 }
+      {
+        threshold: 0.2,
+      }
     );
 
     root.querySelectorAll('.rv').forEach((element, index) => {
-      element.style.setProperty('--d', `${Math.min(index, 4) * 90}ms`);
+      // Intervalo de 130ms entre elementos, com limite de 650ms.
+      const delay = Math.min(index, 5) * 130;
+
+      element.style.setProperty('--d', `${delay}ms`);
       observer.observe(element);
     });
 
