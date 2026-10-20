@@ -78,7 +78,7 @@
   border-color: var(--color-heading-highlight, #dcff4d);
 
   box-shadow:
-    0 0 0 1px rgba(204, 235, 121, 0.18),
+    0 0 0 2px rgba(187, 255, 0, 0.18),
     0 20px 80px rgba(0, 0, 0, 0.38),
     0 10px 32px rgba(169, 187, 118, 0.18);
 
