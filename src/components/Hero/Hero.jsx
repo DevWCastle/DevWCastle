@@ -1,7 +1,60 @@
+import { useState, useEffect } from 'react';
 import profileImg from '../../assets/profile.jpg';
 import './Hero.css';
 
+// Lista de frases dinâmicas configuráveis
+const TYPING_PHRASES = [
+  "desenvolver aplicações e APIs robustas",
+  "integrar sistemas, serviços e dados",
+  "conectar software ao mundo físico",
+  "automatizar processos e operações",
+  "construir soluções Full Stack"
+];
+
+// Configurações de velocidade (ms)
+const TYPING_SPEED = 55;
+const DELETING_SPEED = 30;
+const PAUSE_COMPLETE = 1800;
+const PAUSE_BETWEEN = 300;
+
 export default function Hero() {
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const fullText = TYPING_PHRASES[currentPhraseIndex];
+    let timeout;
+
+    if (!isDeleting) {
+      // Etapa de digitação
+      if (displayedText.length < fullText.length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fullText.substring(0, displayedText.length + 1));
+        }, TYPING_SPEED);
+      } else {
+        // Pausa quando a frase estiver completa
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, PAUSE_COMPLETE);
+      }
+    } else {
+      // Etapa de exclusão/apagamento
+      if (displayedText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fullText.substring(0, displayedText.length - 1));
+        }, DELETING_SPEED);
+      } else {
+        // Alterna para a próxima frase após apagar
+        setIsDeleting(false);
+        setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % TYPING_PHRASES.length);
+        timeout = setTimeout(() => {}, PAUSE_BETWEEN);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, currentPhraseIndex]);
+
   return (
     <main id="inicio" className="hero-section">
       {/* Padrões sutis de fundo (Grid/Matrix & Circuitos) */}
@@ -19,7 +72,7 @@ export default function Hero() {
               <i>&lt;/&gt;</i>
             </span>
             <span className="logo-hero" aria-label="DevWCastle — início">
-              <i className="destaque">DEVW</i>Castle
+              <i className="destaque">DEvW</i>Castle
             </span>
           </div>
 
@@ -29,10 +82,13 @@ export default function Hero() {
             <span className="stroke-lime">IMPACTO REAL</span>
           </h1>
 
-          {/* Descrição em Parágrafo */}
-          <p className="hero-description">
-            Especialista em criar soluções de software que conectam a lógica digital
-            ao mundo físico. Full Stack, IoT, e Automações.
+          {/* Descrição com Efeito de Digitação Dinâmica */}
+          <p className="hero-description" aria-live="polite">
+            <span className="hero-description-prefix">Especialista em &nbsp;</span>
+            <span className="hero-description-highlight">
+              {displayedText}
+              <span className="typing-cursor" aria-hidden="true" />
+            </span>
           </p>
 
           {/* Badges da Stack Tecnológica */}

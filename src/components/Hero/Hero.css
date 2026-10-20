@@ -43,6 +43,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: .5rem;
 }
 
 /* Logo Badge com Castelo */
@@ -72,7 +73,7 @@
 
 .logo-hero {
   font-family: "Sora", sans-serif;
-  font-size: 26px;
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #F0F0E9;
@@ -96,21 +97,17 @@
 }
 
 /* Linha Vazada (Outline / Stroke) em Verde Lima */
-/* Título com interior 100% transparente e contorno contínuo (sem linhas cruzadas internas) */
 .hero-title .stroke-lime {
-  color: transparent;
-  
-  /* Mantém apenas a borda externa visível */
-  -webkit-text-stroke: 2px var(--color-accent, #C7F36B);
-  paint-order: stroke fill;
-
-  /* Afasta ligeiramente as letras para impedir que os vetores se cruzem */
-  letter-spacing: 0.04em;
-
-  /* Brilho Neon sutil nas bordas (idêntico ao da imagem) */
-  text-shadow: 
-    0 0 10px rgba(199, 243, 107, 0.4),
-    0 0 20px rgba(199, 243, 107, 0.15);
+  display: block;
+  font-family: "Sora", sans-serif;
+  font-weight: 900;
+  color: #121609;
+  letter-spacing: 0.015em;
+  line-height: 1.1;
+  text-shadow: -1px -1px 0 #C7F36B, 
+               1px -1px 0 #C7F36B, 
+              -1px  1px 0 #C7F36B, 
+               1px  1px 0 #C7F36B;
 }
 
 /* Parágrafo Descritivo */
@@ -123,26 +120,63 @@
   margin: 0 0 28px;
 }
 
-/* Badges da Stack Tecnológica */
+/* =========================================
+   STACK BADGES — REFINAMENTO VISUAL
+   ========================================= */
+
 .stack-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   margin-bottom: 36px;
 }
 
 .badge-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+  padding: 6px 14px 6px 6px;
+  
+  background: rgba(19, 26, 21, 0.75);
+  border: 1px solid rgba(48, 59, 42, 0.8);
+  border-radius: 12px;
+  
   font-family: "Inter", monospace;
   font-size: 13px;
-  color: #8C968C;
+  color: #A5ADA5;
+  backdrop-filter: blur(8px);
+  
+  transition: border-color 0.22s ease, transform 0.22s ease;
 }
 
+.badge-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Esconde o texto descritivo dos badges por padrão em telas grandes se desejado, 
+   mas aqui mantemos o texto e controlamos a exibição no mobile abaixo */
+.badge-text {
+  display: inline;
+}
+
+/* Ícone quadrado, arredondado, fundo preto e destaque verde */
 .badge-item i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 34px;
+  height: 34px;
+  
+  background: #0B100D;
+  border: 1px solid rgba(199, 243, 107, 0.3);
+  border-radius: 8px;
+  
   font-style: normal;
-  color: #A5ADA5;
+  font-size: 16px;
+  color: var(--color-accent, #C7F36B);
+  
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Botões CTA */
@@ -159,7 +193,7 @@
   justify-content: center;
   padding: 14px 28px;
   border-radius: 99px;
-  background: var(--color-accent, #C7F36B);
+  background: var(--color-accent, #c8f36b);
   color: #0B100D;
   font-family: "Inter", sans-serif;
   font-size: 15px;
@@ -205,7 +239,6 @@
   width: 100%;
 }
 
-/* Frame da Foto com Corte Chanfrado e Brilho Neon */
 .profile-frame {
   position: relative;
   z-index: 2;
@@ -216,7 +249,7 @@
 .profile-border-glow {
   position: relative;
   padding: 8px;
-  border-radius: 36px 36px 100px 36px; /* Borda assimétrica igual ao mock-up */
+  border-radius: 36px 36px 100px 36px;
   background: linear-gradient(135deg, rgba(199, 243, 107, 0.8), rgba(48, 59, 42, 0.3));
   box-shadow: 0 0 30px rgba(199, 243, 107, 0.25);
 }
@@ -230,7 +263,6 @@
   background: #131A15;
 }
 
-/* Chip de Status "Disponível" */
 .status-chip {
   position: absolute;
   top: 24px;
@@ -258,19 +290,18 @@
   box-shadow: 0 0 8px #C7F36B;
 }
 
-/* Cards Decorativos com Fragmentos de Código ao Fundo */
 .code-card {
   position: absolute;
   z-index: 1;
-  background: rgba(15, 22, 18, 0.75);
+  background: rgba(0, 3, 2, 0.75);
   border: 1px solid rgba(48, 59, 42, 0.6);
   border-radius: 14px;
   padding: 12px 16px;
   backdrop-filter: blur(10px);
   font-family: "Fira Code", monospace;
   font-size: 11px;
-  color: #728072;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  color: #459b45;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.404);
 }
 
 .code-card-top {
@@ -283,11 +314,69 @@
   left: -20px;
 }
 
-/* --- RESPONSIVIDADE --- */
+/* =========================================
+   ESTILOS DE DIGITAÇÃO DINÂMICA (HERO)
+   ========================================= */
+
+.hero-description {
+  display: flex;
+  flex-direction: column; /* Organiza em blocos separados para quebrar a linha naturalmente */
+  align-items: flex-start;
+  
+  font-family: "Inter", sans-serif;
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.6;
+  color: #A5ADA5;
+  max-width: 580px;
+  margin: 0 0 28px;
+  min-height: 3.2em;
+}
+
+.hero-description-prefix {
+  color: #F0F0E9;
+  font-weight: 500;
+}
+
+.hero-description-highlight {
+  color: #A9BB76;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: #A9BB76;
+  vertical-align: -0.15em;
+  margin-left: 3px;
+  animation: cursorBlink 0.9s infinite steps(1);
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor {
+    display: none;
+  }
+}
+/* --- RESPONSIVIDADE PARA CELULARES (<= 960px) --- */
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
     padding-top: 40px;
+    text-align: center;
+
+  }
+
+  .hero-content {
+    align-items: center;
+    width: 100%;
+    gap: 1.4rem;
   }
 
   .hero-media {
@@ -299,6 +388,34 @@
   }
 
   .code-card {
-    display: none; /* Simplifica em telas pequenas */
+    display: none; 
+  }
+
+  /* Centraliza e separa o parágrafo de digitação no celular */
+  .hero-description {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Deixa os chips em fila na horizontal e centralizados */
+  .stack-badges {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .badge-item {
+    padding: 6px; /* Deixa o chip compacto apenas para o ícone */
+    border-radius: 12px;
+    justify-content: center;
+  }
+
+  /* Oculta o texto do chip no celular, exibindo apenas o ícone */
+  .badge-text {
+    display: none;
   }
 }
