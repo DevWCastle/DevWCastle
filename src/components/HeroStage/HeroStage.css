@@ -158,7 +158,67 @@
   background: linear-gradient(to bottom, rgba(2,5,3,.0) 70%, rgba(2,5,3,.85) 100%), 
               radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.65) 100%);
 }
+.hero-description {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.6;
+  color: #A5ADA5;
 
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Centralização estrutural garantida */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  z-index: 10;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.hero-description-highlight {
+  color: #A5ADA5;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  text-align: center; /* Garante que o texto em transição permaneça centrado */
+}
+
+
+.hero-description-prefix {
+  color: #F0F0E9;
+  font-weight: 500;
+}
+
+
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: #C7F36B;
+  vertical-align: -0.15em;
+  margin-left: 3px;
+  animation: cursorBlink 0.9s infinite steps(1);
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor {
+    display: none;
+  }
+}
 /* --- BOTÕES DE AÇÃO INFERIORES --- */
 .hero-footer-content {
   position: absolute;

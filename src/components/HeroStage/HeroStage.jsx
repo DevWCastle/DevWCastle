@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './HeroStage.css';
 
 // Importações dos assets originais
@@ -6,8 +6,59 @@ import smokeBack from '../../assets/smoke/smoke-back.webp';
 import smokeFront from '../../assets/smoke/smoke-front.webp';
 import pessoaImg from '../../assets/images/pessoa.webp';
 
+// Lista de frases dinâmicas configuráveis
+const TYPING_PHRASES = [
+  "Desenvolver aplicações e APIs robustas",
+  "Integrar sistemas, serviços e dados",
+  "Conectar software ao mundo físico",
+  "Automatizar processos e operações",
+  "Construir soluções Full Stack"
+];
+
+// Configurações de velocidade (ms)
+const TYPING_SPEED = 55;
+const DELETING_SPEED = 30;
+const PAUSE_COMPLETE = 1800;
+const PAUSE_BETWEEN = 300;
+
 export default function HeroStage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const fullText = TYPING_PHRASES[currentPhraseIndex];
+    let timeout;
+
+    if (!isDeleting) {
+      // Etapa de digitação
+      if (displayedText.length < fullText.length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fullText.substring(0, displayedText.length + 1));
+        }, TYPING_SPEED);
+      } else {
+        // Pausa quando a frase estiver completa
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, PAUSE_COMPLETE);
+      }
+    } else {
+      // Etapa de exclusão/apagamento
+      if (displayedText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fullText.substring(0, displayedText.length - 1));
+        }, DELETING_SPEED);
+      } else {
+        // Alterna para a próxima frase após apagar
+        setIsDeleting(false);
+        setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % TYPING_PHRASES.length);
+        timeout = setTimeout(() => {}, PAUSE_BETWEEN);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, currentPhraseIndex]);
 
   return (
     <main className="hero-stage" id="inicio">
@@ -108,6 +159,7 @@ export default function HeroStage() {
             </g>
           </svg>
         </h1>
+   
 
         {/* 6. Pessoa (Apenas da metade para cima visível) */}
         {/* <img 
@@ -119,6 +171,15 @@ export default function HeroStage() {
         /> */}
 
         {/* 7. Fumaça frontal + iluminação (Vignette) */}
+
+          <p className="hero-description" aria-live="polite">
+            {/* <span className="hero-description-prefix">Especialista em &nbsp;</span> */}
+            <span className="hero-description-highlight">
+              {displayedText}
+              <span className="typing-cursor" aria-hidden="true" />
+            </span>
+          </p>
+
         <img className="layer layer--smoke-front" src={smokeFront} alt="" aria-hidden="true" />
         <div className="layer layer--vignette" aria-hidden="true" />
 
