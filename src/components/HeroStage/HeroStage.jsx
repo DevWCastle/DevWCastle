@@ -73,7 +73,7 @@ export default function HeroStage() {
         {/* Header com a Logo DWC centralizada acima */}
         <header className="site-header">
           <span className="site-header__spacer"></span>
-          <a className="site-header__logo" href="#inicio" aria-label="DWC — início">
+          <a className="site-header__logo" href="#inicio" aria-label="DWC — início" id="inicio">
             <img src={logo} alt="Logo DWC" width="1254" height="1254" />
           </a>
         </header>
@@ -87,7 +87,7 @@ export default function HeroStage() {
         </p>
 
         {/* Conteúdo Principal */}
-        <main className="hero__content" id="inicio">
+        <main className="hero__content" >
           <h1 className="hero__title">
             <span className="hero__title-main">Do código ao</span>
             <span className="hero__title-sub">Impacto real</span>
