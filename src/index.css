@@ -10,6 +10,12 @@
   --lime-tx: #0B100D;   /* Texto sobre fundo de destaque */
   --cy: #C7F36B;        /* Mantido por compatibilidade legada */
   --hd: 68px;           /* Altura da Navbar */
+    --hero-bg: #030712;
+  --hero-accent-blue: #00d2ff;
+  --hero-accent-cyan: #00f0ff;
+  --hero-accent-electric: #0072ff;
+  --hero-text-main: #ffffff;
+  --hero-text-muted: #94a3b8;
 
   color-scheme: dark;
   box-sizing: border-box;

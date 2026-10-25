@@ -24,7 +24,7 @@
 }
 
 /* Container Grid Principal */
-.hero {
+.hero-t {
   position: relative;
   z-index: 1;
   display: grid;
@@ -39,7 +39,7 @@
 }
 
 /* --- LADO ESQUERDO: CONTEÚDO --- */
-.hero-content {
+.hero-content-t {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

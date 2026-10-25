@@ -1,201 +1,115 @@
 import { useState, useEffect } from 'react';
 import './HeroStage.css';
-
-// Importações dos assets originais
-import smokeBack from '../../assets/smoke/smoke-back.webp';
-import smokeFront from '../../assets/smoke/smoke-front.webp';
-import pessoaImg from '../../assets/images/pessoa.webp';
-
-// Lista de frases dinâmicas configuráveis
-const TYPING_PHRASES = [
-  "Desenvolver aplicações e APIs robustas",
-  "Integrar sistemas, serviços e dados",
-  "Conectar software ao mundo físico",
-  "Automatizar processos e operações",
-  "Construir soluções Full Stack"
-];
-
-// Configurações de velocidade (ms)
-const TYPING_SPEED = 55;
-const DELETING_SPEED = 30;
-const PAUSE_COMPLETE = 1800;
-const PAUSE_BETWEEN = 300;
+import logo from '../../assets/dwc-logo.png'; // Ajuste o caminho conforme a estrutura do seu projeto
 
 export default function HeroStage() {
-
-  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const fullText = TYPING_PHRASES[currentPhraseIndex];
-    let timeout;
-
-    if (!isDeleting) {
-      // Etapa de digitação
-      if (displayedText.length < fullText.length) {
-        timeout = setTimeout(() => {
-          setDisplayedText(fullText.substring(0, displayedText.length + 1));
-        }, TYPING_SPEED);
-      } else {
-        // Pausa quando a frase estiver completa
-        timeout = setTimeout(() => {
-          setIsDeleting(true);
-        }, PAUSE_COMPLETE);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        setMenuOpen(false);
       }
-    } else {
-      // Etapa de exclusão/apagamento
-      if (displayedText.length > 0) {
-        timeout = setTimeout(() => {
-          setDisplayedText(fullText.substring(0, displayedText.length - 1));
-        }, DELETING_SPEED);
-      } else {
-        // Alterna para a próxima frase após apagar
-        setIsDeleting(false);
-        setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % TYPING_PHRASES.length);
-        timeout = setTimeout(() => {}, PAUSE_BETWEEN);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, currentPhraseIndex]);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
 
   return (
-    <main className="hero-stage" id="inicio">
-      <div className="stage">
-        
-        {/* 1-2. Fundo + Fumaça (atrás) */}
-        <div className="layer layer--bg" aria-hidden="true" />
-        <img className="layer layer--smoke-back" src={smokeBack} alt="" aria-hidden="true" />
-
-        {/* 3. Elementos tecnológicos decorativos */}
-        <svg className="layer layer--deco" viewBox="0 0 1672 940" preserveAspectRatio="none" aria-hidden="true">
-          <g fill="none" stroke="var(--lime)" strokeWidth="1.2" opacity=".85">
-            <polyline points="0,21 130,21" />
-            <polyline points="130,21 148,0" opacity=".6" />
-            <polyline points="0,131 240,131" />
-            <polyline points="0,122 66,122 50,131" opacity=".5" />
-            <polyline points="0,513 197,513" />
-            <polyline points="0,504 72,504 60,513" opacity=".5" />
-            <polyline points="0,703 55,703 103,750 0,750" opacity=".8" />
-            <polyline points="103,750 172,822 239,822" />
-            <polyline points="0,840 278,840" opacity=".6" />
-            <polyline points="1672,180 1585,262 1527,285" opacity=".8" />
-            <polyline points="1672,710 1570,710 1510,767 1452,767" />
+    <div className="hero-stage-container">
+      <div className="hero">
+        {/* Circuitos e elementos decorativos em SVG */}
+        <svg className="hero__circuits" viewBox="0 0 1365 768" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <defs>
+            <g id="bars-stage">
+              <g transform="skewX(-35)">
+                <rect x="0" y="0" width="9" height="11"/>
+                <rect x="14" y="0" width="9" height="11"/>
+                <rect x="28" y="0" width="9" height="11"/>
+                <rect x="42" y="0" width="9" height="11" opacity=".7"/>
+                <rect x="56" y="0" width="9" height="11" opacity=".45"/>
+              </g>
+            </g>
+          </defs>
+          <g className="lines">
+            <path d="M0 32H108L142 0"/>
+            <path d="M82 145H200"/>
+            <path d="M0 245H95L175 302"/>
+            <path d="M0 405H60L165 527H336"/>
+            <path d="M90 580L150 608H395"/>
+            <path className="faint" d="M170 640L270 768"/>
+            <path d="M1095 188H1175L1250 232H1365"/>
+            <path d="M1078 94L1030 140"/>
+            <path d="M930 664H1040"/>
+            <path d="M1030 702L1165 565H1365"/>
+            <path d="M1105 677H1135"/>
+            <path className="faint" d="M1255 330V400M1255 520V540"/>
           </g>
-          <g fill="var(--lime)">
-            <circle cx="130" cy="21" r="3" />
-            <circle cx="240" cy="131" r="3" />
-            <circle cx="197" cy="513" r="3" />
-            <circle cx="239" cy="822" r="3.5" />
-            <circle cx="278" cy="840" r="3" />
-            <circle cx="1452" cy="767" r="3.5" />
-            <rect x="0" y="138" width="6" height="9" />
-            <rect x="11" y="138" width="6" height="9" />
-            <rect x="22" y="138" width="6" height="9" />
-            <rect x="0" y="520" width="8" height="10" />
-            <rect x="14" y="520" width="8" height="10" />
-            <rect x="28" y="520" width="8" height="10" />
-            <rect x="40" y="520" width="6" height="10" />
-            <rect x="1563" y="266" width="6" height="6" transform="rotate(-40 1566 269)" />
-            <rect x="1574" y="258" width="6" height="6" transform="rotate(-40 1577 261)" />
-            <rect x="1586" y="250" width="6" height="6" transform="rotate(-40 1589 253)" />
+          <g className="nodes">
+            <circle cx="175" cy="302" r="3.5"/>
+            <circle cx="127" cy="481" r="3.5"/>
+            <circle cx="336" cy="527" r="3.5"/>
+            <circle cx="395" cy="608" r="3.5"/>
+            <circle cx="1078" cy="94" r="3.5"/>
+            <circle cx="1165" cy="565" r="3.5"/>
+            <circle cx="930" cy="664" r="2.5"/>
+          </g>
+          <g className="plus">
+            <path d="M1308 282V294M1302 288H1314"/>
+            <path d="M46 455V467M40 461H52"/>
+          </g>
+          <g className="bars">
+            <use href="#bars-stage" x="18" y="154"/>
+            <use href="#bars-stage" x="1290" y="154"/>
+            <use href="#bars-stage" x="10" y="559"/>
+            <use href="#bars-stage" x="1150" y="676"/>
+            <polygon points="1252,208 1268,196 1272,208"/>
           </g>
         </svg>
 
-        {/* Logotipo no Canto Superior Esquerdo */}
-        <div className="hero-top-bar">
-          <a className="brand-badge" href="#inicio" aria-label="DevWCastle — início">
-            <span className="castle-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2 22h20V10l-3-3v3h-2V7l-3-3-3 3v3H9V7L6 10v3H4V7L1 10v12zm4-10h2v10H6V12zm5-3h2v13h-2V9zm5 3h2v10h-2V12z" />
-              </svg>
-              <i>&lt;/&gt;</i>
-            </span>
-            <span className="logo-hero">
-              <i className="destaque">DEVW</i>Castle
-            </span>
+        <span className="hero__dots hero__dots--left" aria-hidden="true"></span>
+        <span className="hero__dots hero__dots--right" aria-hidden="true"></span>
+
+        {/* Header com a Logo DWC centralizada acima */}
+        <header className="site-header">
+          <span className="site-header__spacer"></span>
+          <a className="site-header__logo" href="#inicio" aria-label="DWC — início">
+            <img src={logo} alt="Logo DWC" width="1254" height="1254" />
           </a>
-        </div>
+        </header>
 
-        {/* 5. Headline (texto real em SVG com filtros) */}
-        <h1 className="headline">
-          <svg viewBox="0 0 1400 400" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="warm" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#fbf8ef" />
-                <stop offset="1" stopColor="#d9d4c6" />
-              </linearGradient>
-              <filter id="grunge-white" x="-5%" y="-10%" width="110%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="4" seed="3" result="n" />
-                <feColorMatrix in="n" type="matrix" values="0 0 0 0 .55  0 0 0 0 .56  0 0 0 0 .52  0 0 0 1.6 -.35" result="smudge" />
-                <feComposite in="smudge" in2="SourceAlpha" operator="in" result="s" />
-                <feMerge>
-                  <feMergeNode in="SourceGraphic" />
-                  <feMergeNode in="s" />
-                </feMerge>
-              </filter>
-              <filter id="brush" x="-8%" y="-20%" width="116%" height="140%">
-                <feTurbulence type="fractalNoise" baseFrequency=".008 .09" numOctaves="3" seed="8" result="streak" />
-                <feDisplacementMap in="SourceGraphic" in2="streak" scale="9" xChannelSelector="R" yChannelSelector="G" result="rough" />
-                <feTurbulence type="fractalNoise" baseFrequency=".02 .5" numOctaves="2" seed="2" result="fine" />
-                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 2.0" result="holes" />
-                <feComposite in="rough" in2="holes" operator="in" result="eroded" />
-                <feGaussianBlur in="eroded" stdDeviation="7" result="glow" />
-                <feMerge>
-                  <feMergeNode in="glow" />
-                  <feMergeNode in="glow" />
-                  <feMergeNode in="eroded" />
-                </feMerge>
-              </filter>
-            </defs>
-            <text className="hl-1" x="172" y="147" textLength="1000" lengthAdjust="spacingAndGlyphs" filter="url(#grunge-white)">
-              DO CÓDIGO AO
-            </text>
-            <g transform="translate(62 340) skewX(-14)">
-              <text className="hl-2" x="0" y="0" textLength="1230" lengthAdjust="spacingAndGlyphs" filter="url(#brush)">
-                IMPACTO REAL
-              </text>
-            </g>
-          </svg>
-        </h1>
-   
+        {/* Menu interativo */}
+       
 
-        {/* 6. Pessoa (Apenas da metade para cima visível) */}
-        {/* <img 
-          className="layer layer--person" 
-          src={pessoaImg} 
-          alt="Retrato de DevWCastle, desenvolvedor de software, de jaqueta marrom e óculos" 
-          width="1086" 
-          height="1439" 
-        /> */}
+        <p className="hero__tagline" aria-hidden="true">
+          &lt; DEVELOP<br />/ BUILD<br />&gt; IMPACT
+          <span className="hero__tagline-dots"><i></i><i></i><i></i></span>
+        </p>
 
-        {/* 7. Fumaça frontal + iluminação (Vignette) */}
-
-          <p className="hero-description" aria-live="polite">
-            {/* <span className="hero-description-prefix">Especialista em &nbsp;</span> */}
-            <span className="hero-description-highlight">
-              {displayedText}
-              <span className="typing-cursor" aria-hidden="true" />
-            </span>
-          </p>
-
-        <img className="layer layer--smoke-front" src={smokeFront} alt="" aria-hidden="true" />
-        <div className="layer layer--vignette" aria-hidden="true" />
-
-        {/* Botões de Ação Centralizados na Parte Inferior */}
-        <div className="hero-footer-content">
-          <div className="actions">
-            <a className="btn-primary-glow" href="#projetos">
-              Ver Projetos <span aria-hidden="true">↓</span>
+        {/* Conteúdo Principal */}
+        <main className="hero__content" id="inicio">
+          <h1 className="hero__title">
+            <span className="hero__title-main">Do código ao</span>
+            <span className="hero__title-sub">Impacto real</span>
+          </h1>
+          <div className="hero__actions">
+            <a className="btn btn--primary" href="#projetos">
+              Ver Projetos
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5V13M3.5 8.5L8 13l4.5-4.5"/></svg>
             </a>
-            <a className="btn-secondary-outline" href="#contato">
-              Fale Comigo <span aria-hidden="true">↗</span>
+            <a className="btn btn--outline" href="#contato">
+              Fale Comigo
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12L12 4M5.5 4H12v6.5"/></svg>
             </a>
           </div>
-        </div>
+        </main>
 
+        <ul className="hero__stack" aria-label="Áreas de atuação">
+          <li>Full Stack</li>
+          <li>Cloud</li>
+          <li>DevOps</li>
+        </ul>
       </div>
-    </main>
+    </div>
   );
 }
