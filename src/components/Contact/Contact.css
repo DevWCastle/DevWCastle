@@ -1,7 +1,7 @@
 .contact {
   position: relative;
 
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--blue-line, #1456d6);
   border-radius: 28px;
   padding: clamp(28px, 4vw, 52px);
 
@@ -11,41 +11,42 @@
 
   background: linear-gradient(
     160deg,
-    rgba(19, 26, 21, 0.96),
-    rgba(11, 16, 13, 0.96)
+    rgba(3, 7, 18, 0.96),
+    rgba(2, 4, 10, 0.96)
   );
 
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
- 
-  
- 
-
   box-shadow:
-    0 0 0 0.5px rgba(204, 235, 121, 0.18),
-    0 20px 80px rgba(0, 0, 0, 0.38),
-    0 10px 32px rgba(169, 187, 118, 0.18);
+    0 0 0 0.5px rgba(0, 210, 255, 0.2),
+    0 20px 80px rgba(0, 0, 0, 0.5),
+    0 10px 32px rgba(0, 162, 255, 0.15);
 
   transition:
     box-shadow 0.35s ease,
     border-color 0.35s ease;
 }
-
+/* 
 .contact:hover {
-  border-color: var(--color-heading-highlight);
-}
-
+  border-color: var(--cy, #00f0ff);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 240, 255, 0.35),
+    0 20px 80px rgba(0, 0, 0, 0.6),
+    0 10px 32px rgba(0, 210, 255, 0.25);
+} */
 
 .contact h2 {
   margin-top: 6px;
-  font: 800 clamp(24px, 3vw, 36px) / 1.1 'Archivo';
+  font: 800 clamp(24px, 3vw, 36px) / 1.1 "Archivo Black", "Arial Black", Impact, sans-serif;
   letter-spacing: -0.02em;
+  color: var(--tx, #ffffff);
 }
 
 .contact p {
-  color: var(--mu);
+  color: var(--mu, #94a3b8);
   font-size: 15px;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
 }
 
 /* Lista de Canais de Contato */
@@ -56,26 +57,29 @@
 }
 
 .ch li {
-  border-top: 1px solid var(--ln);
+  border-top: 1px solid var(--blue-line, #1456d6);
   padding: 16px 0;
 }
 
 .ch a {
   text-decoration: none;
   font-weight: 700;
+  color: var(--tx, #ffffff);
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   transition: color 0.2s ease;
 }
 
 .ch a:hover {
-  color: var(--lime);
+  color: var(--cy, #00f0ff);
 }
 
 .ch .off {
-  color: var(--mu);
+  color: var(--mu, #94a3b8);
   letter-spacing: 0.08em;
   font-size: 11px;
   display: block;
   margin-bottom: 4px;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
 }
 
 /* Formulário */
@@ -83,7 +87,6 @@ form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  
 }
 
 .f {
@@ -95,35 +98,38 @@ label {
   margin-bottom: 8px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--tx);
+  color: var(--tx, #ffffff);
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
 }
 
 input,
 textarea {
   width: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  color: var(--tx);
-  border: none;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--tx, #ffffff);
+  border: 1px solid rgba(20, 86, 214, 0.4);
   border-radius: 12px;
   padding: 14px 16px;
   font: inherit;
   font-size: 15px;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
 
   transition:
-    background-color 0.7s ease,
-    box-shadow 0.7s ease-in-out;
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease-in-out;
 }
 
 input:hover, textarea:hover {
-  border-color: rgba(204, 255, 0, 0.35);
-  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 240, 255, 0.4);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 input:focus, textarea:focus {
-  border-color: var(--lime);
-  background: rgba(0, 0, 0, 0.6);
+  border-color: var(--cy, #00f0ff);
+  background: rgba(0, 0, 0, 0.65);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(204, 255, 0, 0.18);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
 }
 
 textarea {
@@ -132,33 +138,35 @@ textarea {
 }
 
 .req {
-  color: var(--lime);
+  color: var(--cy, #00f0ff);
 }
 
-/* Botão do formulário no estilo .project-btn--primary */
+/* Botão do formulário no estilo alinhado ao design azul/ciano */
 .contact form button[type="submit"],
 .contact .pill {
   display: inline-block;
   width: 100%;
   padding: 13px 22px;
   border-radius: 99px;
-  border: 1.5px solid var(--lime);
-  background: var(--lime);
-  color: #0a0a0a;
+  border: 1.5px solid var(--cy, #00f0ff);
+  background: var(--cy, #00f0ff);
+  color: #030712;
   font-weight: 800;
   font-size: 15px;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: transform 0.2s, background 0.2s, border-color 0.2s;
-
+  transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
 }
 
 .contact form button[type="submit"]:hover,
 .contact .pill:hover {
-  background: #dcff4d;
-  border-color: #dcff4d;
+  background: #3ac8ff;
+  border-color: #3ac8ff;
   transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
 }
 
 /* Responsividade */
