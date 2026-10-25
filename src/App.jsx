@@ -20,8 +20,8 @@ export default function App() {
         <HeroStage/>
         <TechStrip />
         <Projects />
-        <TechStack />
-        <About />
+        <About />  
+         <TechStack />
         <Contact />
         <Footer />
     </>
