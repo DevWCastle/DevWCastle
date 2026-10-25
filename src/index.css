@@ -1,21 +1,33 @@
 :root {
-  /* Paleta Principal Refinada */
-  --bg: #0B100D;        /* Fundo principal (carvão escuro com nuances frias) */
-  --s1: #131A15;        /* Cards e superfícies primárias */
-  --s2: #1A231D;        /* Superfícies secundárias e estados de hover */
-  --ln: #303B2A;        /* Bordas, linhas de divisão e contornos */
-  --tx: #F0F0E9;        /* Texto principal (alto contraste e leitura suave) */
-  --mu: #A5ADA5;        /* Texto secundário (cinza-esverdeado) */
-  --lime: #C7F36B;      /* Verde de destaque sofisticado e elegante */
-  --lime-tx: #0B100D;   /* Texto sobre fundo de destaque */
-  --cy: #C7F36B;        /* Mantido por compatibilidade legada */
-  --hd: 68px;           /* Altura da Navbar */
-    --hero-bg: #030712;
+  /* Paleta Principal Refinada e Variáveis do Hero */
+  --bg: #030712;
+  --bg-glow: #021a46;
+  --s1: #060d1f;
+  --s2: #0b1531;
+  --ln: #1456d6;
+  --tx: #ffffff;
+  --mu: #94a3b8;
+  --blue: #1d4ba8;
+  --blue-soft: #3a78b6;
+  --blue-line: #1456d6;
+  --text: #ffffff;
+  --text-dim: #5d9bff;
+  --lime: #00d2ff;
+  --lime-tx: #030712;
+  --cy: #00f0ff;
+  --hd: 68px;
+
+  --hero-bg: #030712;
   --hero-accent-blue: #00d2ff;
   --hero-accent-cyan: #00f0ff;
   --hero-accent-electric: #0072ff;
   --hero-text-main: #ffffff;
   --hero-text-muted: #94a3b8;
+
+  --font-display: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --font-wide: "Michroma", "Eurostile", "Arial", sans-serif;
+  --font-body: "Exo 2", "Segoe UI", system-ui, sans-serif;
+  --gutter: clamp(1rem, 2.4vw, 2rem);
 
   color-scheme: dark;
   box-sizing: border-box;
@@ -36,7 +48,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--tx);
-  font: 400 17px/1.65 "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font: 400 17px/1.65 "Exo 2", "Segoe UI", system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -51,7 +63,7 @@ body::before {
   z-index: 60;
 }
 
-/* ===== FUNDO: Gradiente ambiental quase imperceptível ===== */
+/* ===== FUNDO: Gradiente ambiental azul e ciano tecnológico ===== */
 
 /* 1) Gradiente ambiental profundo hiper-suavizado */
 html::before {
@@ -61,12 +73,12 @@ html::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(50% 40% at 85% 10%, rgba(199, 243, 107, 0.01), transparent 75%),
-    radial-gradient(50% 40% at 10% 80%, rgba(48, 59, 42, 0.04), transparent 75%),
-    linear-gradient(180deg, var(--bg) 0%, #090E0B 50%, var(--bg) 100%);
+    radial-gradient(50% 40% at 85% 10%, rgba(0, 210, 255, 0.02), transparent 75%),
+    radial-gradient(50% 40% at 10% 80%, rgba(20, 86, 214, 0.05), transparent 75%),
+    linear-gradient(180deg, var(--bg) 0%, #02050e 50%, var(--bg) 100%);
 }
 
-/* 2) Luzes ambiente com opacidade quase zero */
+/* 2) Luzes ambiente com opacidade sutil em tons de azul/ciano */
 body::after {
   content: "";
   position: fixed;
@@ -75,8 +87,8 @@ body::after {
   pointer-events: none;
   opacity: 0.06;
   background:
-    radial-gradient(closest-side, rgba(199, 243, 107, 0.03), transparent) no-repeat,
-    radial-gradient(closest-side, rgba(48, 59, 42, 0.08), transparent) no-repeat;
+    radial-gradient(closest-side, rgba(0, 240, 255, 0.04), transparent) no-repeat,
+    radial-gradient(closest-side, rgba(0, 114, 255, 0.08), transparent) no-repeat;
   background-size: 420px 420px, 520px 520px;
   background-position: -120px 20%, calc(100% + 160px) 95%;
   animation: bg-drift 18s ease-in-out infinite alternate;
@@ -102,7 +114,7 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--lime);
+  outline: 2px solid var(--cy);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -127,7 +139,6 @@ img {
   margin: 0 auto;
   padding: 0 clamp(18px, 4vw, 40px);
   padding-bottom: 8rem;
-  
 }
 
 section {
@@ -135,7 +146,7 @@ section {
 }
 
 h2 {
-  font: 800 clamp(30px, 4.6vw, 54px)/1.02 "Sora";
+  font: 800 clamp(30px, 4.6vw, 54px)/1.02 "Archivo Black", "Arial Black", Impact, sans-serif;
   font-stretch: 105%;
   letter-spacing: -0.03em;
   margin: 10px 0 36px;
@@ -145,10 +156,11 @@ h2 {
 
 h2 em {
   font-style: normal;
-  background: var(--lime);
+  background: var(--cy);
   color: var(--lime-tx);
   padding: 0 8px;
-  border-radius: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
 }
 
 .kick {
