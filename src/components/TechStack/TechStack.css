@@ -24,8 +24,8 @@
 }
 
 .tech-description {
-  color: var(--mu, #A5ADA5);
-  font-family: "Inter", sans-serif;
+  color: var(--mu, #94a3b8);
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.6;
 }
@@ -38,10 +38,10 @@
 }
 
 .filter-btn {
-  background: rgba(19, 26, 21, 0.7);
-  border: 1px solid var(--ln, #303B2A);
-  color: var(--mu, #A5ADA5);
-  font-family: "Inter", sans-serif;
+  background: rgba(3, 7, 18, 0.7);
+  border: 1px solid var(--blue-line, #1456d6);
+  color: var(--mu, #94a3b8);
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
   padding: 8px 16px;
@@ -51,31 +51,31 @@
 }
 
 .filter-btn:hover {
-  border-color: var(--color-secondary, #A9BB76);
-  color: var(--tx, #F0F0E9);
+  border-color: var(--cy, #00f0ff);
+  color: var(--tx, #ffffff);
 }
 
 .filter-btn.active {
-  background: var(--color-secondary, #A9BB76);
-  color: var(--color-background, #0B100D);
-  border-color: var(--color-secondary, #A9BB76);
+  background: var(--cy, #00f0ff);
+  color: #030712;
+  border-color: var(--cy, #00f0ff);
   font-weight: 600;
-  box-shadow: 0 0 15px rgba(169, 187, 118, 0.25);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
 }
 
 /* Card de Detalhes da Tecnologia */
 .tech-detail-card {
-  background: rgba(19, 26, 21, 0.85);
-  border: 1px solid var(--ln, #303B2A);
+  background: rgba(3, 7, 18, 0.85);
+  border: 1px solid var(--blue-line, #1456d6);
   border-radius: 18px;
   padding: 20px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transition: border-color 0.25s ease;
 }
 
 .tech-detail-card:hover {
-  border-color: rgba(169, 187, 118, 0.4);
+  border-color: rgba(0, 240, 255, 0.5);
 }
 
 .detail-header {
@@ -91,43 +91,43 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: #0B100D;
-  border: 1px solid rgba(169, 187, 118, 0.3);
+  background: #030712;
+  border: 1px solid rgba(0, 240, 255, 0.3);
   border-radius: 10px;
-  color: var(--color-secondary, #A9BB76);
+  color: var(--cy, #00f0ff);
   font-size: 20px;
 }
 
 .detail-header h4 {
-  font-family: "Sora", sans-serif;
+  font-family: "Archivo Black", "Arial Black", Impact, sans-serif;
   font-size: 16px;
   font-weight: 700;
-  color: var(--tx, #F0F0E9);
+  color: var(--tx, #ffffff);
   margin: 0 0 4px;
 }
 
 .detail-category {
-  font-family: "Inter", sans-serif;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   font-size: 12px;
-  color: var(--mu, #A5ADA5);
+  color: var(--mu, #94a3b8);
 }
 
 .detail-category strong {
-  color: var(--color-secondary, #A9BB76);
+  color: var(--cy, #00f0ff);
 }
 
 .detail-desc {
-  font-family: "Inter", sans-serif;
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   font-size: 13.5px;
   line-height: 1.5;
-  color: var(--mu, #A5ADA5);
+  color: var(--mu, #94a3b8);
   margin: 0;
 }
 
 /* Coluna Direita: Nuvem Orgânica de Ícones */
 .tech-cloud-wrapper {
-  background: rgba(19, 26, 21, 0.6);
-  border: 1px solid var(--ln, #303B2A);
+  background: rgba(3, 7, 18, 0.6);
+  border: 1px solid var(--blue-line, #1456d6);
   border-radius: 24px;
   padding: 28px;
   backdrop-filter: blur(10px);
@@ -151,13 +151,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #0B100D;
-  border: 1px solid var(--ln, #303B2A);
+  background: #030712;
+  border: 1px solid var(--blue-line, #1456d6);
   padding: 10px 16px;
   border-radius: 14px;
   cursor: pointer;
-  color: var(--tx, #F0F0E9);
-  font-family: "Inter", sans-serif;
+  color: var(--tx, #ffffff);
+  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
@@ -166,21 +166,21 @@
 
 .tech-cloud-item:hover {
   transform: translateY(-3px);
-  border-color: rgba(169, 187, 118, 0.6);
-  background: rgba(19, 26, 21, 0.9);
+  border-color: rgba(0, 240, 255, 0.7);
+  background: rgba(3, 7, 18, 0.9);
 }
 
 .tech-cloud-item.selected {
-  border-color: var(--color-secondary, #A9BB76);
-  background: rgba(169, 187, 118, 0.1);
-  box-shadow: 0 0 15px rgba(169, 187, 118, 0.2);
+  border-color: var(--cy, #00f0ff);
+  background: rgba(0, 240, 255, 0.12);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
 }
 
 .cloud-icon {
   display: inline-flex;
   align-items: center;
   font-size: 18px;
-  color: var(--color-secondary, #A9BB76);
+  color: var(--cy, #00f0ff);
 }
 
 .cloud-label {
