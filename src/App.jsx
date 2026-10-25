@@ -7,6 +7,7 @@ import TechStack from './components/TechStack/TechStack';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import { useScrollReveal } from './hooks/useScrollReveal';
+import HeroStage from './components/HeroStage/HeroStage';
 import './App.css'
 
 export default function App() {
@@ -15,7 +16,8 @@ export default function App() {
   return (
     <>
         <Navbar />
-        <Hero />
+        {/* <Hero /> */}
+        <HeroStage/>
         <TechStrip />
         <Projects />
         <TechStack />
