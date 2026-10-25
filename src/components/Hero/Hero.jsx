@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import profileImg from '../../assets/profile.jpg';
+import { SiReact, SiNodedotjs, SiRaspberrypi, SiDocker } from 'react-icons/si';
+import profileImg from '../../assets/profile.png';
 import './Hero.css';
 
 // Lista de frases dinâmicas configuráveis
 const TYPING_PHRASES = [
-  "desenvolver aplicações e APIs robustas",
-  "integrar sistemas, serviços e dados",
-  "conectar software ao mundo físico",
-  "automatizar processos e operações",
-  "construir soluções Full Stack"
+  "Desenvolver aplicações e APIs robustas",
+  "Integrar sistemas, serviços e dados",
+  "Conectar software ao mundo físico",
+  "Automatizar processos e operações",
+  "Construir soluções Full Stack"
 ];
 
 // Configurações de velocidade (ms)
@@ -91,23 +92,27 @@ export default function Hero() {
             </span>
           </p>
 
-          {/* Badges da Stack Tecnológica */}
-          <div className="stack-badges">
+          {/* Badges da Stack Tecnológica com Ícones Consistentes */}
+          <div className="stack-badges" aria-label="Tecnologias principais">
             <span className="badge-item">
-              <i className="icon-react">⚛</i> [React]
+              <i><SiReact /></i>
+              <span className="badge-text">React</span>
             </span>
             <span className="badge-item">
-              <i className="icon-node">JS</i> [Node.js]
+              <i><SiNodedotjs /></i>
+              <span className="badge-text">Node.js</span>
             </span>
             <span className="badge-item">
-              <i className="icon-chip">🎛</i> [Hardware Circuits]
+              <i><SiRaspberrypi /></i>
+              <span className="badge-text">IoT &amp; CLP</span>
             </span>
             <span className="badge-item">
-              <i className="icon-cloud">☁</i> [Cloud Data]
+              <i><SiDocker /></i>
+              <span className="badge-text">Docker &amp; SQL</span>
             </span>
           </div>
 
-          {/* Botoes de Ação (CTA) */}
+          {/* Botões de Ação (CTA) */}
           <div className="cta-group">
             <a className="btn-primary-glow" href="#projetos">
               Ver Projetos ↓
@@ -120,16 +125,18 @@ export default function Hero() {
 
         {/* Lado Direito: Foto e Cards Decorativos */}
         <div className="hero-media">
-          {/* Card decorativo superior (JSON) */}
+          {/* Card decorativo superior (Telemetria / TypeScript & CLP) */}
           <div className="code-card code-card-top" aria-hidden="true">
+            <div className="code-card-header">
+              <span className="code-card-dot" />
+              <span className="code-card-title">telemetry.service.ts</span>
+            </div>
             <pre>
               <code>
-{`{
-  "name": "json",
-  "projet": "des",
-  "done": "tine",
-  "color": "t."
-}`}
+                <span className="code-keyword">async</span> <span className="code-func">syncClp</span>() &#123;{'\n'}
+                {'  '}<span className="code-keyword">const</span> data = <span className="code-keyword">await</span> modbus.<span className="code-func">read</span>();{'\n'}
+                {'  '}<span className="code-keyword">return</span> &#123; status: <span className="code-string">"ONLINE"</span>, data &#125;;{'\n'}
+                &#125;
               </code>
             </pre>
           </div>
@@ -144,16 +151,18 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Card decorativo inferior (Python/Code) */}
+          {/* Card decorativo inferior (Python / Bridge Industrial) */}
           <div className="code-card code-card-bottom" aria-hidden="true">
+            <div className="code-card-header">
+              <span className="code-card-dot" />
+              <span className="code-card-title">clp_bridge.py</span>
+            </div>
             <pre>
               <code>
-{`# forsteine R
-python = 0
-def __comigo__(
-  "stat": "HellaWeRous"
-  return 1
-)`}
+                <span className="code-keyword">import</span> snap7{'\n'}
+                plc = snap7.client.<span className="code-func">Client</span>(){'\n'}
+                plc.<span className="code-func">connect</span>(<span className="code-string">"192.168.0.10"</span>, 0, 1){'\n'}
+                state = plc.<span className="code-func">db_read</span>(1, 0, 16)
               </code>
             </pre>
           </div>
