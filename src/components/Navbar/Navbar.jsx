@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
+import logo from '../../assets/dwc-logo.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,8 +72,8 @@ export default function Navbar() {
       inert={!isInteractive ? '' : undefined}
     >
       <div className="bar">
-        <a className="logo" href="#inicio" aria-label="WCastle Dev — início">
-          <i className="destaque">DEVW</i>CASTLE
+         <a className="logo" href="#inicio" aria-label="DWC — início">
+            <img src={logo} alt="Logo DWC" width="1254" height="1254" />
         </a>
         <nav className="links" aria-label="Principal">
           <a href="#projetos">Projetos</a>
