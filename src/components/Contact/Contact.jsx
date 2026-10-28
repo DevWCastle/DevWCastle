@@ -1,44 +1,85 @@
+import { useState } from 'react';
 import './Contact.css';
 
 export default function Contact() {
+  const [buttonText, setButtonText] = useState('Enviar mensagem');
+  const [isSent, setIsSent] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setButtonText('Mensagem enviada');
+    setIsSent(true);
   };
 
   return (
-    <section className="wrap" id="contato" style={{ paddingBottom: 'clamp(60px,10vh,100px)' }}>
-      <div className="contact rv">
-        <div>
-          <p className="mono kick">Contato</p>
-          <h2>Vamos <em>conversar?</em></h2>
-          <p style={{ color: 'var(--mu)' }}>Estou disponível para novas oportunidades de trabalho, projetos freelance ou parcerias na área de tecnologia.</p>
+    <section className="ct" id="contato">
+      <div className="w">
+        {/* Coluna Esquerda: Informações de Contato */}
+        <div className="ct__info">
+          <div className="lbl">CONTATO</div>
+          <h2>
+            Vamos <br />
+            <em>conversar?</em>
+          </h2>
+          <p className="sub">
+            Disponível para oportunidades de trabalho, projetos freelance ou parcerias na área de tecnologia.
+          </p>
+          
+          <div className="lk">
+            <a href="mailto:pedrocastelobrancodosantos@gmail.com" className="lk-item">
+              <span className="lk-badge">@</span>
+              <div className="lk-text">
+                <span className="lk-label">E-mail</span>
+                <span className="lk-value">contato@devwcastle.com</span>
+              </div>
+              <span className="lk-arrow">↗</span>
+            </a>
 
-          <ul className="ch">
-            <li>
-              <span className="mono off" style={{ display: 'block', fontSize: '11px' }}>E-MAIL</span>
-              <a href="mailto:contato@devwcastle.com">contato@devwcastle.com</a>
-            </li>
-            <li>
-              <span className="mono off" style={{ display: 'block', fontSize: '11px' }}>GITHUB</span>
-              <a href="https://github.com/DevWCastle" target="_blank" rel="noopener noreferrer">github.com/DevWCastle</a>
-            </li>
-          </ul>
+            <a href="https://github.com/DevWCastle" target="_blank" rel="noopener noreferrer" className="lk-item">
+              <span className="lk-badge">GH</span>
+              <div className="lk-text">
+                <span className="lk-label">GitHub</span>
+                <span className="lk-value">github.com/DevWCastle</span>
+              </div>
+              <span className="lk-arrow">↗</span>
+            </a>
+
+            <a href="#" target="_blank" rel="noopener noreferrer" className="lk-item">
+              <span className="lk-badge">IN</span>
+              <div className="lk-text">
+                <span className="lk-label">LinkedIn</span>
+                <span className="lk-value">Conecte-se comigo</span>
+              </div>
+              <span className="lk-arrow">↗</span>
+            </a>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="f">
-            <label htmlFor="nm">Nome <span className="req">*</span></label>
-            <input type="text" id="nm" name="name" required placeholder="Seu nome" />
+        {/* Coluna Direita: Formulário Escuro Profissional */}
+        <form className={`ct-form ${isSent ? 'sent' : ''}`} onSubmit={handleSubmit}>
+          <div className="form-header">
+            <h3>Envie uma mensagem</h3>
+            <p>Preencha os campos abaixo para iniciar uma conversa.</p>
           </div>
-          <div className="f">
-            <label htmlFor="em">E-mail <span className="req">*</span></label>
-            <input type="email" id="em" name="email" required placeholder="seu@email.com" />
-          </div>
-          <div className="f">
-            <label htmlFor="msg">Mensagem <span className="req">*</span></label>
-            <textarea id="msg" name="message" required placeholder="Escreva sua mensagem..."></textarea>
-          </div>
-          <button type="submit" className="pill" style={{ width: '100%' }}>Enviar mensagem ↗</button>
+
+          <label>
+            Nome
+            <input required placeholder="Seu nome completo" />
+          </label>
+
+          <label>
+            E-mail
+            <input type="email" required placeholder="voce@email.com" />
+          </label>
+
+          <label>
+            Mensagem
+            <textarea required placeholder="Escreva sua mensagem detalhada..."></textarea>
+          </label>
+
+          <button className="btn-grad p form-btn" type="submit" disabled={isSent}>
+            {buttonText} {!isSent && <span>↗</span>}
+          </button>
         </form>
       </div>
     </section>
