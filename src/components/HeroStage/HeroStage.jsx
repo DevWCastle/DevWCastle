@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './HeroStage.css';
 import logo from '../../assets/dwc-logo.png'; // Ajuste o caminho conforme a estrutura do seu projeto
+import TypingImpact from '../TypingImpact/TypingImpact';
 
 export default function HeroStage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,10 +55,10 @@ export default function HeroStage() {
             <circle cx="1165" cy="565" r="3.5"/>
             <circle cx="930" cy="664" r="2.5"/>
           </g>
-          <g className="plus">
+          {/* <g className="plus">
             <path d="M1308 282V294M1302 288H1314"/>
             <path d="M46 455V467M40 461H52"/>
-          </g>
+          </g> */}
           <g className="bars">
             <use href="#bars-stage" x="18" y="154"/>
             <use href="#bars-stage" x="1290" y="154"/>
@@ -81,16 +82,16 @@ export default function HeroStage() {
         {/* Menu interativo */}
        
 
-        <p className="hero__tagline" aria-hidden="true">
+        {/* <p className="hero__tagline" aria-hidden="true">
           &lt; DEVELOP<br />/ BUILD<br />&gt; IMPACT
           <span className="hero__tagline-dots"><i></i><i></i><i></i></span>
-        </p>
+        </p> */}
 
         {/* Conteúdo Principal */}
         <main className="hero__content" >
           <h1 className="hero__title">
             <span className="hero__title-main">Do código ao</span>
-            <span className="hero__title-sub">Impacto real</span>
+            <span className="hero__title-sub"><TypingImpact/></span>
           </h1>
           <div className="hero__actions">
             <a className="btn btn--primary" href="#projetos">
@@ -104,11 +105,11 @@ export default function HeroStage() {
           </div>
         </main>
 
-        <ul className="hero__stack" aria-label="Áreas de atuação">
+        {/* <ul className="hero__stack" aria-label="Áreas de atuação">
           <li>Full Stack</li>
           <li>Cloud</li>
           <li>DevOps</li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

@@ -150,7 +150,7 @@
 
 .hero-stage-container .hero__title-main {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 7.4vw, 7rem);
+  font-size: clamp(1rem, 7.4vw, 7rem);
   line-height: 1; text-transform: uppercase; letter-spacing: .01em;
   color: transparent;
   background:
@@ -188,22 +188,78 @@
   justify-content: center; 
   gap: clamp(.8rem, 2.4vw, 2rem); 
   animation: heroRise .9s .3s cubic-bezier(.2, .7, .2, 1) both; 
+}.hero-stage-container .btn {
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: .6rem;
+  min-width: 11.5rem; 
+  min-height: 3.1rem; 
+  padding: 0 1.6rem;
+  font: 500 .95rem/1 var(--font-body); 
+  color: var(--text); 
+  text-decoration: none;
+  border: 1.5px solid var(--blue); 
+  border-radius: 999px;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
-.hero-stage-container .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
-  min-width: 11.5rem; min-height: 3.1rem; padding: 0 1.6rem;
-  font: 500 .95rem/1 var(--font-body); color: var(--text); text-decoration: none;
-  border: 1.5px solid var(--blue); border-radius: 999px;
-  transition: transform .2s, box-shadow .2s, background .2s;
+.hero-stage-container .btn svg { 
+  width: .95rem; 
+  fill: none; 
+  stroke: currentColor; 
+  stroke-width: 1.6; 
+  stroke-linecap: round; 
+  stroke-linejoin: round; 
 }
-.hero-stage-container .btn svg { width: .95rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.hero-stage-container .btn--primary { background: rgba(60, 140, 255, .9); color: #dbe8ff; box-shadow: 0 0 14px rgba(31, 107, 255, .25); }
-.hero-stage-container .btn--outline { background: rgba(0, 8, 24, .55); color: #dbe8ff; box-shadow: 0 0 14px rgba(31, 107, 255, .25); }
-.hero-stage-container .btn:hover { transform: translateY(-2px); }
-.hero-stage-container .btn--primary:hover { box-shadow: 0 0 36px rgba(60, 140, 255, .9), inset 0 1px 0 rgba(255, 255, 255, .3); }
-.hero-stage-container .btn--outline:hover { background: rgba(31, 107, 255, .18); box-shadow: 0 0 22px rgba(31, 107, 255, .5); }
 
+/* Botão Primário com Gradiente Isolado e Fluido */
+.hero-stage-container .btn--primary { 
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: #fff;
+  outline: none;
+  border: none;
+  z-index: 1;
+}
+
+/* Camada do Gradiente Animado */
+.hero-stage-container .btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1A2980 0%, #1ed2ff 50%, #1A2980 100%);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  transition: background-position 0.4s ease-in-out;
+  z-index: -1; /* Fica atrás do texto do botão */
+}
+
+.hero-stage-container .btn--outline { 
+  background: rgba(0, 8, 24, .55); 
+  color: #dbe8ff; 
+  box-shadow: 0 0 14px rgba(31, 107, 255, .25); 
+}
+
+.hero-stage-container .btn:hover { 
+  transform: translateY(-2px); 
+}
+
+/* Move o gradiente suavemente para a direita ao passar o mouse */
+.hero-stage-container .btn--primary:hover::before { 
+  background-position: 100% 50%;
+}
+
+.hero-stage-container .btn--primary:hover { 
+  color: #fff;
+  text-decoration: none; 
+}
+
+.hero-stage-container .btn--outline:hover { 
+  background: rgba(31, 107, 255, .18); 
+  box-shadow: 0 0 22px rgba(31, 107, 255, .5); 
+}
 /* ---------- Rótulos laterais ---------- */
 .hero-stage-container .hero__tagline {
   position: absolute; left: 2.2%; top: 38.5%; margin: 0;
@@ -296,7 +352,7 @@
 
 .hero-stage-container .hero__title-main {
   width: 100%;
-  font-size: clamp(2.5rem, 6.8vw, 7rem);
+  font-size: clamp(1rem, 6.8vw, 7rem);
   line-height: 1.05;
   letter-spacing: 0.015em;
   text-align: center;
@@ -306,7 +362,7 @@
   width: 100%;
   margin: 0;
   font-family: "Michroma", sans-serif;
-  font-size: clamp(7rem, 5.1vw, 5.5rem);
+  font-size: clamp(3rem, 5.1vw, 5rem);
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: 0.20em;
@@ -344,6 +400,10 @@
 
 /* Responsividade: mantém o subtítulo dentro da tela */
 @media (max-width: 900px) {
+  .hero-stage-container .hero {
+    justify-content: center;
+  }
+
   .hero-stage-container .hero__content {
     gap: 2rem;
     padding-inline: 1rem;
