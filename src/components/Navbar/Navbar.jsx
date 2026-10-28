@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/dwc-logo.png'
+import logo from '../../assets/dwc-logo-mobile.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,42 +10,32 @@ export default function Navbar() {
   useEffect(() => {
     let animationFrameId = null;
 
-    // A revelação iniciará nos últimos 20% de saída do Hero (80% a 100%)
-    const START_THRESHOLD = 0.8;
-    const END_THRESHOLD = 1.0;
-
     const handleScroll = () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
 
       animationFrameId = requestAnimationFrame(() => {
-        const heroElement = document.getElementById('inicio');
-
-        if (!heroElement) {
-          document.documentElement.style.setProperty('--scroll-progress', '1');
-          setIsScrolled(true);
-          setIsInteractive(true);
-          return;
-        }
-
-        const heroHeight = heroElement.offsetHeight;
         const currentScroll = window.scrollY;
+        
+        // Define o ponto de gatilho em 60vh (60% da altura da tela)
+        const triggerPoint = window.innerHeight * 0.6;
+        // Distância em pixels para completar o efeito de fade-in suave
+        const fadeLength = 150; 
 
-        // Progresso bruto do scroll ao longo da Hero (0 a 1)
-        const rawProgress = Math.min(Math.max(currentScroll / heroHeight, 0), 1);
-
-        // Mapeamento concentrado na faixa final (0.80 -> 0 | 1.00 -> 1)
         let mappedProgress = 0;
-        if (rawProgress > START_THRESHOLD) {
-          mappedProgress = (rawProgress - START_THRESHOLD) / (END_THRESHOLD - START_THRESHOLD);
+
+        if (currentScroll >= triggerPoint) {
+          mappedProgress = (currentScroll - triggerPoint) / fadeLength;
           mappedProgress = Math.min(Math.max(mappedProgress, 0), 1);
+        } else {
+          mappedProgress = 0;
         }
 
-        // Define a variável CSS que controla a animação rápida
+        // Define a variável CSS que controla a animação
         document.documentElement.style.setProperty('--scroll-progress', mappedProgress.toFixed(3));
 
-        // Define se está interativo (começou a revelar) e se concluiu a Hero
+        // Define se está interativo e se concluiu a transição
         setIsInteractive(mappedProgress > 0);
         setIsScrolled(mappedProgress >= 1);
       });
@@ -78,7 +68,7 @@ export default function Navbar() {
         <nav className="links" aria-label="Principal">
           <a href="#projetos">Projetos</a>
           <a href="#sobre">Sobre</a>
-          <a href="#tecnologias">Stack</a>
+          <a href="#stack">Stack</a>
           <a href="#contato">Contato</a>
         </nav>
         <a className="pill nav-pill" href="#contato">Contato ↗</a>

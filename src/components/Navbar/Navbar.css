@@ -1,80 +1,102 @@
 /* =========================================
-   NAVBAR — DEVWCASTLE (Fast Final-Hero Scroll)
+   NAVBAR — DEVWCASTLE (Capsule Reference Redesign)
    ========================================= */
 
 .nav {
   position: fixed;
-  top: env(safe-area-inset-top, 0px);
-  left: 0;
-  right: 0;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 50;
 
-  /* Revelação de fundo e divisória vinculados ao progresso concentrado */
+  width: min(1080px, calc(100% - 32px));
+  border-radius: 999px;
+
+  /* Revelação de fundo, borda e efeito translúcido em cápsula */
   background: rgba(
-    3, 
-    7, 
+    11, 
     18, 
-    calc(0.9 * var(--scroll-progress, 0))
+    38, 
+    calc(0.85 * var(--scroll-progress, 0))
   );
 
   -webkit-backdrop-filter: blur(calc(14px * var(--scroll-progress, 0))) saturate(130%);
   backdrop-filter: blur(calc(14px * var(--scroll-progress, 0))) saturate(130%);
 
-  border-bottom: 1px solid rgba(
-    20, 
-    86, 
-    214, 
-    var(--scroll-progress, 0)
+  border: 1px solid rgba(
+    142, 
+    197, 
+    255, 
+    calc(0.2 * var(--scroll-progress, 0))
   );
 
-  will-change: background-color, border-color, backdrop-filter, opacity, visibility;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+  will-change: background-color, border-color, backdrop-filter, opacity, visibility, transform;
   transition: background-color 0.1s linear, border-color 0.1s linear, visibility 0.1s linear;
 }
 
-/* Estado de Ocultação Absoluta (Antes dos 80% do Hero) */
+/* Estado de Ocultação Absoluta (Antes dos 90% do Hero) */
 .nav.is-hidden {
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
 }
 
-/* Estado Final Estável (Hero 100% ultrapassada) */
+/* Estado Final Estável (Hero ultrapassada) */
 .nav.is-scrolled {
   visibility: visible;
   pointer-events: auto;
   opacity: 1;
-  background: rgba(3, 7, 18, 0.92);
+  transform: translateX(-50%);
+  background: rgba(11, 18, 38, 0.88);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
   backdrop-filter: blur(14px) saturate(130%);
-  border-bottom-color: var(--blue-line, #1456d6);
+  border-color: rgba(142, 197, 255, 0.25);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(30, 107, 255, 0.15);
 }
 
 /* Container da Navbar */
 .bar {
-  height: var(--hd, 68px);
+  height: 60px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 24px;
 
-  max-width: 1520px;
-  margin: 0 auto;
-  padding: 0 clamp(18px, 4vw, 40px);
+  padding: 0 18px 0 22px;
 }
 
-/* Logo - Revelação progressiva rápida com o conjunto */
-.logo img {
-  width: 100%; 
-  height: var(--hd, 68px);
-  object-fit: contain;
-
+/* Logo - Destacada com leve ganho de escala e contraste */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   opacity: var(--scroll-progress, 0);
-  transform: translateY(calc(-6px * (1 - var(--scroll-progress, 0))));
-
+  transform: translateY(calc(-4px * (1 - var(--scroll-progress, 0))));
   will-change: opacity, transform;
   transition: opacity 0.08s linear, transform 0.08s linear;
-  filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.4));
+}
+
+.logo img {
+  /* width: 100px;
+  height: 100px; */
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(30, 107, 255, 0.6));
+  transition: transform 0.2s ease, filter 0.2s ease;
+  display: block;
+  width: 125px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 5px rgb(0 110 255 / 18%));
+}
+
+.logo:hover img {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 12px rgba(30, 107, 255, 0.8));
 }
 
 .logo .destaque {
@@ -87,18 +109,14 @@
   font-weight: inherit;
 }
 
-.logo:hover {
-  opacity: 0.88;
-}
-
-/* Links desktop - Revelação concentrada e veloz */
+/* Links desktop - Espaçamento equilibrado e tipografia limpa */
 .links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 28px;
 
   opacity: var(--scroll-progress, 0);
-  transform: translateY(calc(-8px * (1 - var(--scroll-progress, 0))));
+  transform: translateY(calc(-6px * (1 - var(--scroll-progress, 0))));
 
   will-change: opacity, transform;
   transition: opacity 0.08s linear, transform 0.08s linear;
@@ -110,59 +128,51 @@
   display: inline-flex;
   align-items: center;
 
-  padding: 10px 0;
+  padding: 6px 0;
   margin: 0;
 
-  color: var(--mu, #94a3b8);
+  color: #c4d0ea;
   text-decoration: none;
-  text-transform: uppercase;
 
   font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.015em;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 
-  border-bottom: 2px solid transparent;
-
-  transition:
-    color 0.22s ease,
-    border-color 0.22s ease;
+  transition: color 0.2s ease;
 }
 
 .links a:hover,
 .links a.on {
-  color: var(--tx, #ffffff);
+  color: #ffffff;
 }
 
-.links a.on {
-  border-bottom-color: var(--cy, #00f0ff);
-}
-
-.links a:not(.on)::after {
+.links a::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -2px;
+  bottom: 0;
 
   height: 2px;
 
-  background: var(--cy, #00f0ff);
+  background: var(--blue, #1E6BFF);
 
   transform: scaleX(0);
   transform-origin: left;
 
-  transition: transform 0.22s ease;
+  transition: transform 0.2s ease;
 }
 
-.links a:not(.on):hover::after {
+.links a:hover::after,
+.links a.on::after {
   transform: scaleX(1);
 }
 
-/* Botão de contato da Navbar */
+/* Botão de contato da Navbar (Pill azul vibrante) */
 .nav-pill {
   opacity: var(--scroll-progress, 0);
-  transform: translateY(calc(-8px * (1 - var(--scroll-progress, 0))));
+  transform: translateY(calc(-6px * (1 - var(--scroll-progress, 0))));
 
   will-change: opacity, transform;
   transition: opacity 0.08s linear, transform 0.08s linear;
@@ -174,36 +184,35 @@
   justify-content: center;
   gap: 8px;
 
-  padding: 11px 22px;
+  padding: 9px 20px;
   border-radius: 99px;
-  border: 1px solid transparent;
+  border: 1px solid var(--blue, #1E6BFF);
 
-  background: var(--cy, #00f0ff);
-  color: #030712;
+  background: var(--blue, #1E6BFF);
+  color: #ffffff;
 
   font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13.5px;
+  font-weight: 600;
   line-height: 1.2;
 
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
 
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(30, 107, 255, 0.35);
 
   transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    filter 0.22s ease,
-    background-color 0.22s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .pill:hover {
   filter: brightness(1.1);
   transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
-  background: #3ac8ff;
+  box-shadow: 0 6px 20px rgba(30, 107, 255, 0.5);
 }
 
 /* Botão burger e menu mobile */
@@ -212,24 +221,20 @@
   align-items: center;
   justify-content: center;
 
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   padding: 0;
 
-  border: 1px solid var(--blue-line, #1456d6);
+  border: 1px solid rgba(142, 197, 255, 0.3);
+  background: rgba(11, 18, 38, 0.8);
+  color: #ffffff;
 
-  background: rgba(3, 7, 18, 0.8);
-  color: var(--tx, #ffffff);
-
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 
   opacity: var(--scroll-progress, 0);
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    opacity 0.08s linear;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .menu {
@@ -238,6 +243,11 @@
 
 /* Responsive & Accessibility overrides */
 @media (max-width: 900px) {
+  .nav {
+    width: calc(100% - 24px);
+    border-radius: 20px;
+  }
+
   .links {
     display: none;
   }
@@ -254,55 +264,46 @@
     display: flex;
     flex-direction: column;
 
-    padding: 8px clamp(18px, 4vw, 40px) 20px;
-
-    background: rgba(3, 7, 18, 0.98);
-
-    border-top: 1px solid var(--blue-line, #1456d6);
+    padding: 12px 20px 20px;
+    background: rgba(11, 18, 38, 0.98);
+    border-top: 1px solid rgba(142, 197, 255, 0.2);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 
   .menu a {
     display: flex;
     align-items: center;
 
-    min-height: 48px;
-    padding: 14px 0;
+    min-height: 44px;
+    padding: 10px 0;
 
-    border-bottom: 1px solid rgba(20, 86, 214, 0.3);
+    border-bottom: 1px solid rgba(142, 197, 255, 0.1);
 
-    color: var(--mu, #94a3b8);
+    color: #c4d0ea;
     text-decoration: none;
 
     font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease;
+    transition: color 0.2s ease;
   }
 
   .menu a:hover,
   .menu a.on {
-    color: var(--tx, #ffffff);
-  }
-
-  .menu a.on {
-    border-bottom-color: var(--cy, #00f0ff);
+    color: #ffffff;
   }
 
   .menu a.pill {
     justify-content: center;
-    min-height: 44px;
-
-    margin-top: 16px;
-    padding: 12px 22px;
-
-    border: 0;
+    min-height: 42px;
+    margin-top: 14px;
+    padding: 10px 20px;
     border-radius: 99px;
-
-    color: #030712;
-    background: var(--cy, #00f0ff);
+    color: #ffffff;
+    background: var(--blue, #1E6BFF);
+    border: 1px solid var(--blue, #1E6BFF);
   }
 }
 
@@ -319,10 +320,11 @@
     visibility: visible !important;
     pointer-events: auto !important;
     opacity: 1 !important;
+    transform: translateX(-50%) !important;
   }
 
   .nav {
-    background: rgba(3, 7, 18, 0.92) !important;
-    border-bottom-color: var(--blue-line, #1456d6) !important;
+    background: rgba(11, 18, 38, 0.88) !important;
+    border-color: rgba(142, 197, 255, 0.25) !important;
   }
 }
