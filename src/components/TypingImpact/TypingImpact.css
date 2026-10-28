@@ -1,0 +1,63 @@
+.typing-wrapper {
+  display: inline-block;
+  position: relative;
+  transition: text-shadow 0.5s ease-in-out;
+    cursor: none;
+}
+
+/* Efeito de brilho neon quando a frase está completa */
+.typing-wrapper.glow-active {
+  text-shadow: 
+    0 0 10px #168aff67,
+    0 0 20px rgba(0, 210, 255, 0.7),
+    0 0 35px rgba(0, 114, 255, 0.5),
+    0 0 50px rgba(0, 114, 255, 0.3);
+}
+
+.typing-letter {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+
+}
+
+.typing-letter.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* .typing-cursor {
+  display: inline-block;
+  width: 5px;
+  height: 1em;
+  background: linear-gradient(
+    90deg,
+    #dceaff 0%,
+    #b9dcff 38%,
+    #55aaff 72%,
+    #168cff 100%
+  );
+  vertical-align: -0.15em;
+  margin-left: 4px;
+  box-shadow: 0 0 8px rgba(22, 140, 255, 0.4);
+  animation: cursorBlink 0.8s infinite steps(1);
+  transition: opacity 0.2s ease;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0; 
+  }
+} */
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor {
+    display: none;
+  }
+  .typing-wrapper.glow-active {
+    text-shadow: none;
+  }
+}
