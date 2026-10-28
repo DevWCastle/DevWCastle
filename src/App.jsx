@@ -19,9 +19,9 @@ export default function App() {
         {/* <Hero /> */}
         <HeroStage/>
         <TechStrip />
-        <Projects />
-        <About />  
-         <TechStack />
+        <Projects /> 
+        <About /> 
+        <TechStack /> 
         <Contact />
         <Footer />
     </>
