@@ -1,212 +1,109 @@
-/* =========================================
-   TECH STACK & INTERACTIVE CLOUD — DEVWCASTLE
-   ========================================= */
-
-.wrap {
-  max-width: 1520px;
-  margin: 0 auto;
-  padding: clamp(60px, 10vh, 100px) clamp(18px, 4vw, 40px);
+.dark {
+  background: var(--bg);
+  color: #fff;
+  border-radius: var(--r) var(--r) 0 0;
+  margin-top: -20px;
+  position: relative;
+  z-index: 3;
+  padding: 96px 0;
+  overflow: hidden;
 }
 
-.tech-container {
+.dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* background: radial-gradient(circle, rgba(142, 197, 255, .16) 1px, transparent 1.5px) 0 0/22px 22px;
+  -webkit-mask: radial-gradient(ellipse at 70% 0, #000, transparent 70%);
+  mask: radial-gradient(ellipse at 70% 0, #000, transparent 70%); */
+}
+
+.dark .w {
+  position: relative;
+}
+
+.dark h2 em {
+  color: var(--soft);
+}
+
+.dark .lbl {
+  color: var(--soft);
+}
+
+.dark .lbl::before,
+.dark .lbl::after {
+  background: var(--soft);
+}
+
+.cols {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: clamp(30px, 5vw, 60px);
-  margin-top: 40px;
-  align-items: flex-start;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 56px;
+  border: 1px solid rgba(30, 107, 255, .4);
+  position: relative;
 }
 
-/* Sidebar Esquerda */
-.tech-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.cols::before,
+.cols::after {
+  content: "◆";
+  position: absolute;
+  font-size: 10px;
+  color: var(--cyan);
+  line-height: 1;
 }
 
-.tech-description {
-  color: var(--mu, #94a3b8);
-  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.6;
+.cols::before {
+  top: -6px;
+  left: -5px;
 }
 
-/* Filtros por Categoria */
-.tech-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.cols::after {
+  bottom: -6px;
+  right: -5px;
 }
 
-.filter-btn {
-  background: rgba(3, 7, 18, 0.7);
-  border: 1px solid var(--blue-line, #1456d6);
-  color: var(--mu, #94a3b8);
-  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 99px;
-  cursor: pointer;
-  transition: all 0.22s ease;
+.cols div {
+  padding: 28px 22px;
+  border-right: 1px solid rgba(30, 107, 255, .3);
+  transition: .3s;
 }
 
-.filter-btn:hover {
-  border-color: var(--cy, #00f0ff);
-  color: var(--tx, #ffffff);
+.cols div:last-child {
+  border-right: 0;
 }
 
-.filter-btn.active {
-  background: var(--cy, #00f0ff);
-  color: #030712;
-  border-color: var(--cy, #00f0ff);
-  font-weight: 600;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+.cols div:hover {
+  background: rgba(30, 107, 255, .12);
 }
 
-/* Card de Detalhes da Tecnologia */
-.tech-detail-card {
-  background: rgba(3, 7, 18, 0.85);
-  border: 1px solid var(--blue-line, #1456d6);
-  border-radius: 18px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: border-color 0.25s ease;
+.cols h3 {
+  font: 500 13px Orbitron, sans-serif;
+  letter-spacing: .1em;
+  color: var(--soft);
+  margin-bottom: 18px;
 }
 
-.tech-detail-card:hover {
-  border-color: rgba(0, 240, 255, 0.5);
+.cols ul {
+  padding: 0;
 }
 
-.detail-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 12px;
+.cols li {
+  list-style: none;
+  padding: 99px 0; /* Note: Maintain original styling rules */
+  padding: 9px 0;
+  border-top: 1px solid rgba(142, 197, 255, .14);
+  color: #dbe5fb;
+  font-size: 15px;
 }
 
-.detail-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: #030712;
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  border-radius: 10px;
-  color: var(--cy, #00f0ff);
-  font-size: 20px;
-}
-
-.detail-header h4 {
-  font-family: "Archivo Black", "Arial Black", Impact, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--tx, #ffffff);
-  margin: 0 0 4px;
-}
-
-.detail-category {
-  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 12px;
-  color: var(--mu, #94a3b8);
-}
-
-.detail-category strong {
-  color: var(--cy, #00f0ff);
-}
-
-.detail-desc {
-  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--mu, #94a3b8);
-  margin: 0;
-}
-
-/* Coluna Direita: Nuvem Orgânica de Ícones */
-.tech-cloud-wrapper {
-  background: rgba(3, 7, 18, 0.6);
-  border: 1px solid var(--blue-line, #1456d6);
-  border-radius: 24px;
-  padding: 28px;
-  backdrop-filter: blur(10px);
-  min-height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tech-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* Item Individual da Nuvem */
-.tech-cloud-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #030712;
-  border: 1px solid var(--blue-line, #1456d6);
-  padding: 10px 16px;
-  border-radius: 14px;
-  cursor: pointer;
-  color: var(--tx, #ffffff);
-  font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  animation: fadeInCloud 0.3s ease-in-out;
-}
-
-.tech-cloud-item:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0, 240, 255, 0.7);
-  background: rgba(3, 7, 18, 0.9);
-}
-
-.tech-cloud-item.selected {
-  border-color: var(--cy, #00f0ff);
-  background: rgba(0, 240, 255, 0.12);
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
-}
-
-.cloud-icon {
-  display: inline-flex;
-  align-items: center;
-  font-size: 18px;
-  color: var(--cy, #00f0ff);
-}
-
-.cloud-label {
-  white-space: nowrap;
-}
-
-@keyframes fadeInCloud {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
+@media(max-width:900px) {
+  .dark {
+    padding: 72px 0;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  .cols {
+    grid-template-columns: 1fr 1fr;
   }
-}
-
-/* Responsividade */
-@media (max-width: 960px) {
-  .tech-container {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  
-  .tech-cloud-wrapper {
-    min-height: auto;
-    padding: 20px;
+  .cols div {
+    border-bottom: 1px solid rgba(30, 107, 255, .3);
   }
 }
