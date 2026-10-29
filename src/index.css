@@ -297,7 +297,7 @@ body {
 }
 
 .sheet.gray {
-  background: var(bg);
+  background: var(--bg);
 }
 
 .lbl {
