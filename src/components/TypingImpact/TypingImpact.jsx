@@ -49,7 +49,7 @@ export default function TypingImpact() {
           {char === ' ' ? '\u00A0' : char}
         </span>
       ))}
-      {/* <span className="typing-cursor" aria-hidden="true" /> */}
+      {/* <span className="typing-cursor" aria-hidden="true" />    */}
     </span>
   );
 }
