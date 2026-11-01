@@ -1,20 +1,27 @@
 import { useRef, useState } from 'react';
 import { projects } from '../../data/projects';
+import cbpatioHome from '../../assets/cbpatio-home.jpg';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import CarouselControls from '../CarouselControls/CarouselControls';
+import InlineShot from '../InlineShot/InlineShot';
+import { useScrollParallax } from '../../hooks/useScrollParallax';
 import './Projects.css';
 
 const visibleProjects = projects.filter((project) => !project.draft);
 const SWIPE_MIN = 48;
 
 /**
- * Carrossel largo: o projeto ativo ocupa a largura e o próximo aparece
- * na borda. Setas, bolinhas, arrastar (mouse ou toque) e teclado.
+ * Palco de projetos: faixas que se expandem (formato do "carousel 2"), com a
+ * mídia de cada projeto numa roda vertical em 3D (animação do "carousel 1").
+ * Setas, índice com títulos, arrastar (mouse ou toque) e teclado.
+ * A seção sobe por cima do hero fixo e a mídia tem parallax de rolagem.
  */
 export default function Projects() {
   const [current, setCurrent] = useState(0);
   const pointerStart = useRef(null);
+  const stageRef = useRef(null);
   const total = visibleProjects.length;
+  useScrollParallax(stageRef);
 
   const go = (index) => setCurrent((index + total) % total);
   const next = () => go(current + 1);
@@ -51,10 +58,10 @@ export default function Projects() {
   return (
     <section className="section section--paper projects" id="projetos" aria-labelledby="projetos-title">
       <div className="w projects__head">
-        <h2 className="section__title" id="projetos-title">
-          Projetos <em>selecionados</em>
+        <h2 className="section__title rv" id="projetos-title">
+         Projetos  <em>selecionados</em>   {/*<InlineShot src={cbpatioHome} position="30% 40%" /> */}
         </h2>
-        <p className="projects__intro">
+        <p className="projects__intro rv" style={{ '--d': '120ms' }}>
           Código aberto, arquitetura descrita e links para conferir cada decisão.
         </p>
         <CarouselControls
@@ -67,18 +74,20 @@ export default function Projects() {
         />
       </div>
 
-      <div
-        className="projects__viewport"
-        role="region"
-        aria-roledescription="carrossel"
-        aria-label="Projetos selecionados"
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-        onPointerCancel={() => { pointerStart.current = null; }}
-      >
-        <div className="projects__track" style={{ '--index': current }}>
+      <div className="w">
+        <div
+          ref={stageRef}
+          className="projects__stage rv"
+          style={{ '--n': total, '--d': '200ms' }}
+          role="region"
+          aria-roledescription="carrossel"
+          aria-label="Projetos selecionados"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={() => { pointerStart.current = null; }}
+        >
           {visibleProjects.map((project, index) => (
             <ProjectCard
               key={project.id}

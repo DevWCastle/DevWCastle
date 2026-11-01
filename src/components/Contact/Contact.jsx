@@ -79,16 +79,16 @@ export default function Contact() {
     <section className="section section--night contact" id="contato" aria-labelledby="contato-title">
       <div className="w contact__grid">
         <div className="contact__info">
-          <h2 className="section__title" id="contato-title">
+          <h2 className="section__title rv" id="contato-title">
             Vamos <em>conversar?</em>
           </h2>
-          <p className="contact__sub">
+          <p className="contact__sub rv" style={{ '--d': '100ms' }}>
             Disponível para oportunidades de trabalho, projetos freelance ou parcerias na área de tecnologia.
           </p>
 
           <ul className="contact__links">
-            {LINKS.map((link) => (
-              <li key={link.key}>
+            {LINKS.map((link, i) => (
+              <li key={link.key} className="rv" style={{ '--d': `${180 + i * 80}ms` }}>
                 <a
                   href={link.href}
                   {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
@@ -103,7 +103,7 @@ export default function Contact() {
           </ul>
         </div>
 
-        <form ref={formRef} className="contact__form" onSubmit={onSubmit} noValidate>
+        <form ref={formRef} className="contact__form rv" style={{ '--d': '200ms' }} onSubmit={onSubmit} noValidate>
           <div className={`field field--${fieldState('name')}`}>
             <label htmlFor="name">Nome</label>
             <div className="field__control">

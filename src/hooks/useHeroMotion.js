@@ -8,6 +8,7 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
  *  - --p: progresso de rolagem do hero (0 a 1)
  *  - .is-tracking: o cursor está sobre o hero
  *  - .is-offscreen: o hero saiu da tela (CSS pausa as animações)
+ *  - .is-covered: a seção de projetos já cobriu o hero fixo (canvases param)
  * Tudo é escrito em variáveis CSS dentro de um único requestAnimationFrame.
  * Com prefers-reduced-motion, nenhum listener é registrado.
  */
@@ -39,6 +40,8 @@ export function useHeroMotion(ref) {
     };
 
     const onScroll = () => {
+      // o hero é sticky: "coberto" quando a rolagem passou da altura dele
+      el.classList.toggle('is-covered', window.scrollY >= el.offsetHeight - 2);
       if (!visible) return;
       const progress = clamp(window.scrollY / el.offsetHeight, 0, 1);
       queue('--p', progress.toFixed(3));
@@ -64,6 +67,14 @@ export function useHeroMotion(ref) {
     });
     observer.observe(el);
 
+    // topo do sticky: negativo se o hero for mais alto que a janela
+    const updateStick = () => {
+      el.style.setProperty('--stick', `${Math.min(0, window.innerHeight - el.offsetHeight)}px`);
+    };
+    const resizeObserver = new ResizeObserver(updateStick);
+    resizeObserver.observe(el);
+    window.addEventListener('resize', updateStick, { passive: true });
+
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
@@ -74,11 +85,13 @@ export function useHeroMotion(ref) {
 
     return () => {
       observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateStick);
       window.removeEventListener('scroll', onScroll);
       el.removeEventListener('pointermove', onPointerMove);
       el.removeEventListener('pointerleave', onPointerLeave);
       if (frame) cancelAnimationFrame(frame);
-      el.classList.remove('is-tracking', 'is-offscreen');
+      el.classList.remove('is-tracking', 'is-offscreen', 'is-covered');
     };
   }, [ref]);
 }

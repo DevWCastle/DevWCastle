@@ -5,8 +5,13 @@ import { useHeroMotion } from '../../hooks/useHeroMotion';
 import { sections } from '../../data/site';
 import './HeroStage.css';
 
-// O canvas do retrato é o único efeito pesado do site: carregado sob demanda.
+// Efeitos de canvas do hero, todos carregados sob demanda.
 const HeroPortrait = lazy(() => import('../HeroPortrait/HeroPortrait'));
+const TubesCursor = lazy(() => import('../TubesCursor/TubesCursor'));
+const ShatterTitle = lazy(() => import('../ShatterTitle/ShatterTitle'));
+
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SHATTER_TIMEOUT_MS = 2500; // se os cacos não ficarem prontos, o título volta ao CSS
 
 const RENDER_MODES = [
   { id: 'dots', label: 'Pontos' },
@@ -32,22 +37,33 @@ function LocalTime() {
   return <time className="hero__time">{time}</time>;
 }
 
-/* ---------- Título: "código" nasce em mono e se constrói na grotesca ---------- */
+/* ---------- Título: "código" nasce em mono; o resto se monta em cacos ---------- */
 const CODE_WORD = 'código';
 
-function HeroTitle({ ready }) {
+function HeroTitle({ ready, trackRef }) {
+  const titleRef = useRef(null);
   const [built, setBuilt] = useState(false);
+  // Com movimento reduzido, o título fica só no CSS (sem canvas de cacos)
+  const [shatter, setShatter] = useState(() => !prefersReducedMotion());
+  const [shatterReady, setShatterReady] = useState(false);
 
   useEffect(() => {
     if (!ready) return undefined;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const id = setTimeout(() => setBuilt(true), reduce ? 0 : 520);
+    const id = setTimeout(() => setBuilt(true), prefersReducedMotion() ? 0 : 520);
     return () => clearTimeout(id);
   }, [ready]);
 
+  // Rede de segurança: o texto nunca fica invisível se o canvas falhar
+  useEffect(() => {
+    if (!built || !shatter || shatterReady) return undefined;
+    const id = setTimeout(() => setShatter(false), SHATTER_TIMEOUT_MS);
+    return () => clearTimeout(id);
+  }, [built, shatter, shatterReady]);
+
   return (
     <h1
-      className={`hero__title${built ? ' is-built' : ''}`}
+      ref={titleRef}
+      className={`hero__title${built ? ' is-built' : ''}${shatter ? ' has-shatter' : ''}`}
       id="hero-title"
       aria-label="Do código ao impacto real"
     >
@@ -68,6 +84,16 @@ function HeroTitle({ ready }) {
           ao <em>impacto real</em>
         </span>
       </span>
+      {shatter && (
+        <Suspense fallback={null}>
+          <ShatterTitle
+            titleRef={titleRef}
+            trackRef={trackRef}
+            play={built}
+            onReady={() => setShatterReady(true)}
+          />
+        </Suspense>
+      )}
     </h1>
   );
 }
@@ -76,10 +102,17 @@ function HeroTitle({ ready }) {
 export default function HeroStage({ ready = true }) {
   const heroRef = useRef(null);
   const [mode, setMode] = useState('dots');
+  const [motionOk] = useState(() => !prefersReducedMotion());
   useHeroMotion(heroRef);
 
   return (
     <section className="hero" id="inicio" ref={heroRef} aria-labelledby="hero-title">
+      {motionOk && ready && (
+        <Suspense fallback={null}>
+          <TubesCursor trackRef={heroRef} />
+        </Suspense>
+      )}
+
       <header className="hero__top">
         <a className="hero__logo" href="#inicio" aria-label="DevWCastle — início">
           <img src={wordmark} alt="" width="520" height="115" fetchPriority="high" />
@@ -91,10 +124,10 @@ export default function HeroStage({ ready = true }) {
             <dd>Desenvolvedor Full Stack · Backend</dd>
           </div>
           <div>
-            <dt>Base</dt>
+            {/* <dt>Base</dt>
             <dd>
               Brasil · <LocalTime /> <abbr title="Horário de Brasília">BRT</abbr>
-            </dd>
+            </dd> */}
           </div>
           <div className="hero__meta-nav">
             <dt>Navegação</dt>
@@ -147,7 +180,7 @@ export default function HeroStage({ ready = true }) {
         ))}
       </div>
 
-      <HeroTitle ready={ready} />
+      <HeroTitle ready={ready} trackRef={heroRef} />
     </section>
   );
 }

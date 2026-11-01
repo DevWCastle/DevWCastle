@@ -1,62 +1,71 @@
-/* Pilha de capturas sobre o campo azul do projeto */
+/* Roda vertical de capturas sobre o campo azul do projeto (carousel 1) */
 
 .screens {
   position: relative;
-  width: 100%;
-  padding-bottom: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
 }
 
-.screens__stack {
+.screens__wheel {
   position: relative;
-  width: 100%;
-  aspect-ratio: 1000 / 600;
+  aspect-ratio: 1000 / 491;
+  transform-style: preserve-3d;
 }
 
-.screens__stack img {
+.screens__wheel img {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 88%;
+  inset: 0;
+  width: 100%;
   height: auto;
   border-radius: 6px;
   box-shadow: 0 24px 48px -16px rgba(2, 7, 22, 0.6);
-  opacity: 0.55;
-  transform: translate(12%, 14%) scale(0.94);
+  transform-origin: 50% 50% -160px;
   transition:
-    transform 0.8s var(--ease-out),
-    opacity 0.6s var(--ease-out);
+    transform 0.9s var(--ease-out),
+    opacity 0.6s var(--ease-out),
+    filter 0.6s var(--ease-out);
 }
 
-.screens__stack img.is-front {
-  z-index: 2;
-  opacity: 1;
-  transform: none;
+/* posições na roda; a ativa (0) usa as regras de .project__wheel-item.is-front */
+.screens__wheel img[data-offset='-1'] {
+  transform: translateY(-78%) rotateX(62deg) scale(0.8);
+  opacity: 0.45;
+  filter: saturate(0.6);
+}
+
+.screens__wheel img[data-offset='1'] {
+  transform: translateY(78%) rotateX(-62deg) scale(0.8);
+  opacity: 0.45;
+  filter: saturate(0.6);
+}
+
+.screens__wheel img[data-offset='-2'],
+.screens__wheel img[data-offset='2'] {
+  opacity: 0;
 }
 
 .screens__controls {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
 }
 
-.screens__dots {
-  display: flex;
+.screens__count {
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .screens__btn {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 50%;
-  background: rgba(2, 7, 22, 0.35);
+  background: rgba(2, 7, 22, 0.25);
   color: var(--white);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .screens__btn:hover {
@@ -65,32 +74,8 @@
   color: var(--blue);
 }
 
-.screens__dot {
-  position: relative;
-  width: 22px;
-  height: 40px;
-  padding: 0;
-  border: 0;
-  background: none;
-}
-
-.screens__dot::after {
-  content: '';
-  position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 50%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.45);
-  transition: background-color 0.3s ease;
-}
-
-.screens__dot[aria-current='true']::after {
-  background: var(--white);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .screens__stack img {
+  .screens__wheel img {
     transition: none;
   }
 }

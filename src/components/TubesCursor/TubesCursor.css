@@ -1,0 +1,14 @@
+.tubes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  animation: tubesIn 1.2s 0.2s var(--ease-out) forwards;
+}
+
+@keyframes tubesIn {
+  to { opacity: 1; }
+}

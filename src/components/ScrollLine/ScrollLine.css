@@ -1,0 +1,71 @@
+.site-main {
+  position: relative;
+}
+
+.scroll-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.scroll-line__path {
+  fill: none;
+  stroke: var(--blue-bright);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* nós nas fronteiras: acendem quando a linha passa por eles */
+.scroll-line__node {
+  fill: var(--night);
+  stroke: var(--blue-bright);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.4);
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s var(--ease-out),
+    fill 0.4s ease;
+}
+
+.scroll-line__node.is-on {
+  opacity: 1;
+  transform: none;
+  fill: var(--blue-bright);
+}
+
+.scroll-line__head {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.scroll-line.is-started .scroll-line__head {
+  opacity: 1;
+}
+
+.scroll-line__glow {
+  fill: rgba(74, 116, 255, 0.28);
+}
+
+.scroll-line__dot {
+  fill: var(--white);
+  stroke: var(--blue-bright);
+  stroke-width: 1.5;
+}
+
+/* movimento reduzido: linha inteira, nós acesos, sem a cabeça */
+.scroll-line.is-static .scroll-line__node {
+  opacity: 1;
+  transform: none;
+  fill: var(--blue-bright);
+  transition: none;
+}
+
+.scroll-line.is-static .scroll-line__head {
+  display: none;
+}

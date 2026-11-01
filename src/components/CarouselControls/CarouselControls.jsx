@@ -6,22 +6,26 @@ const pad = (value) => String(value).padStart(2, '0');
 function CarouselControls({ current, total, onPrev, onNext, onSelect, labels = [] }) {
   return (
     <div className="carousel">
-      <p className="carousel__count data" aria-hidden="true">
+      {/* <p className="carousel__count data" aria-hidden="true">
         <span>{pad(current + 1)}</span> / {pad(total)}
-      </p>
+      </p> */}
 
-      <div className="carousel__dots">
+      {/* índice com os títulos (como a lista lateral do carousel 1) */}
+      <ol className="carousel__index">
         {Array.from({ length: total }, (_, index) => (
-          <button
-            type="button"
-            key={index}
-            className="carousel__dot"
-            aria-label={`Ir para ${labels[index] ?? `o projeto ${index + 1}`}`}
-            aria-current={index === current}
-            onClick={() => onSelect(index)}
-          />
+          <li key={index}>
+            <button
+              type="button"
+              className="carousel__item"
+              aria-current={index === current}
+              onClick={() => onSelect(index)}
+            >
+              <span className="data">{pad(index + 1)}</span>
+              {labels[index] ?? `Projeto ${index + 1}`}
+            </button>
+          </li>
         ))}
-      </div>
+      </ol>
 
       <div className="carousel__arrows">
         <button type="button" className="carousel__arrow" aria-label="Projeto anterior" onClick={onPrev}>

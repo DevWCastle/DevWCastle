@@ -272,6 +272,31 @@
   50% { opacity: 0; }
 }
 
+/* Título em cacos (ShatterTitle): o canvas desenha as letras construídas.
+   O DOM mantém o layout final desde o início (sem deslocamentos) para o
+   canvas ler a posição exata de cada letra, e fica transparente. */
+.hero__title.has-shatter {
+  font-stretch: 112.5%; /* = semi-expanded, a mesma largura que o canvas usa */
+}
+
+.hero__title.has-shatter .hero__glyph-built,
+.hero__title.has-shatter .hero__reveal {
+  opacity: 0;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+/* ---------- Hero fixo: a seção de projetos sobe por cima (efeito petrillo) ----------
+   --stick (useHeroMotion) é negativo quando o hero é mais alto que a tela,
+   para que o fim dele apareça antes de ser coberto. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-pin .hero {
+    position: sticky;
+    top: var(--stick, 0px);
+  }
+}
+
 /* ---------- Parallax de rolagem (useHeroMotion) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .hero__title {

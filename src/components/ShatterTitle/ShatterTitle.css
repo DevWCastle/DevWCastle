@@ -1,0 +1,9 @@
+/* canvas maior que o título (margem de 120px) para os cacos voarem para fora */
+.shatter {
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: calc(100% + 240px);
+  height: calc(100% + 240px);
+  pointer-events: none;
+}

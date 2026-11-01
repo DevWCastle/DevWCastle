@@ -57,22 +57,22 @@ export default function About() {
   return (
     <section className="section section--white about" id="sobre" aria-labelledby="sobre-title">
       <div className="w about__grid">
-        <figure className="about__photo cut">
+        <figure className="about__photo cut rv">
           <img src={portrait} alt="Retrato de DevWCastle" width="1086" height="1439" loading="lazy" decoding="async" />
         </figure>
 
         <div className="about__text">
-          <h2 className="section__title" id="sobre-title">
+          <h2 className="section__title rv" id="sobre-title" style={{ '--d': '80ms' }}>
             Falhas <em>custam caro</em>
           </h2>
 
-          <p className="about__body">
+          <p className="about__body rv" style={{ '--d': '160ms' }}>
             Minha trajetória começou no chão de fábrica e nos laboratórios de eletroeletrônica.
             Lá, aprendi que falhas custam caro. Trouxe essa mentalidade para APIs REST com
             Node.js/NestJS, modelagem SQL e interfaces em React.
           </p>
 
-          <ol className="about__path" aria-label="Trajetória">
+          <ol className="about__path rv" style={{ '--d': '240ms' }} aria-label="Trajetória">
             {PATH.map((stop) => (
               <li key={stop.title}>
                 <strong>{stop.title}</strong>
@@ -81,7 +81,7 @@ export default function About() {
             ))}
           </ol>
 
-          <dl className="about__facts" ref={factsRef}>
+          <dl className="about__facts rv" style={{ '--d': '320ms' }} ref={factsRef}>
             {FACTS.map((fact) => (
               <div key={fact.label}>
                 <dt>{fact.label}</dt>

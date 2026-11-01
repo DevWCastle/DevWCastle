@@ -88,10 +88,10 @@ export default function TechStack() {
     <section className="section section--deep stack" id="stack" aria-labelledby="stack-title">
       <div className="w">
         <header className="stack__head">
-          <h2 className="section__title" id="stack-title">
+          <h2 className="section__title rv" id="stack-title">
             Do chão de fábrica <em>ao deploy</em>
           </h2>
-          <p className="stack__intro">
+          <p className="stack__intro rv" style={{ '--d': '120ms' }}>
             As ferramentas que uso no dia a dia, na ordem em que um dado atravessa o sistema.
           </p>
         </header>
@@ -131,10 +131,10 @@ export default function TechStack() {
                   </g>
                 </svg>
 
-                <p className="stack__num data">{pad(i + 1)} / {pad(stackLayers.length)}</p>
-                <h3 className="stack__title">{layer.title}</h3>
-                <p className="stack__line">{layer.line}</p>
-                <ul className="stack__tech" aria-label={`Tecnologias: ${layer.title}`}>
+                <p className="stack__num data rv">{pad(i + 1)} / {pad(stackLayers.length)}</p>
+                <h3 className="stack__title rv" style={{ '--d': '80ms' }}>{layer.title}</h3>
+                <p className="stack__line rv" style={{ '--d': '160ms' }}>{layer.line}</p>
+                <ul className="stack__tech rv" style={{ '--d': '240ms' }} aria-label={`Tecnologias: ${layer.title}`}>
                   {layer.tech.map((tech) => (
                     <li key={tech} className="data">{tech}</li>
                   ))}

@@ -1,6 +1,14 @@
 /* =========================================
-   PROJETOS — seção clara, carrossel largo com o próximo slide na borda
+   PROJETOS — seção clara que sobe por cima do hero fixo (efeito petrillo),
+   com um palco de faixas que se expandem.
    ========================================= */
+
+.projects {
+  position: relative;
+  z-index: 2;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -24px 48px -24px rgba(2, 7, 22, 0.7);
+}
 
 .projects__head {
   display: grid;
@@ -28,31 +36,31 @@
   grid-area: controls;
 }
 
-/* ---------- Trilho ---------- */
-.projects__viewport {
+/* ---------- Palco ---------- */
+.projects__stage {
+  --strip: 92px;
+  --gap: 12px;
+  --cut: 28px;
+  --sy: 0;
+
   container-type: inline-size;
-  overflow: hidden;
-  padding-inline: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter)));
-  touch-action: pan-y;
-  outline-offset: -4px;
-  cursor: grab;
-}
-
-.projects__viewport:active {
-  cursor: grabbing;
-}
-
-.projects__track {
-  --slide-w: min(100cqw, 1240px);
-  --gap: clamp(16px, 2.4vw, 32px);
-
   display: flex;
   gap: var(--gap);
-  transform: translate3d(calc(var(--index) * -1 * (var(--slide-w) + var(--gap))), 0, 0);
-  transition: transform 0.8s var(--ease-out);
+  height: clamp(540px, 74vh, 720px);
+  touch-action: pan-y;
+  outline-offset: 6px;
+}
+
+/* largura do painel aberto: o palco menos as faixas fechadas */
+.projects__stage > .project {
+  --panel-w: calc(100cqw - (var(--n) - 1) * (var(--strip) + var(--gap)));
 }
 
 @media (max-width: 900px) {
+  .projects {
+    border-radius: 20px 20px 0 0;
+  }
+
   .projects__head {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
@@ -61,13 +69,9 @@
       'controls';
   }
 
-  .projects__track {
-    --slide-w: 100cqw;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .projects__track {
-    transition: none;
+  .projects__stage {
+    --cut: 20px;
+    flex-direction: column;
+    height: auto;
   }
 }

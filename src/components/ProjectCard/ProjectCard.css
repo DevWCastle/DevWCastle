@@ -1,61 +1,106 @@
 /* =========================================
-   PROJETO — mídia chanfrada (campo azul ou azul-noite) + ficha técnica
+   PROJETO — faixa que se expande (formato do "carousel 2").
+   Fechada: tira estreita com rótulo vertical. Aberta: ficha + roda de mídia.
+   O fundo da faixa é o campo do projeto: azul DWC (capturas) ou azul-noite (diagrama).
    ========================================= */
 
 .project {
   --mx: 0;
   --my: 0;
 
-  flex: 0 0 var(--slide-w);
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 64px);
-  align-items: center;
-}
-
-/* Vizinho na borda: a mídia continua legível como "próximo", o texto recua */
-.project__media,
-.project__body {
-  transition: opacity 0.6s var(--ease-out);
-}
-
-.project:not(.is-active) .project__media {
-  opacity: 0.85;
-}
-
-.project:not(.is-active) .project__body {
-  opacity: 0.2;
-}
-
-.project:not(.is-active) {
-  cursor: pointer;
-}
-
-/* ---------- Mídia ---------- */
-.project__media {
-  --cut: 28px;
-
   position: relative;
-  aspect-ratio: 16 / 11;
+  flex: 0 0 var(--strip);
+  min-width: 0;
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  padding: clamp(20px, 4vw, 48px);
+  color: var(--snow);
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+  transition: flex-grow 0.9s var(--ease-out);
 }
 
-.project__media--screens {
+.project.is-active {
+  flex-grow: 1;
+}
+
+.project--screens {
   background: var(--blue);
 }
 
-.project__media--diagram {
+.project--diagram {
   background: var(--night);
 }
 
-/* Parallax leve: as camadas internas andam com o mouse */
-.project__media .screens__stack,
-.project__media .project-diagram {
-  transform: translate3d(calc(var(--mx) * 14px), calc(var(--my) * 10px), 0);
-  transition: transform 0.5s var(--ease-out);
+/* ---------- Tira fechada ---------- */
+.project__strip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 28px 0 24px;
+  border: 0;
+  color: var(--white);
+  background:
+    linear-gradient(rgba(2, 7, 22, 0.55), rgba(2, 7, 22, 0.55)),
+    var(--strip-img, none) center / cover,
+    var(--night);
+  transition: background-color 0.3s ease;
+}
+
+.project--screens .project__strip {
+  background:
+    linear-gradient(rgba(0, 49, 249, 0.8), rgba(0, 49, 249, 0.8)),
+    var(--strip-img, none) center / cover,
+    var(--blue);
+}
+
+.project__strip[hidden] {
+  display: none;
+}
+
+.project__strip-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font: 800 1rem / 1 var(--font-sans);
+  font-stretch: 112%;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.project__strip .icon {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.project__strip:hover .icon {
+  transform: translateX(3px);
+}
+
+.project__strip:focus-visible {
+  outline-offset: -6px;
+}
+
+/* ---------- Painel aberto ----------
+   Largura fixa (o palco inteiro menos as tiras): o conteúdo não se reorganiza
+   enquanto a faixa cresce, só é revelado, como as imagens do carousel 2. */
+.project__panel {
+  width: var(--panel-w);
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 56px);
 }
 
 /* ---------- Ficha ---------- */
@@ -63,13 +108,45 @@
   display: grid;
   justify-items: start;
   gap: 1rem;
-  max-width: 34rem;
+  max-width: 32rem;
 }
 
+/* entra em cascata quando a faixa abre */
+.project__body > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+.project.is-active .project__body > * {
+  opacity: 1;
+  transform: none;
+}
+
+.project.is-active .project__body > :nth-child(1) { transition-delay: 0.25s; }
+.project.is-active .project__body > :nth-child(2) { transition-delay: 0.32s; }
+.project.is-active .project__body > :nth-child(3) { transition-delay: 0.39s; }
+.project.is-active .project__body > :nth-child(4) { transition-delay: 0.46s; }
+.project.is-active .project__body > :nth-child(5) { transition-delay: 0.53s; }
+
 .project__cat {
-  color: var(--blue);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: baseline;
   font-size: var(--fs-small);
   font-weight: 600;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.project--diagram .project__cat {
+  color: var(--mist);
+}
+
+.project__cat .data {
+  color: var(--white);
 }
 
 .project__title {
@@ -80,22 +157,21 @@
 }
 
 .project__desc {
-  color: var(--ink-2);
-  max-width: 52ch;
+  max-width: 50ch;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.project--diagram .project__desc {
+  color: var(--mist);
 }
 
 .project__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--ink-line);
   width: 100%;
-  color: var(--ink);
-}
-
-.project__tags li {
-  padding-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .project__actions {
@@ -105,15 +181,110 @@
   padding-top: 0.5rem;
 }
 
+/* botão primário claro sobre o campo azul / azul-noite */
+.project .btn--light {
+  --btn-bg: var(--white);
+  --btn-fg: var(--blue);
+  --btn-line: var(--white);
+}
+
+.project .btn--light:hover {
+  --btn-bg: var(--paper-2);
+  --btn-line: var(--paper-2);
+}
+
+.project--screens .btn--outline {
+  --btn-line: rgba(255, 255, 255, 0.6);
+  --btn-fg: var(--white);
+}
+
+.project--screens .btn--outline:hover {
+  --btn-line: var(--white);
+  --btn-bg: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Mídia: roda vertical em 3D (carousel 1) + parallax ---------- */
+.project__media {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  align-items: center;
+  perspective: 1100px;
+}
+
+.project__wheel {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  /* parallax: mouse (--mx/--my) + rolagem (--sy, -1 a 1, escrito pelo palco) */
+  transform: translate3d(
+    calc(var(--mx) * 16px),
+    calc(var(--my) * 12px + var(--sy, 0) * -44px),
+    0
+  );
+  transition: transform 0.5s var(--ease-out);
+}
+
+/* diagrama: item único que entra girando no eixo X */
+.project__wheel-item {
+  transform: translateY(40%) rotateX(-60deg) scale(0.86);
+  opacity: 0;
+  transform-origin: 50% 50% -120px;
+  transition:
+    transform 1s var(--ease-out) 0.2s,
+    opacity 0.6s var(--ease-out) 0.2s;
+}
+
+.project.is-active .project__wheel-item.is-front {
+  transform: none;
+  opacity: 1;
+}
+
+/* ---------- Tablet e celular: palco vertical ---------- */
 @media (max-width: 900px) {
   .project {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
+    flex: none;
+    height: 76px;
+    transition: none;
   }
 
+  .project.is-active {
+    height: auto;
+  }
+
+  .project__strip {
+    flex-direction: row;
+    padding: 0 22px;
+  }
+
+  .project__strip-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+
+  .project__panel {
+    width: 100%;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 28px 20px 32px;
+  }
+
+  /* a roda fica dentro da própria caixa: as telas inclinadas não invadem o texto */
   .project__media {
-    --cut: 20px;
-    aspect-ratio: 4 / 3;
+    order: -1;
+    height: auto;
+    overflow: hidden;
+    padding-block: 12px;
+  }
+
+  .project__wheel {
+    transform: none;
   }
 }
 
@@ -124,9 +295,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project__media .screens__stack,
-  .project__media .project-diagram {
-    transform: none;
+  .project,
+  .project__body > *,
+  .project__wheel,
+  .project__wheel-item {
     transition: none;
+  }
+
+  .project__wheel {
+    transform: none;
   }
 }

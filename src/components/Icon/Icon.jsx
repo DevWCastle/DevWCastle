@@ -6,6 +6,7 @@ const PATHS = {
   'arrow-right': 'M4 10h12M11 5l5 5-5 5',
   'arrow-left': 'M16 10H4M9 5l-5 5 5 5',
   'arrow-down': 'M10 4v12M5 11l5 5 5-5',
+  'arrow-up': 'M10 16V4M5 9l5-5 5 5',
   'arrow-up-right': 'M6 14L14 6M7 6h7v7',
   mail: 'M3 5.5h14v9H3zM3.5 6l6.5 5 6.5-5',
   check: 'M4.5 10.5l3.5 3.5 7.5-8',

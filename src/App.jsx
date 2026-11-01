@@ -8,11 +8,13 @@ import TechStack from './components/TechStack/TechStack';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import ScrollLine from './components/ScrollLine/ScrollLine';
 import { useScrollReveal } from './hooks/useScrollReveal';
 
 /*
  * Ritmo das seções: hero (azul-noite) → projetos (papel) → stack (escura,
  * no meio) → sobre (branco) → contato (azul-noite).
+ * O hero fica fixo dentro de .hero-pin enquanto Projetos sobe por cima dele.
  */
 export default function App() {
   const [playIntro] = useState(shouldPlayIntro);
@@ -23,12 +25,15 @@ export default function App() {
     <>
       {playIntro && <Preloader onDone={() => setIntroDone(true)} />}
       <Navbar />
-      <main>
-        <HeroStage ready={introDone} />
-        <Projects />
+      <main className="site-main">
+        <div className="hero-pin">
+          <HeroStage ready={introDone} />
+          <Projects />
+        </div>
         <TechStack />
         <About />
         <Contact />
+        <ScrollLine />
       </main>
       <Footer />
     </>

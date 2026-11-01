@@ -126,6 +126,10 @@
   color: var(--blue);
 }
 
+.about__facts div {
+  justify-content: flex-start;
+}
+
 @media (max-width: 900px) {
   .about__grid {
     grid-template-columns: minmax(0, 1fr);
@@ -136,6 +140,16 @@
     top: auto;
     width: min(100%, 420px);
     aspect-ratio: 1 / 1;
+  }
+
+   .about__photo img{
+    position: absolute;
+    left: 50%;
+     bottom: -8rem;
+     width: 108%;
+      max-width: none;
+     height: auto;
+    transform: translateX(-46%);
   }
 }
 
