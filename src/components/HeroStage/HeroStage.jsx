@@ -8,10 +8,12 @@ import './HeroStage.css';
 // Efeitos de canvas do hero, todos carregados sob demanda.
 const HeroPortrait = lazy(() => import('../HeroPortrait/HeroPortrait'));
 const TubesCursor = lazy(() => import('../TubesCursor/TubesCursor'));
-const ShatterTitle = lazy(() => import('../ShatterTitle/ShatterTitle'));
+const SelectTitle = lazy(() => import('../SelectTitle/SelectTitle'));
+const TesseractEmblem = lazy(() => import('../TesseractEmblem/TesseractEmblem'));
+const CircuitField = lazy(() => import('../CircuitField/CircuitField'));
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const SHATTER_TIMEOUT_MS = 2500; // se os cacos não ficarem prontos, o título volta ao CSS
+const CANVAS_TIMEOUT_MS = 2500; // se o canvas não ficar pronto, o título volta ao CSS
 
 const RENDER_MODES = [
   { id: 'dots', label: 'Pontos' },
@@ -37,15 +39,19 @@ function LocalTime() {
   return <time className="hero__time">{time}</time>;
 }
 
-/* ---------- Título: "código" nasce em mono; o resto se monta em cacos ---------- */
-const CODE_WORD = 'código';
+/* ---------- Título: letras selecionáveis, como num editor de design ---------- */
+// cada linha sobe por trás de um corte; o destaque azul vai em "impacto real"
+const TITLE_LINES = [
+  <>Do código</>,
+  <>ao <em>impacto real</em></>,
+];
 
 function HeroTitle({ ready, trackRef }) {
   const titleRef = useRef(null);
   const [built, setBuilt] = useState(false);
-  // Com movimento reduzido, o título fica só no CSS (sem canvas de cacos)
-  const [shatter, setShatter] = useState(() => !prefersReducedMotion());
-  const [shatterReady, setShatterReady] = useState(false);
+  // Com movimento reduzido, o título fica só no CSS (sem canvas)
+  const [canvasTitle, setCanvasTitle] = useState(() => !prefersReducedMotion());
+  const [canvasReady, setCanvasReady] = useState(false);
 
   useEffect(() => {
     if (!ready) return undefined;
@@ -55,42 +61,30 @@ function HeroTitle({ ready, trackRef }) {
 
   // Rede de segurança: o texto nunca fica invisível se o canvas falhar
   useEffect(() => {
-    if (!built || !shatter || shatterReady) return undefined;
-    const id = setTimeout(() => setShatter(false), SHATTER_TIMEOUT_MS);
+    if (!built || !canvasTitle || canvasReady) return undefined;
+    const id = setTimeout(() => setCanvasTitle(false), CANVAS_TIMEOUT_MS);
     return () => clearTimeout(id);
-  }, [built, shatter, shatterReady]);
+  }, [built, canvasTitle, canvasReady]);
 
   return (
     <h1
       ref={titleRef}
-      className={`hero__title${built ? ' is-built' : ''}${shatter ? ' has-shatter' : ''}`}
+      className={`hero__title${built ? ' is-built' : ''}${canvasTitle ? ' has-canvas' : ''}`}
       id="hero-title"
       aria-label="Do código ao impacto real"
     >
-      <span className="hero__line" aria-hidden="true">
-        Do{' '}
-        <span className="hero__code">
-          {Array.from(CODE_WORD).map((char, i) => (
-            <span className="hero__glyph" style={{ '--i': i }} key={char + i}>
-              <span className="hero__glyph-code">{char}</span>
-              <span className="hero__glyph-built">{char}</span>
-            </span>
-          ))}
-          <span className="hero__caret" />
+      {TITLE_LINES.map((line, i) => (
+        <span className="hero__line" aria-hidden="true" key={i}>
+          <span className="hero__reveal" style={{ '--i': i }}>{line}</span>
         </span>
-      </span>
-      <span className="hero__line hero__line--impact" aria-hidden="true">
-        <span className="hero__reveal">
-          ao <em>impacto real</em>
-        </span>
-      </span>
-      {shatter && (
+      ))}
+      {canvasTitle && (
         <Suspense fallback={null}>
-          <ShatterTitle
+          <SelectTitle
             titleRef={titleRef}
             trackRef={trackRef}
             play={built}
-            onReady={() => setShatterReady(true)}
+            onReady={() => setCanvasReady(true)}
           />
         </Suspense>
       )}
@@ -101,6 +95,7 @@ function HeroTitle({ ready, trackRef }) {
 /* ---------- Hero ---------- */
 export default function HeroStage({ ready = true }) {
   const heroRef = useRef(null);
+  const emblemRef = useRef(null);
   const [mode, setMode] = useState('dots');
   const [motionOk] = useState(() => !prefersReducedMotion());
   useHeroMotion(heroRef);
@@ -109,7 +104,11 @@ export default function HeroStage({ ready = true }) {
     <section className="hero" id="inicio" ref={heroRef} aria-labelledby="hero-title">
       {motionOk && ready && (
         <Suspense fallback={null}>
-          <TubesCursor trackRef={heroRef} />
+           <a className="btn btn--primary hero__projects" href="#projetos">
+            Ver projetos
+          <Icon name="arrow-down" size={16} />
+        </a>
+          {/* <TubesCursor trackRef={heroRef} /> */}
         </Suspense>
       )}
 
@@ -150,24 +149,31 @@ export default function HeroStage({ ready = true }) {
         </a>
       </header>
 
+      {/* placa de circuitos com profundidade atrás do tesseract */}
+      <Suspense fallback={null}>
+        <CircuitField play={ready} trackRef={heroRef} anchorRef={emblemRef} />
+      </Suspense>
+
       <div className="hero__portrait" role="img" aria-label="Retrato de DevWCastle desenhado em pontos azuis">
         <Suspense fallback={null}>
           <HeroPortrait mode={mode} play={ready} trackRef={heroRef} />
         </Suspense>
       </div>
 
-      <div className="hero__intro">
-        <p className="hero__lead">
-          Da manutenção industrial ao backend: sistemas que precisam funcionar sob pressão,
-          com máxima previsibilidade.
-        </p>
-        <a className="btn btn--primary" href="#projetos">
-          Ver projetos
-          <Icon name="arrow-down" size={16} />
-        </a>
+      {/* assinatura: ícone em tesseract, nome e o CTA logo abaixo */}
+      <div className={`hero__brand${ready ? ' is-on' : ''}`}>
+        <div className="hero__emblem" ref={emblemRef} role="img" aria-label="Logo DevWCastle: um cubo de circuitos que se desdobra em tesseract">
+           {/* <span className="hero__brand-name" aria-hidden="true">DevWCastle</span> */}
+          <Suspense fallback={null}>
+            <TesseractEmblem play={ready} trackRef={heroRef} />
+          </Suspense>
+         
+        </div>
+       
       </div>
 
       <div className="hero__modes" role="group" aria-label="Desenho do retrato">
+        
         {RENDER_MODES.map((item) => (
           <button
             type="button"
@@ -180,7 +186,11 @@ export default function HeroStage({ ready = true }) {
         ))}
       </div>
 
-      <HeroTitle ready={ready} trackRef={heroRef} />
+      {/* nome da marca logo acima do título, no mesmo eixo esquerdo */}
+      <div className={`hero__heading${ready ? ' is-on' : ''}`}>
+        <p className="hero__kicker">DevWCastle</p>
+        <HeroTitle ready={ready} trackRef={heroRef} />
+      </div>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 /* =========================================
    HERO — metadados editoriais no topo, retrato em pontos à direita,
+   assinatura (ícone em tesseract + nome + CTA) no vazio à esquerda,
    título grotesco gigante ancorado na base.
    ========================================= */
 
@@ -97,26 +98,85 @@
   width: min(56%, 920px);
 }
 
-/* ---------- Parágrafo + CTA ---------- */
-.hero__intro {
+/* ---------- Assinatura: ícone em tesseract, nome e CTA ----------
+   Alinhada ao mesmo eixo esquerdo do título "Do código ao impacto real":
+   ícone, nome e botão começam na linha da margem, como o "D". O ícone é
+   medido pela altura disponível para nunca empurrar o título. */
+.hero__brand {
   grid-column: 1;
   grid-row: 2;
   align-self: center;
+  justify-self: center;
   position: relative;
+ 
   z-index: 2;
   display: grid;
-  justify-items: start;
-  gap: 1.75rem;
-  max-width: 30rem;
-  padding-block: 2rem;
+  justify-items: center;
+  gap: clamp(10px, 1.8vh, 20px);
+  padding-block: 0.5rem 1.5rem;
 }
 
-.hero__lead {
-  font-size: var(--fs-lead);
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  color: var(--snow);
-  text-wrap: pretty;
+.hero__emblem {
+  --emblem: clamp(200px, min(30vw, 40vh), 440px);
+
+  display: grid;
+  justify-items: start;
+  width: var(--emblem);
+}
+
+/* o desenho ocupa só o miolo do canvas: a borda externa do tesseract fica a
+   11,8% da largura (aresta projetada a 0,382 do centro). Puxar o canvas por
+   essa folga põe a quina esquerda do ícone na mesma linha do título. */
+.hero__emblem .tesseract-emblem {
+  margin-left: calc(var(--emblem) * -0.118);
+  opacity: 0.55; /* translúcido: fica como marca d'água, sem disputar com o título */
+}
+
+/* nome no estilo da logo: letreiro tech, minúsculas em versalete e azul metálico */
+.hero__brand-name {
+  margin-top: 2%;
+  font: 900 calc(var(--emblem) * 0.135) / 1 "Orbitron", var(--font-sans);
+  font-variant-caps: small-caps;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  /* mesma escala de azuis do retrato e do tesseract (sem o ciano de antes) */
+  background: linear-gradient(180deg, #d9e2ff 0%, #86a2ff 38%, #4a74ff 72%, #0031f9 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(74, 116, 255, 0.45));
+}
+
+/* o nome e o botão entram quando o tesseract termina de se montar
+   (.hero__brand na frente para vencer a transição de .btn, que carrega depois) */
+.hero__brand .hero__brand-name,
+.hero__brand .hero__projects {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.9s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.hero__brand.is-on .hero__brand-name {
+  opacity: 1;
+  transform: none;
+  transition-delay: 4.1s;
+}
+
+.hero__brand.is-on .hero__projects {
+  opacity: 1;
+  transform: none;
+  transition-delay: 4.35s, 4.35s, 0s, 0s, 0s; /* o hover do botão não espera */
+}
+
+/* CTA logo abaixo do título: só a largura do texto, não a coluna inteira */
+.hero__projects {
+  justify-self: start;
+  padding-inline: 1.75rem;
 }
 
 /* ---------- Seletor de desenho (Pontos / Pixels / Linhas) ---------- */
@@ -158,9 +218,36 @@
 }
 
 /* ---------- Título ---------- */
-.hero__title {
+.hero__heading {
   grid-column: 1 / -1;
   grid-row: 3;
+  position: relative;
+  z-index: 1;
+}
+
+/* nome da marca: mesma fonte e escala de azuis da logo, colado à margem esquerda */
+.hero__kicker {
+  margin: 0 0 clamp(6px, 1.2vh, 14px);
+  width: fit-content;
+  font: 900 clamp(0.95rem, 1.6vw, 1.6rem) / 1 "Orbitron", var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #d9e2ff 0%, #86a2ff 45%, #4a74ff 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.hero__heading.is-on .hero__kicker {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.35s;
+}
+
+.hero__title {
   position: relative;
   z-index: 1;
   display: grid;
@@ -171,116 +258,39 @@
   pointer-events: none;
 }
 
-.hero__line {
-  display: block;
-  white-space: nowrap;
-}
-
-.hero__line--impact {
-  white-space: normal;
-  text-wrap: balance;
-}
-
-.hero__line--impact em {
+.hero__title em {
   font-style: normal;
   color: var(--blue-bright);
 }
 
-/* "código": cada letra existe duas vezes, em mono (código) e na grotesca (produto) */
-.hero__code {
-  display: inline-flex;
-  align-items: baseline;
-}
-
-/* a largura de cada letra é a da grotesca; a versão mono flutua centrada sobre ela */
-.hero__glyph {
-  position: relative;
-  display: inline-block;
-}
-
-.hero__glyph > span {
-  display: inline-block;
-  transition:
-    opacity 0.45s var(--ease-out),
-    transform 0.6s var(--ease-out),
-    filter 0.45s var(--ease-out);
-  transition-delay: calc(var(--i) * 55ms);
-}
-
-.hero__glyph-code {
-  position: absolute;
-  left: 50%;
-  bottom: 0.06em;
-  font: 400 0.82em / 1 var(--font-mono);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--blue-soft);
-  transform: translateX(-50%);
-}
-
-.hero__glyph-built {
-  opacity: 0;
-  transform: translateY(0.18em);
-  filter: blur(6px);
-}
-
-.hero__caret {
-  display: inline-block;
-  width: 0.08em;
-  height: 0.7em;
-  margin-left: 0.04em;
-  background: var(--blue-bright);
-  animation: heroCaret 1s steps(1) infinite;
-  transition: opacity 0.2s ease;
-}
-
-.hero__title.is-built .hero__glyph-code {
-  opacity: 0;
-  transform: translate(-50%, -0.18em);
-  filter: blur(6px);
-}
-
-.hero__title.is-built .hero__glyph-built {
-  opacity: 1;
-  transform: none;
-  filter: none;
-}
-
-.hero__title.is-built .hero__caret {
-  opacity: 0;
-  animation: none;
-  transition-delay: 0.3s;
-}
-
-/* "ao impacto real" sobe por trás de uma linha de corte */
-.hero__line--impact {
+/* cada linha sobe por trás de um corte; a folga no topo guarda o acento de "CÓDIGO" */
+.hero__line {
+  display: block;
   overflow: hidden;
-  padding-bottom: 0.04em;
+  white-space: nowrap;
+  padding-block: 0.14em 0.04em;
+  margin-top: -0.14em;
 }
 
 .hero__reveal {
   display: inline-block;
-  transform: translateY(105%);
-  transition: transform 0.9s var(--ease-out) 0.38s;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: calc(0.1s + var(--i) * 90ms);
 }
 
 .hero__title.is-built .hero__reveal {
   transform: none;
 }
 
-@keyframes heroCaret {
-  50% { opacity: 0; }
-}
-
-/* Título em cacos (ShatterTitle): o canvas desenha as letras construídas.
+/* Título selecionável (SelectTitle): o canvas desenha as letras.
    O DOM mantém o layout final desde o início (sem deslocamentos) para o
    canvas ler a posição exata de cada letra, e fica transparente. */
-.hero__title.has-shatter {
+.hero__title.has-canvas {
   font-stretch: 112.5%; /* = semi-expanded, a mesma largura que o canvas usa */
 }
 
-.hero__title.has-shatter .hero__glyph-built,
-.hero__title.has-shatter .hero__reveal {
+.hero__title.has-canvas .hero__reveal {
   opacity: 0;
   transform: none;
   filter: none;
@@ -299,8 +309,9 @@
 
 /* ---------- Parallax de rolagem (useHeroMotion) ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .hero__title {
-    transform: translate3d(0, calc(var(--p) * -48px), 0);
+  .hero__title,
+  .hero__kicker {
+    translate: 0 calc(var(--p) * -48px);
   }
 
   .hero__portrait {
@@ -308,9 +319,6 @@
     transition: transform 0.4s var(--ease-out);
   }
 
-  .hero.is-offscreen .hero__caret {
-    animation-play-state: paused;
-  }
 }
 
 /* ---------- Notebook ---------- */
@@ -328,7 +336,7 @@
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(42svh, 1fr) auto auto auto;
+    grid-template-rows: auto minmax(42svh, 1fr) auto auto;
     row-gap: 1.25rem;
   }
 
@@ -354,22 +362,43 @@
   .hero__modes {
     grid-column: 1;
     grid-row: 2;
+    align-self: end;
+    justify-self: center;
     margin-bottom: 0;
   }
 
-  .hero__title {
+  /* numa coluna só, nome, título e CTA ficam centralizados */
+  .hero__heading {
     grid-row: 3;
+    text-align: center;
   }
 
-  .hero__intro {
+  .hero__kicker {
+    margin-inline: auto;
+  }
+
+  .hero__title {
+    justify-items: center;
+  }
+
+  /* sem o vazio da coluna esquerda, a assinatura sai e o CTA vai para baixo do título */
+  .hero__brand {
+    display: contents;
+  }
+
+  .hero__emblem {
+    display: none;
+  }
+
+  .hero__projects {
     grid-column: 1;
     grid-row: 4;
-    padding-block: 0 0.5rem;
-    gap: 1.25rem;
+    justify-self: center;
+    margin-bottom: 0.5rem;
   }
 
-  .hero__lead {
-    font-size: 1.125rem;
+  .hero__brand.is-on .hero__projects {
+    transition-delay: 0.6s, 0.6s, 0s, 0s, 0s;
   }
 }
 
@@ -379,21 +408,21 @@
     padding-inline: 1rem;
   }
 
-  .hero__line {
-    white-space: normal;
+  .hero__projects {
+    justify-self: stretch;
   }
 
-  .hero__intro .btn {
-    width: 100%;
+  .hero__line {
+    white-space: normal;
   }
 }
 
 /* ---------- Movimento reduzido: estado final, sem transições ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .hero__glyph > span,
   .hero__reveal,
-  .hero__caret {
+  .hero__kicker,
+  .hero__brand .hero__brand-name,
+  .hero__brand .hero__projects {
     transition: none;
-    animation: none;
   }
 }
