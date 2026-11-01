@@ -1,65 +1,77 @@
-.carousel-controls {
+.carousel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 6px;
+  gap: clamp(12px, 2vw, 24px);
 }
 
-.carousel-controls__arrow {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1.5px solid #3a4030;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--tx);
-  font-size: 20px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+.carousel__count {
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  min-width: 7ch;
 }
 
-.carousel-controls__arrow:hover {
-  background: var(--lime);
-  color: #0a0a0a;
-  border-color: var(--lime);
-  transform: scale(1.06);
+.carousel__count span {
+  color: var(--ink);
 }
 
-.carousel-controls__dots {
+.carousel__dots {
   display: flex;
-  gap: 4px;
-  margin: 0 10px;
 }
 
-.carousel-controls__dot {
-  width: 30px;
+.carousel__dot {
+  position: relative;
+  width: 28px;
   height: 44px;
+  padding: 0;
   border: 0;
   background: none;
-  cursor: pointer;
-  position: relative;
-  padding: 0;
 }
 
-.carousel-controls__dot::after {
+.carousel__dot::after {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 3px;
+  right: 3px;
   top: 50%;
-  height: 6px;
-  margin-top: -3px;
-  border-radius: 9px;
-  background: #33382a;
-  transition: background 0.3s;
+  height: 2px;
+  background: var(--ink-line);
+  transition: background-color 0.3s ease;
 }
 
-.carousel-controls__dot[aria-current='true']::after {
-  background: var(--lime);
+.carousel__dot:hover::after {
+  background: var(--ink-2);
 }
 
-.carousel-controls__count {
-  color: var(--mu);
-  text-align: center;
-  margin: 10px 0 0;
+.carousel__dot[aria-current='true']::after {
+  background: var(--blue);
+}
+
+.carousel__arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.carousel__arrow {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--ink-line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  transition:
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.carousel__arrow:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+}
+
+.carousel__arrow:active {
+  transform: scale(0.96);
 }

@@ -1,29 +1,36 @@
+import { useState } from 'react';
+import Preloader from './components/Preloader/Preloader';
+import { shouldPlayIntro } from './components/Preloader/intro';
 import Navbar from './components/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
-import TechStrip from './components/TechStrip/TechStrip';
-import About from './components/About/About';
+import HeroStage from './components/HeroStage/HeroStage';
 import Projects from './components/Projects/Projects';
 import TechStack from './components/TechStack/TechStack';
+import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import { useScrollReveal } from './hooks/useScrollReveal';
-import HeroStage from './components/HeroStage/HeroStage';
-import './App.css'
 
+/*
+ * Ritmo das seções: hero (azul-noite) → projetos (papel) → stack (escura,
+ * no meio) → sobre (branco) → contato (azul-noite).
+ */
 export default function App() {
+  const [playIntro] = useState(shouldPlayIntro);
+  const [introDone, setIntroDone] = useState(!playIntro);
   useScrollReveal();
 
   return (
     <>
-        <Navbar />
-        {/* <Hero /> */}
-        <HeroStage/>
-        <TechStrip />
-        <Projects /> 
-        <About /> 
-        <TechStack /> 
+      {playIntro && <Preloader onDone={() => setIntroDone(true)} />}
+      <Navbar />
+      <main>
+        <HeroStage ready={introDone} />
+        <Projects />
+        <TechStack />
+        <About />
         <Contact />
-        <Footer />
+      </main>
+      <Footer />
     </>
   );
 }

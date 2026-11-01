@@ -1,38 +1,38 @@
+/* Diagrama de arquitetura em traço fino sobre azul-noite (mesma gramática da Stack) */
+
 .project-diagram {
   width: 100%;
   height: auto;
+  overflow: visible;
 }
 
 .project-diagram__bg {
-  fill: #0c1207;
+  fill: var(--night);
   stroke: none;
+  rx: 2px;
 }
 
 .project-diagram__node {
-  fill: rgba(204, 255, 0, 0.07);
-  stroke: rgba(204, 255, 0, 0.5);
+  fill: none;
+  stroke: var(--blue-bright);
+  stroke-width: 1.2;
+  rx: 2px;
 }
 
 .project-diagram__node.is-dashed {
-  stroke-dasharray: 5 5;
-  fill: transparent;
+  stroke: var(--mist);
+  stroke-dasharray: 4 5;
 }
 
 .project-diagram text {
-  fill: var(--tx);
-  font: 600 12px 'JetBrains Mono', monospace;
+  fill: var(--snow);
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.02em;
   text-anchor: middle;
 }
 
 .project-diagram line {
-  stroke: var(--lime);
-  stroke-width: 2;
-  stroke-dasharray: 6 6;
-  animation: project-diagram-flow 1.2s linear infinite;
-}
-
-@keyframes project-diagram-flow {
-  to {
-    stroke-dashoffset: -12;
-  }
+  stroke: var(--blue-soft);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
 }

@@ -4,6 +4,7 @@ import cbpatioFeatured from '../assets/cbpatio-campeonatos.jpg';
 /*
  * media.type === 'screens'  -> pilha de capturas com carrossel próprio
  * media.type === 'diagram'  -> diagrama de arquitetura (nodes + edges por índice)
+ * draft: true               -> fica fora do carrossel até ter link real
  */
 export const projects = [
   {
@@ -15,8 +16,9 @@ export const projects = [
       'Aplicação cliente para divulgação e inscrição nos campeonatos do evento: campeonatos em destaque, times, classificação e busca de jogadores. Mais de 560 commits.',
     tags: ['Vite', 'SQL', 'Vercel', 'ESLint'],
     links: [
-      { label: 'Demo ao vivo ↗', href: 'https://cbpatio.vercel.app', primary: true },
-      { label: 'Código ↗', href: 'https://github.com/DevWCastle/cbpatio_client' },
+      // Pendente: cbpatio.vercel.app (homepage do repositório) responde 404 hoje.
+      { label: 'Demo ao vivo', href: 'https://cbpatio.vercel.app', primary: true },
+      { label: 'Código', href: 'https://github.com/DevWCastle/cbpatio_client' },
     ],
     media: {
       type: 'screens',
@@ -40,8 +42,9 @@ export const projects = [
     description:
       'API REST para controle de rotinas de manutenção preventiva, estoque de insumos e ordens de serviço em tempo real.',
     tags: ['TypeScript', 'NestJS', 'PostgreSQL', 'TypeORM', 'Docker'],
-    // Pendente: trocar pelo link do repositório real do ERP (hoje aponta para o perfil).
-    links: [{ label: 'Repositório ↗', href: 'https://github.com/DevWCastle' }],
+    // Pendente: não há repositório público do ERP; volta ao carrossel com o link real.
+    draft: true,
+    links: [{ label: 'Repositório', href: 'https://github.com/DevWCastle' }],
     media: {
       type: 'diagram',
       nodes: ['Client App', 'Controller / Service', 'PostgreSQL / TypeORM', 'Docker Container'],
@@ -60,7 +63,7 @@ export const projects = [
       'Sistema de permissão que libera funções de um CLP apenas para pessoas autorizadas, comunicando um Raspberry Pi 4B com o controlador.',
     tags: ['TypeScript', 'Express', 'SQLite', 'JWT', 'Docker'],
     links: [
-      { label: 'Código ↗', href: 'https://github.com/DevWCastle/user-permissions-clp-raspberry' },
+      { label: 'Código', href: 'https://github.com/DevWCastle/user-permissions-clp-raspberry' },
     ],
     media: {
       type: 'diagram',

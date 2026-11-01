@@ -1,38 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Icon from '../Icon/Icon';
 import './ScreenshotStack.css';
-
-const AUTOPLAY_MS = 4500;
 
 /**
  * Pilha de capturas de tela com carrossel próprio: a tela ativa fica à frente
- * e as demais atrás, menores e apagadas. Troca sozinha enquanto o card está
- * ativo, pausando com mouse ou foco, e não troca com movimento reduzido.
+ * e as demais atrás, menores e apagadas. Só troca quando a pessoa pede
+ * (sem autoplay: nada se move sozinho fora do hero).
  */
 function ScreenshotStack({ screens, active }) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const total = screens.length;
 
   const goTo = (target) => setIndex((target + total) % total);
 
-  useEffect(() => {
-    if (!active || paused || total < 2) return undefined;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-
-    const timer = setInterval(() => setIndex((current) => (current + 1) % total), AUTOPLAY_MS);
-    return () => clearInterval(timer);
-  }, [active, paused, total]);
-
   const tabIndex = active ? 0 : -1;
 
   return (
-    <div
-      className="screens"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
+    <div className="screens">
       <div className="screens__stack">
         {screens.map((screen, i) => (
           <img
@@ -55,7 +39,7 @@ function ScreenshotStack({ screens, active }) {
           tabIndex={tabIndex}
           onClick={() => goTo(index - 1)}
         >
-          ←
+          <Icon name="arrow-left" size={16} />
         </button>
         <div className="screens__dots">
           {screens.map((screen, i) => (
@@ -77,7 +61,7 @@ function ScreenshotStack({ screens, active }) {
           tabIndex={tabIndex}
           onClick={() => goTo(index + 1)}
         >
-          →
+          <Icon name="arrow-right" size={16} />
         </button>
       </div>
     </div>

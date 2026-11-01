@@ -1,78 +1,84 @@
-import { forwardRef } from 'react';
+import { useRef } from 'react';
+import Icon from '../Icon/Icon';
 import ProjectDiagram from '../ProjectDiagram/ProjectDiagram';
 import ScreenshotStack from '../ScreenshotStack/ScreenshotStack';
 import './ProjectCard.css';
 
 /**
- * Slide do carrossel. `position` é 0 para o ativo e ±1 para os vizinhos.
- * Os vizinhos ficam fora da navegação por teclado e do leitor de tela;
- * clicar neles seleciona o projeto.
+ * Slide do carrossel. O inativo fica fora do teclado e do leitor de tela
+ * (inert) e, ao ser clicado, vira o ativo. A mídia ganha um parallax leve
+ * com o mouse, escrito direto em variáveis CSS (sem re-render).
  */
-const ProjectCard = forwardRef(function ProjectCard(
-  { project, index, total, position, onSelect },
-  ref
-) {
-  const isActive = position === 0;
+export default function ProjectCard({ project, index, total, isActive, onSelect }) {
+  const mediaRef = useRef(null);
   const { media } = project;
-  const tabIndex = isActive ? 0 : -1;
+
+  const onPointerMove = (event) => {
+    if (!isActive || event.pointerType !== 'mouse') return;
+    const el = mediaRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', ((event.clientX - rect.left) / rect.width - 0.5).toFixed(3));
+    el.style.setProperty('--my', ((event.clientY - rect.top) / rect.height - 0.5).toFixed(3));
+  };
+
+  const onPointerLeave = () => {
+    mediaRef.current?.style.setProperty('--mx', '0');
+    mediaRef.current?.style.setProperty('--my', '0');
+  };
 
   return (
     <article
-      ref={ref}
-      className={`project-slide${isActive ? ' is-active' : ''}`}
-      data-pos={position}
-      aria-hidden={!isActive}
+      className={`project${isActive ? ' is-active' : ''}`}
       aria-label={`${index + 1} de ${total}: ${project.label}`}
-      onClick={() => {
-        if (!isActive) onSelect(index);
-      }}
+      onClick={isActive ? undefined : () => onSelect(index)}
     >
-      <div className="project-card">
-        <div className={`project-media${media.type === 'screens' ? ' project-media--screens' : ''}`}>
-          <span className="project-num mono">{String(index + 1).padStart(2, '0')}</span>
+      {/* inert nos filhos, não no article: o clique no slide vizinho ainda chega aqui */}
+      <div
+        ref={mediaRef}
+        inert={!isActive}
+        className={`project__media cut project__media--${media.type}`}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
+      >
+        {media.type === 'screens' ? (
+          <ScreenshotStack screens={media.screens} active={isActive} />
+        ) : (
+          <ProjectDiagram
+            nodes={media.nodes}
+            edges={media.edges}
+            dashed={media.dashed}
+            label={media.label}
+          />
+        )}
+      </div>
 
-          {media.type === 'screens' ? (
-            <ScreenshotStack screens={media.screens} active={isActive} />
-          ) : (
-            <>
-              <ProjectDiagram
-                nodes={media.nodes}
-                edges={media.edges}
-                dashed={media.dashed}
-                label={media.label}
-              />
-              <span className="project-cap mono">Diagrama de arquitetura</span>
-            </>
-          )}
-        </div>
+      <div className="project__body" inert={!isActive}>
+        <p className="project__cat">{project.category}</p>
+        <h3 className="project__title">{project.title}</h3>
+        <p className="project__desc">{project.description}</p>
 
-        <div className="project-body">
-          <p className="project-cat mono" style={{ '--i': 0 }}>{project.category}</p>
-          <h3 className="project-title" style={{ '--i': 1 }}>{project.title}</h3>
-          <p className="project-desc" style={{ '--i': 2 }}>{project.description}</p>
-          <div className="project-tags mono" style={{ '--i': 3 }}>
-            {project.tags.map((tag) => (
-              <span className="project-tag" key={tag}>{tag}</span>
-            ))}
-          </div>
-          <div className="project-actions" style={{ '--i': 4 }}>
-            {project.links.map((link) => (
-              <a
-                key={link.href + link.label}
-                className={`project-btn${link.primary ? ' project-btn--primary' : ''}`}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={tabIndex}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+        <ul className="project__tags" aria-label="Tecnologias">
+          {project.tags.map((tag) => (
+            <li key={tag} className="data">{tag}</li>
+          ))}
+        </ul>
+
+        <div className="project__actions">
+          {project.links.map((link) => (
+            <a
+              key={link.href + link.label}
+              className={`btn ${link.primary ? 'btn--primary' : 'btn--outline-ink'}`}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.label}
+              <Icon name="arrow-up-right" size={16} />
+            </a>
+          ))}
         </div>
       </div>
     </article>
   );
-});
-
-export default ProjectCard;
+}

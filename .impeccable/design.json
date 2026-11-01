@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-01T01:05:00-03:00",
+  "title": "Design System: DevWCastle Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "brand-blue": { "role": "primary", "displayName": "Azul DWC", "canonical": "#0031f9", "tonalRamp": ["#00104f", "#001a80", "#0024b8", "#0031f9", "#4a74ff", "#86a2ff", "#c3d1ff", "#eef2ff"] },
+      "signal-blue": { "role": "primary", "displayName": "Azul sinal", "canonical": "#4a74ff" },
+      "logo-cyan": { "role": "tertiary", "displayName": "Ciano da logo", "canonical": "#00c6fc" },
+      "night": { "role": "neutral", "displayName": "Azul-noite", "canonical": "#020716", "tonalRamp": ["#020716", "#050f2a", "#0a1a42", "#1a2a5c", "#3a4566", "#a7b3d6", "#d3daec", "#eef2ff"] },
+      "paper": { "role": "neutral", "displayName": "Papel frio", "canonical": "#f4f6fc" },
+      "danger": { "role": "error", "displayName": "Alerta", "canonical": "#ff9a9a" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Só o título do hero, ancorado na base." },
+      "headline": { "displayName": "Título de seção", "purpose": "Títulos de seção em maiúsculas, segunda parte em azul." },
+      "label": { "displayName": "Dado", "purpose": "Hora, contagens, numeração de etapas, nomes de tecnologia." }
+    },
+    "shadows": [
+      { "name": "screenshot", "value": "0 24px 48px -16px rgba(2, 7, 22, 0.6)", "purpose": "Capturas sobre o campo azul do projeto." },
+      { "name": "nav", "value": "0 12px 32px -12px rgba(2, 7, 22, 0.55)", "purpose": "Barra de navegação flutuante." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entradas, deslizes e desenho de traços." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Cortina de saída do preloader." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "520px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "notebook", "value": "1180px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão primário",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal da seção.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Ver projetos <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 4v12M5 11l5 5 5-5\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:.65rem;min-height:48px;padding:0 1.4rem;border-radius:999px;background:#0031f9;color:#fff;font:600 .9375rem/1 Archivo,Arial,sans-serif;text-decoration:none;transition:background-color .25s cubic-bezier(.16,1,.3,1)}.ds-btn-primary svg{transition:transform .35s cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:#0024b8}.ds-btn-primary:hover svg{transform:translateY(3px)}.ds-btn-primary:focus-visible{outline:2px solid #4a74ff;outline-offset:3px}"
+    },
+    {
+      "name": "Botão em contorno (escuro)",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "CTA secundário sobre azul-noite (Fale comigo).",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Fale comigo <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 14L14 6M7 6h7v7\"/></svg></a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:.65rem;min-height:48px;padding:0 1.4rem;border:1px solid rgba(157,178,255,.45);border-radius:999px;background:#020716;color:#eef2ff;font:600 .9375rem/1 Archivo,Arial,sans-serif;text-decoration:none;transition:border-color .25s,background-color .25s}.ds-btn-outline:hover{border-color:#4a74ff;background:rgba(0,49,249,.16)}.ds-btn-outline:focus-visible{outline:2px solid #4a74ff;outline-offset:3px}"
+    },
+    {
+      "name": "Campo de formulário",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo sobre o painel azul-noite 2, com foco azul.",
+      "html": "<label class=\"ds-field\"><span>E-mail</span><input placeholder=\"voce@email.com\"></label>",
+      "css": ".ds-field{display:grid;gap:.5rem;padding:24px;background:#050f2a;font-family:Archivo,Arial,sans-serif}.ds-field span{font-size:.875rem;font-weight:600;color:#a7b3d6}.ds-field input{min-height:52px;padding:14px 16px;border:1px solid rgba(157,178,255,.16);border-radius:4px;background:#020716;color:#eef2ff;font-size:1rem}.ds-field input::placeholder{color:#7d89ad}.ds-field input:focus{outline:none;border-color:#4a74ff;box-shadow:0 0 0 3px rgba(0,49,249,.35)}"
+    },
+    {
+      "name": "Chip de tecnologia",
+      "kind": "chip",
+      "refersTo": "tech-chip",
+      "description": "Nome de tecnologia em mono numa pílula de divisória.",
+      "html": "<span class=\"ds-chip\">PostgreSQL</span>",
+      "css": ".ds-chip{display:inline-block;padding:7px 12px;border:1px solid rgba(157,178,255,.16);border-radius:999px;background:#050f2a;color:#eef2ff;font:500 .75rem/1.4 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase}"
+    },
+    {
+      "name": "Mídia chanfrada",
+      "kind": "custom",
+      "description": "Campo azul com chanfro de 45° herdado do wordmark DWC.",
+      "html": "<div class=\"ds-cut\"></div>",
+      "css": ".ds-cut{width:320px;aspect-ratio:16/11;background:#0031f9;clip-path:polygon(28px 0,100% 0,100% calc(100% - 28px),calc(100% - 28px) 100%,0 100%,0 28px)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O sinal vira produto",
+    "overview": "O portfólio conta uma passagem: do sinal de campo (um CLP ligando máquinas) até o software em produção. Os campos escuros em azul-noite são o campo e a sala de controle, o papel frio é a bancada onde o trabalho é examinado, e o azul da logo DWC é o próprio sinal: aparece em campos inteiros e em traço fino, nunca como brilho neon espalhado.",
+    "keyCharacteristics": [
+      "Azul de marca #0031F9 extraído do núcleo do wordmark; nenhuma outra cor dominante.",
+      "Alternância de seções: azul-noite → papel → azul-noite (meio) → branco → azul-noite.",
+      "Uma família tipográfica em duas larguras + mono só para dados.",
+      "Chanfro de 45° em mídias e fotos; pílula em controles.",
+      "Diagramas em traço fino sem preenchimento."
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "O único acento é o azul da logo. Verde, roxo, laranja ou outro azul de outra família não entram, nem em gradiente.", "section": "colors" },
+      { "name": "The Field Not Glow Rule", "body": "Azul ocupa áreas (um campo atrás da foto, um botão, uma palavra inteira) ou é traço fino. Halo luminoso, drop-shadow colorido e texto com gradiente não fazem parte do sistema.", "section": "colors" },
+      { "name": "The No Eyebrow Rule", "body": "Nenhum rótulo pequeno acima de título de seção. O título se sustenta sozinho.", "section": "typography" },
+      { "name": "The Mono Is Data Rule", "body": "Mono só para hora, contagem, numeração e nomes de tecnologia. Frase em mono é proibida.", "section": "typography" },
+      { "name": "The No Glass Rule", "body": "Sem backdrop-filter decorativo. A barra de navegação é sólida (azul-noite a 94%).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar o azul DWC (#0031F9) sobre fundo claro e o azul sinal (#4A74FF) sobre fundo escuro.",
+      "Do alternar os chãos das seções para dar ritmo, com uma seção escura no meio.",
+      "Do recortar mídias e fotos com o chanfro de 45°.",
+      "Do desenhar ícones em SVG de traço único (1,6px), nunca com setas em Unicode.",
+      "Do respeitar prefers-reduced-motion, mostrando o estado final sem transição.",
+      "Do mostrar só números conferidos (repositórios, commits, tecnologias listadas)."
+    ],
+    "donts": [
+      "Don't usar verde-lima, roxo ou qualquer outra cor dominante. O sistema antigo em carvão e lima foi aposentado.",
+      "Don't colocar rótulos/eyebrows acima de títulos de seção.",
+      "Don't usar texto com gradiente, glass decorativo ou halo neon.",
+      "Don't adicionar movimento contínuo fora do hero (letreiros, autoplay, partículas).",
+      "Don't aninhar cards nem montar grades de ícones em tiles para a stack."
+    ]
+  }
+}

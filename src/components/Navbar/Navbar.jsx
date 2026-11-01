@@ -1,93 +1,151 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import wordmark from '../../assets/dwc-wordmark-520.webp';
+import Icon from '../Icon/Icon';
+import { sections } from '../../data/site';
 import './Navbar.css';
-import logo from '../../assets/dwc-logo-mobile.png'
 
+/**
+ * Barra flutuante que só existe depois do hero (o hero tem a própria navegação).
+ *  - some ao rolar para baixo e volta ao rolar para cima;
+ *  - marca a seção ativa com um indicador que desliza entre os links.
+ */
 export default function Navbar() {
+  const [pastHero, setPastHero] = useState(false);
+  const [hiddenByScroll, setHiddenByScroll] = useState(false);
+  const [active, setActive] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isInteractive, setIsInteractive] = useState(false);
+  const linksRef = useRef(null);
 
+  /* Rolagem: passou do hero? direção? (um cálculo por quadro) */
   useEffect(() => {
-    let animationFrameId = null;
+    let lastY = window.scrollY;
+    let frame = 0;
 
-    const handleScroll = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const hero = document.getElementById('inicio');
+      const limit = hero ? hero.offsetHeight * 0.72 : window.innerHeight * 0.6;
+      setPastHero(y > limit);
+
+      const delta = y - lastY;
+      if (Math.abs(delta) > 6) {
+        setHiddenByScroll(delta > 0 && y > limit + 120);
+        lastY = y;
       }
-
-      animationFrameId = requestAnimationFrame(() => {
-        const currentScroll = window.scrollY;
-        
-        // Define o ponto de gatilho em 60vh (60% da altura da tela)
-        const triggerPoint = window.innerHeight * 0.6;
-        // Distância em pixels para completar o efeito de fade-in suave
-        const fadeLength = 150; 
-
-        let mappedProgress = 0;
-
-        if (currentScroll >= triggerPoint) {
-          mappedProgress = (currentScroll - triggerPoint) / fadeLength;
-          mappedProgress = Math.min(Math.max(mappedProgress, 0), 1);
-        } else {
-          mappedProgress = 0;
-        }
-
-        // Define a variável CSS que controla a animação
-        document.documentElement.style.setProperty('--scroll-progress', mappedProgress.toFixed(3));
-
-        // Define se está interativo e se concluiu a transição
-        setIsInteractive(mappedProgress > 0);
-        setIsScrolled(mappedProgress >= 1);
-      });
     };
 
-    // Avaliação no carregamento inicial
-    handleScroll();
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
     };
   }, []);
 
+  /* Seção ativa: a que cruza a faixa central da tela */
+  useEffect(() => {
+    const targets = sections
+      .map((section) => document.getElementById(section.id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, []);
+
+  /* Indicador: posição e largura do link ativo em variáveis CSS */
+  useLayoutEffect(() => {
+    const list = linksRef.current;
+    if (!list) return;
+    const link = list.querySelector(`[data-id="${active}"]`);
+    if (!link) {
+      list.style.setProperty('--ind-o', '0');
+      return;
+    }
+    list.style.setProperty('--ind-x', `${link.offsetLeft}px`);
+    list.style.setProperty('--ind-w', `${link.offsetWidth}px`);
+    list.style.setProperty('--ind-o', '1');
+  }, [active, pastHero]);
+
+  /* Menu móvel: fecha com Esc */
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
+  const visible = pastHero && (!hiddenByScroll || isOpen);
+  const close = () => setIsOpen(false);
+
   return (
     <header
-      className={`nav ${isScrolled ? 'is-scrolled' : ''} ${!isInteractive ? 'is-hidden' : ''}`}
-      inert={!isInteractive ? '' : undefined}
+      className={`nav${visible ? ' is-visible' : ''}${isOpen ? ' is-open' : ''}`}
+      inert={!visible}
     >
-      <div className="bar">
-         <a className="logo" href="#inicio" aria-label="DWC — início">
-            <img src={logo} alt="Logo DWC" width="1254" height="1254" />
+      <div className="nav__bar">
+        <a className="nav__logo" href="#inicio" aria-label="DevWCastle — início">
+          <img src={wordmark} alt="" width="520" height="115" />
         </a>
-        <nav className="links" aria-label="Principal">
-          <a href="#projetos">Projetos</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#stack">Stack</a>
-          <a href="#contato">Contato</a>
+
+        <nav className="nav__links" aria-label="Principal" ref={linksRef}>
+          {sections.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              data-id={section.id}
+              aria-current={active === section.id ? 'true' : undefined}
+            >
+              {section.label}
+            </a>
+          ))}
+          <span className="nav__indicator" aria-hidden="true" />
         </nav>
-        <a className="pill nav-pill" href="#contato">Contato ↗</a>
+
+        <a className="btn btn--outline nav__cta" href="#contato">
+          Fale comigo
+          <Icon name="arrow-up-right" size={16} />
+        </a>
+
         <button
-          className="burger"
+          type="button"
+          className="nav__burger"
           aria-expanded={isOpen}
-          aria-controls="mn"
-          aria-label="Abrir menu"
-          onClick={() => setIsOpen(!isOpen)}
+          aria-controls="nav-menu"
+          aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
+          onClick={() => setIsOpen((open) => !open)}
         >
-          ☰
+          <Icon name={isOpen ? 'close' : 'menu'} size={20} />
         </button>
       </div>
-      <nav className={`menu ${isOpen ? 'open' : ''}`} id="mn" aria-label="Menu móvel">
-        <a href="#projetos" onClick={() => setIsOpen(false)}>Projetos</a>
-        <a href="#sobre" onClick={() => setIsOpen(false)}>Sobre</a>
-        <a href="#tecnologias" onClick={() => setIsOpen(false)}>Stack</a>
-        <a href="#contato" onClick={() => setIsOpen(false)}>Contato</a>
-        <a className="pill" href="#contato" onClick={() => setIsOpen(false)}>Fale comigo</a>
+
+      <nav className="nav__menu" id="nav-menu" aria-label="Menu móvel" hidden={!isOpen}>
+        {sections.map((section) => (
+          <a
+            key={section.id}
+            href={`#${section.id}`}
+            onClick={close}
+            aria-current={active === section.id ? 'true' : undefined}
+          >
+            {section.label}
+            <Icon name="arrow-right" size={18} />
+          </a>
+        ))}
       </nav>
     </header>
   );
