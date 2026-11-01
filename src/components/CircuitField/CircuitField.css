@@ -1,0 +1,21 @@
+/* fundo do lado do tesseract: da borda esquerda até o retrato, atrás de tudo */
+.circuit-field {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 62%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* tablet e celular: sem o tesseract, a placa vira um fundo discreto só na
+   metade de cima do hero (o corte é feito no canvas), atrás de todos os
+   elementos (z-index negativo dentro do hero isolado) */
+@media (max-width: 900px) {
+  .circuit-field {
+    z-index: -1;
+    width: 100%;
+    opacity: 0.4;
+  }
+}
