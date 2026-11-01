@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import HeroStage from './components/HeroStage/HeroStage';
 import Projects from './components/Projects/Projects';
 import TechStack from './components/TechStack/TechStack';
+import TechMarquee from './components/TechMarquee/TechMarquee';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
@@ -13,7 +14,8 @@ import { useScrollReveal } from './hooks/useScrollReveal';
 
 /*
  * Ritmo das seções: hero (azul-noite) → projetos (papel) → stack (escura,
- * no meio) → sobre (branco) → contato (azul-noite).
+ * no meio, fechada pelo letreiro de tecnologias) → sobre (branco) →
+ * contato (azul-noite).
  * O hero fica fixo dentro de .hero-pin enquanto Projetos sobe por cima dele.
  */
 export default function App() {
@@ -31,6 +33,7 @@ export default function App() {
           <Projects />
         </div>
         <TechStack />
+        <TechMarquee />
         <About />
         <Contact />
         <ScrollLine />
