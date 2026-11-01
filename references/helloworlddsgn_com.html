@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-geo="DE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0c18" />
+    <script src="lang.js">
+    </script>
+    <title>
+      Hello_world_design — it all starts with curiosity
+    </title>
+    <meta name="description" content="Volodymyr Ihnatenko — ad creatives, websites, motion and branding." />
+    <!-- share previews (the Worker swaps them to English for visitors outside Ukraine) -->
+    <link rel="canonical" href="https://helloworlddsgn.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hello_world_design" />
+    <meta property="og:url" content="https://helloworlddsgn.com/" />
+    <meta property="og:title" content="Hello_world_design — it all starts with curiosity" />
+    <meta property="og:description" content="Volodymyr Ihnatenko — ad creatives, websites, motion and branding." />
+    <meta property="og:image" content="https://helloworlddsgn.com/assets/meta/og-en-screen.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&amp;display=swap" rel="stylesheet" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="assets/meta/favicon-64.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="assets/meta/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="os.css" />
+    <link rel="stylesheet" href="about.css" />
+    <script type="importmap">
+      { &#34;imports&#34;: {
+      &#34;three&#34;: &#34;https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js&#34;,
+      &#34;three/addons/&#34;: &#34;https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/&#34;
+    } }
+    </script>
+  </head>
+  <body>
+    <!-- one SVG icon set for the whole site (text arrows turn into emoji on phones) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="i-ne" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9">
+        </path>
+      </symbol>
+      <symbol id="i-right" viewBox="0 0 24 24">
+        <path d="M4 12h15M13 6l6 6-6 6">
+        </path>
+      </symbol>
+      <symbol id="i-down" viewBox="0 0 24 24">
+        <path d="M12 4v15M6 13l6 6 6-6">
+        </path>
+      </symbol>
+      <symbol id="i-redo" viewBox="0 0 24 24">
+        <path d="M19 12a7 7 0 1 1-2.05-4.95M19 4v5h-5">
+        </path>
+      </symbol>
+    </svg>
+    <!-- Loader -->
+    <div class="loader" id="loader" aria-live="polite">
+      <div class="loader-glow" aria-hidden="true">
+      </div>
+      <div class="loader-top">
+        <span id="loader-status" data-i18n="loader">        Збираємо кімнату
+</span>
+        <span>        hello_world.exe
+</span>
+      </div>
+      <div class="loader-count">
+        <b id="loader-num">        0
+</b>
+        %
+      </div>
+    </div>
+    <canvas id="scene" aria-hidden="true">
+    </canvas>
+    <!-- The monitor picture is drawn on the 3D glass (crt-screen.js); the text stays here for screen readers and search -->
+    <div class="screen" id="screen" hidden="">
+    </div>
+    <h1 class="sr-only" data-i18n="h1">
+      Все почалось з бажання вивчати нове
+    </h1>
+    <!-- Headline that sits on the wall between the posters -->
+    <header class="top">
+      <a aria-label="На початок" class="brand" data-i18n-attr="aria-label:home" href="#" id="home">      <img src="assets/hello-world-logo.png" alt="Hello world" width="720" height="477" />
+</a>
+      <div class="who" data-i18n="who">
+        <b>        Володимир Ігнатенко
+</b>
+        <span>        дизайнер
+</span>
+      </div>
+      <!-- background music on / off (music.js). Track: "Fhloston Paradise Arrival", Mixkit Stock Music Free License -->
+      <button class="lng" id="lng" type="button">
+        EN
+      </button>
+      <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Увімкнути музику">
+        <span class="snd-bars" aria-hidden="true">        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+</span>
+        <span class="snd-t" data-i18n="snd">        звук
+</span>
+      </button>
+    </header>
+    <button class="skip" id="skip" type="button" data-i18n="skip">
+      Пропустити історію
+      <svg class="ico" aria-hidden="true">
+        <use href="#i-down">
+        </use>
+      </svg>
+    </button>
+    <p class="hint" id="hint" data-i18n="hint">
+      Гортай, щоб зазирнути далі
+      <svg class="ico" aria-hidden="true">
+        <use href="#i-down">
+        </use>
+      </svg>
+    </p>
+    <!-- Scroll length that drives the camera -->
+    <main class="track" id="track">
+      <section class="chapter" data-chapter="screen">
+      </section>
+      <section class="chapter" data-chapter="room">
+      </section>
+      <section class="chapter" data-chapter="hold">
+      </section>
+      <section class="chapter" data-chapter="modern">
+      </section>
+      <section class="chapter" data-chapter="tech">
+      </section>
+      <section class="chapter" data-chapter="push">
+      </section>
+      <section class="chapter" data-chapter="os">
+      </section>
+      <section class="chapter" data-chapter="dialogs">
+      </section>
+      <section class="chapter" data-chapter="exit">
+      </section>
+      <section class="chapter end" data-chapter="next">
+      </section>
+    </main>
+    <!-- ================= after the story: a normal scrolling page — Swiss editorial, one 12-column grid ================= -->
+    <!-- Every block sits on the same grid (.sw-grid) and shares the vertical rule after column 4. Animations: content.js -->
+    <div class="content" id="content">
+      <section class="sw sw-about" id="about" aria-labelledby="about-title">
+        <div class="sw-hero">
+          <div class="sw-hero-in">
+            <header class="sw-head sw-grid" data-i18n="aboutHead">
+              <p class="sw-label">
+                <span>                (01)
+</span>
+                Про мене
+              </p>
+              <p class="sw-label sw-r">
+                Графічний і веб-дизайнер · Україна
+              </p>
+            </header>
+            <h2 class="sw-big sw-grid" id="about-title" data-split="" data-early="">
+              <span class="ln c1" data-drift="-0.6" data-i18n="hi1">              Привіт,
+</span>
+              <span class="ln c5" data-drift="0.6" data-i18n="hi2">              я Вова —
+</span>
+              <span class="ln c2" data-drift="-0.4" data-i18n="hi3">              дизайнер
+</span>
+            </h2>
+            <figure class="sw-ig">
+              <a aria-label="Instagram @hello_world_dsgn" class="ig-stage" href="https://www.instagram.com/hello_world_dsgn/" rel="noopener" target="_blank">              <canvas class="ig-gl" aria-hidden="true">
+              </canvas>
+              <span class="ig-tag" aria-hidden="true" data-i18n="igTag">              натисни, щоб перейти в інстаграм
+              <svg class="ico" aria-hidden="true">
+                <use href="#i-ne">
+                </use>
+              </svg>
+</span>
+</a>
+              <figcaption>
+                <span class="sw-label">                Instagram
+</span>
+                <a class="ig-link" href="https://www.instagram.com/hello_world_dsgn/" rel="noopener" target="_blank">                @hello_world_dsgn
+                <svg class="ico" aria-hidden="true">
+                  <use href="#i-ne">
+                  </use>
+                </svg>
+</a>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="sw-rest">
+          <div class="sw-grid sw-intro">
+            <figure class="sw-photo" data-reveal="">
+              <img src="assets/portrait.jpg" alt="Володимир Ігнатенко" data-i18n-attr="alt:photo" width="900" height="900" loading="lazy" />
+            </figure>
+            <!-- lead in the butter.video manner: big text with small flat symbol icons (different shapes) between the words -->
+            <p class="sw-lead" data-split="" data-i18n="lead">
+              Роблю креативи
+              <span class="tile ic ic-creative" aria-hidden="true">              <svg viewBox="0 0 24 24">
+                <path d="M12 3c.6 4.6 3.4 7.4 8 8-4.6.6-7.4 3.4-8 8-.6-4.6-3.4-7.4-8-8 4.6-.6 7.4-3.4 8-8z" fill="#fff">
+                </path>
+              </svg>
+</span>
+              , сайти
+              <span class="tile ic ic-web" aria-hidden="true">              <svg viewBox="0 0 32 24">
+                <rect x="4" y="4" width="24" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2.2">
+                </rect>
+                <path d="M4 9h24" stroke="#fff" stroke-width="2.2">
+                </path>
+                <circle cx="8" cy="6.6" r="1" fill="#fff">
+                </circle>
+                <circle cx="11" cy="6.6" r="1" fill="#fff">
+                </circle>
+              </svg>
+</span>
+              , моушн
+              <span class="tile ic ic-motion" aria-hidden="true">              <svg viewBox="0 0 24 24">
+                <path d="M9 6.5v11l9-5.5z" fill="#fff">
+                </path>
+              </svg>
+</span>
+              і брендинг
+              <span class="tile ic ic-brand" aria-hidden="true">              <svg viewBox="0 0 24 24">
+                <path d="M12 4l2.2 5.2L20 10l-4.3 3.8L17 20l-5-3-5 3 1.3-6.2L4 10l5.8-.8z" fill="#051727">
+                </path>
+              </svg>
+</span>
+              для бізнесу.
+              <span class="dim">              Не прикрашаю — розв’язую задачу: щоб вашу рекламу помітили, а сайт продавав.
+</span>
+            </p>
+          </div>
+          <ul class="sw-stats" aria-label="Коротко" data-i18n-attr="aria-label:stats">
+            <li class="sw-grid" data-reveal="">
+              <b class="sw-num" data-count="6">              6
+</b>
+              <span class="sw-label" data-i18n="years">              років досвіду
+</span>
+            </li>
+            <li class="sw-grid" data-reveal="">
+              <b class="sw-num">              <span class="since" data-i18n="since">              з
+</span>
+              <i data-count="2020" data-from="2014">              2020
+</i>
+</b>
+              <span class="sw-label" data-i18n="freelance">              на фрілансі
+</span>
+            </li>
+          </ul>
+          <p class="sw-quote sw-grid" data-split="" data-i18n="quote">
+            <span class="ln c1">            <span class="q">            Не краса
+</span>
+            <span class="q q-r">            заради
+</span>
+</span>
+            <span class="ln c5">            <span class="q q-r">            краси —
+</span>
+</span>
+            <span class="ln c2">            <span class="q">            дизайн,
+</span>
+            <span class="q q-i">            що
+</span>
+</span>
+            <span class="ln c5">            <span class="q q-r">            працює
+</span>
+</span>
+          </p>
+        </div>
+      </section>
+      <section class="sw-numbers" id="numbers" aria-labelledby="nums-title">
+        <div class="nums-stage" data-mesh="">
+          <div class="nums-track">
+            <div class="nums-intro">
+              <p class="sw-label" data-i18n="nums">
+                <span>                (02)
+</span>
+                У цифрах · з 2020 року
+              </p>
+              <h2 class="nums-title" id="nums-title" data-i18n="numsTitle">
+                Що вже
+                <br />
+                зроблено
+              </h2>
+            </div>
+            <div class="num">
+              <span class="num-i">              01
+</span>
+              <b data-count="836">              836
+</b>
+              <span class="num-l" data-i18n="n1">              банерів
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              02
+</span>
+              <b data-count="372">              372
+</b>
+              <span class="num-l" data-i18n="n2">              моушн
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              03
+</span>
+              <b data-count="116">              116
+</b>
+              <span class="num-l" data-i18n="n3">              презентацій
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              04
+</span>
+              <b data-count="42">              42
+</b>
+              <span class="num-l" data-i18n="n4">              сайтів
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              05
+</span>
+              <b data-count="18">              18
+</b>
+              <span class="num-l" data-i18n="n5">              брендбуків
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              06
+</span>
+              <b data-count="14">              14
+</b>
+              <span class="num-l" data-i18n="n6">              соцмереж оформлено
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              07
+</span>
+              <b data-count="100" data-suffix="+">              100+
+</b>
+              <span class="num-l" data-i18n="n7">              макетів для друку
+</span>
+            </div>
+            <div class="num">
+              <span class="num-i">              08
+</span>
+              <b data-count="100" data-suffix="+">              100+
+</b>
+              <span class="num-l" data-i18n="n8">              промо-відео
+</span>
+            </div>
+          </div>
+          <div class="nums-fade" aria-hidden="true">
+          </div>
+        </div>
+      </section>
+      <!-- 03 works: a scroll-driven tunnel of cards (works.js); the stage stays pinned while the section scrolls -->
+      <section class="works" id="work" aria-labelledby="work-title">
+        <div class="works-stage">
+          <canvas class="works-gl" aria-hidden="true">
+          </canvas>
+          <p class="sw-label works-note" data-i18n="workNote">
+            <span>            (03)
+</span>
+            Роботи
+          </p>
+          <div class="works-copy">
+            <h2 class="works-title" id="work-title" data-i18n="workTitle">
+              Статичні креативи
+            </h2>
+            <p class="works-sub" data-i18n="workSub">
+              ( банери · пости · сторіс )
+            </p>
+            <a class="btn works-btn" data-i18n="viewAll" href="/work/">            Дивитись усі
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-right">
+              </use>
+            </svg>
+</a>
+          </div>
+          <nav class="works-dots" aria-label="Категорії робіт" data-i18n-attr="aria-label:dots">
+            <button type="button" class="on" aria-label="Статичні креативи" data-i18n-attr="aria-label:dot1">
+            </button>
+            <button type="button" aria-label="Веб-дизайн" data-i18n-attr="aria-label:dot2">
+            </button>
+            <button type="button" aria-label="Моушн" data-i18n-attr="aria-label:dot3">
+            </button>
+            <button type="button" aria-label="Лого і брендинг" data-i18n-attr="aria-label:dot4">
+            </button>
+          </nav>
+        </div>
+      </section>
+      <footer class="sw sw-foot" id="contact" aria-labelledby="cta-title">
+        <header class="sw-head sw-grid" data-i18n="contactHead">
+          <p class="sw-label">
+            <span>            (05)
+</span>
+            Контакти
+          </p>
+          <p class="sw-label sw-r">
+            відкритий до нових проєктів
+          </p>
+        </header>
+        <h2 class="sw-big sw-grid" id="cta-title" data-split="">
+          <span class="ln c1" data-drift="-0.8" data-i18n="cta1">          Обговоримо
+</span>
+          <span class="ln c4" data-drift="0.8" data-i18n="cta2">          ваш проєкт?
+</span>
+        </h2>
+        <ul class="sw-links">
+          <li data-reveal="">
+            <a class="sw-grid" href="mailto:qwertyvova8@gmail.com">            <span class="sw-label">            01
+</span>
+            <b>            Email
+</b>
+            <span class="sw-note">            qwertyvova8@gmail.com
+</span>
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-ne">
+              </use>
+            </svg>
+</a>
+          </li>
+          <li data-reveal="">
+            <a class="sw-grid" href="https://instagram.com/hello_world_dsgn" rel="noopener" target="_blank">            <span class="sw-label">            02
+</span>
+            <b>            Instagram
+</b>
+            <span class="sw-note">            @hello_world_dsgn
+</span>
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-ne">
+              </use>
+            </svg>
+</a>
+          </li>
+          <li data-reveal="">
+            <a class="sw-grid" href="https://www.behance.net/qwertyvova274a" rel="noopener" target="_blank">            <span class="sw-label">            03
+</span>
+            <b>            Behance
+</b>
+            <span class="sw-note" data-i18n="cases">            усі кейси
+</span>
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-ne">
+              </use>
+            </svg>
+</a>
+          </li>
+          <li data-reveal="">
+            <a class="sw-grid" href="https://linktr.ee/hello_world_dsgn" rel="noopener" target="_blank">            <span class="sw-label">            04
+</span>
+            <b>            Linktree
+</b>
+            <span class="sw-note" data-i18n="links">            усі посилання
+</span>
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-ne">
+              </use>
+            </svg>
+</a>
+          </li>
+        </ul>
+        <div class="sw-formwrap" data-reveal="">
+          <form class="sw-formcard" id="brief" data-mesh="" aria-labelledby="form-title">
+            <p class="f-sub" data-i18n="fSub">
+              Відповім протягом дня
+            </p>
+            <h3 id="form-title" data-fit="" data-i18n="fTitle">
+              <span class="ln">              <span class="w2">              Розкажіть
+</span>
+              <span class="w2">              про задачу
+</span>
+</span>
+            </h3>
+            <div class="sw-fields">
+              <label>
+                <span class="sw-label" data-i18n="fName">                Ім’я
+                <em aria-hidden="true">                *
+</em>
+</span>
+                <input type="text" name="name" autocomplete="name" required="" placeholder="Ім’я *" data-i18n-attr="placeholder:fNamePh" />
+              </label>
+              <label>
+                <span class="sw-label">                Telegram / email
+                <em aria-hidden="true">                *
+</em>
+</span>
+                <input type="text" name="contact" required="" placeholder="Telegram / Email *" />
+              </label>
+              <input class="hp" type="text" name="hw_trap_x" tabindex="-1" autocomplete="one-time-code" aria-hidden="true" />
+              <label class="f-wide">
+                <textarea name="task" rows="3" placeholder="Задача: що потрібно, терміни" aria-label="Задача" data-i18n-attr="placeholder:fTaskPh;aria-label:fTask">
+                </textarea>
+              </label>
+              <button class="btn btn-ink" type="submit" data-i18n="fSend">
+                Надіслати заявку
+                <svg class="ico" aria-hidden="true">
+                  <use href="#i-right">
+                  </use>
+                </svg>
+              </button>
+            </div>
+            <p class="f-note" aria-live="polite">
+            </p>
+          </form>
+        </div>
+        <div class="sw-end sw-grid">
+          <p class="sw-label">
+            © 2026 Hello world
+          </p>
+          <button class="sw-replay" id="replay" type="button" data-i18n="replay">
+            Історія ще раз
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-redo">
+              </use>
+            </svg>
+          </button>
+        </div>
+        <p class="sw-word" aria-hidden="true">
+          hello_world
+        </p>
+      </footer>
+    </div>
+    <script>
+      hwApplyLang();
+    </script>
+    <script type="module" src="main.js">
+    </script>
+    <script type="module" src="cursor.js">
+    </script>
+    <script type="module" src="works.js">
+    </script>
+    <script type="module" src="mesh.js">
+    </script>
+    <script type="module" src="content.js">
+    </script>
+    <script type="module" src="ig-phone.js">
+    </script>
+    <script type="module" src="music.js">
+    </script>
+  </body>
+</html>
